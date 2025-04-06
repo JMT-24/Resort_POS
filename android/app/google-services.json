@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1092736646500",
+    "project_id": "darasapos",
+    "storage_bucket": "darasapos.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092736646500:android:eccd11a9bc8eacbab94e71",
+        "android_client_info": {
+          "package_name": "com.darasa.ResortPOS"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC68jVEJaL3m0cehBLy_4nQ3XLHzk4oUl4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

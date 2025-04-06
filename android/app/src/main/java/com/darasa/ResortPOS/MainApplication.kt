@@ -1,4 +1,4 @@
-package com.resort_pos
+package com.darasa.ResortPOS
 
 import android.app.Application
 import com.facebook.react.PackageList
