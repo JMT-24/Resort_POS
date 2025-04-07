@@ -1,4 +1,4 @@
-package com.darasa.ResortPOS
+package com.darasa.POS
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
