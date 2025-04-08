@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
   formContainerLeft: {
     width: '65%',
     //backgroundColor: 'yellow',
-    paddingLeft: 15,
+    paddingLeft: 25,
+    paddingTop: 5,
   },
  
   checkInFormContainer: {
@@ -45,6 +46,7 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 20,
     justifyContent: 'flex-end', 
+    marginBottom: 40,
   },
 
   formHeader: {
@@ -222,7 +224,63 @@ const styles = StyleSheet.create({
     width: "100%",
     borderWidth: 1, 
     borderColor: 'black',
+    //backgroundColor: "red",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    padding: 20,
   },
+  paymentDetailsSummary: {
+    height: 250,
+    backgroundColor: "gray",
+  },
+  paymentDetailsContainer: {
+    //backgroundColor: "whitesmoke",
+    height: 250,
+    display: "flex",
+    flexDirection: "column",
+  },
+  paymentDetailHeader: {
+    fontSize: 20, 
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+
+  detailsField: {
+    //backgroundColor: "yellow",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 5,
+  },
+  horizontalLine: {
+    borderBottomColor: '#000',
+    borderBottomWidth: 1,
+    marginVertical: 8,
+  },
+  paymentDetailLabel: {
+    fontSize: 18,
+  },
+  paymentDetailData: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  Confirmbtn: {
+    backgroundColor: "blue",
+    alignItems: "center",
+    justifyContent: "center",
+    display: "flex",
+    width: "100%",
+    height: 40,
+    alignSelf: "center",
+    marginTop: 45
+  },
+  ConfirmbtnText: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "white",
+  },
+
 });
 
 

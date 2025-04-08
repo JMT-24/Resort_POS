@@ -283,7 +283,29 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
 
                         <View style={styles.formContainerRight}>
                             <View style={styles.summaryBox}>
+                                <View style={styles.paymentDetailsSummary}>
+                                    
+                                </View>
 
+                                <View style={styles.paymentDetailsContainer}>
+                                    <Text style={styles.paymentDetailHeader}>Payment Details</Text>
+                                    <View style={styles.detailsField}>
+                                        <Text style={styles.paymentDetailLabel}>Subtotal</Text>
+                                        <Text style={styles.paymentDetailData}>98.00</Text>
+                                    </View>
+                                    <View style={styles.detailsField}>
+                                        <Text style={styles.paymentDetailLabel}>Discount</Text>
+                                        <Text style={styles.paymentDetailData}>0.00</Text>
+                                    </View>
+                                    <View style={styles.horizontalLine} />
+                                    <View style={styles.detailsField}>
+                                        <Text style={styles.paymentDetailData}>Total</Text>
+                                        <Text style={styles.paymentDetailData}>98.00</Text>
+                                    </View>
+                                    <TouchableOpacity style={styles.Confirmbtn}>
+                                        <Text style={styles.ConfirmbtnText}>CONFIRM</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
 
