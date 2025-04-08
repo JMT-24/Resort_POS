@@ -332,7 +332,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                     <View style={styles.detail_miniField}>
                                         <Text style={styles.summaryLabel}>Adults</Text>
                                         <View style={styles.detail_subminiField}>
-                                            <Text>2x</Text>
+                                            <Text>{adultCount}x</Text>
                                             <Text style={styles.summaryLabel}>1,500</Text>
                                         </View>
                                     </View>
@@ -343,7 +343,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                     <View style={styles.detail_miniField}>
                                         <Text style={styles.summaryLabel}>Senior</Text>
                                         <View style={styles.detail_subminiField}>
-                                            <Text>2x</Text>
+                                            <Text>{seniorCount}x</Text>
                                             <Text style={styles.summaryLabel}>1,500</Text>
                                         </View>
                                     </View>
@@ -354,7 +354,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                     <View style={styles.detail_miniField}>
                                         <Text style={styles.summaryLabel}>Kids</Text>
                                         <View style={styles.detail_subminiField}>
-                                            <Text>2x</Text>
+                                            <Text>{kidsCount}x</Text>
                                             <Text style={styles.summaryLabel}>1,500</Text>
                                         </View>
                                     </View>
@@ -365,7 +365,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                     <View style={styles.detail_miniField}>
                                         <Text style={styles.summaryLabel}>PWD</Text>
                                         <View style={styles.detail_subminiField}>
-                                            <Text>2x</Text>
+                                            <Text>{pwdCount}x</Text>
                                             <Text style={styles.summaryLabel}>1,500</Text>
                                         </View>
                                     </View>
@@ -376,7 +376,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                     <View style={styles.detail_miniField}>
                                         <Text style={styles.summaryLabel}>Cottages</Text>
                                         <View style={styles.detail_subminiField}>
-                                            <Text>2x</Text>
+                                            <Text>{cottagesCount}x</Text>
                                             <Text style={styles.summaryLabel}>1,500</Text>
                                         </View>
                                     </View>
@@ -387,7 +387,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                     <View style={styles.detail_miniField}>
                                         <Text style={styles.summaryLabel}>E-Charge</Text>
                                         <View style={styles.detail_subminiField}>
-                                            <Text>2x</Text>
+                                            <Text>{electricChargeCount}x</Text>
                                             <Text style={styles.summaryLabel}>1,500</Text>
                                         </View>
                                     </View>
@@ -398,7 +398,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                     <View style={styles.detail_miniField}>
                                         <Text style={styles.summaryLabel}>Round Table</Text>
                                         <View style={styles.detail_subminiField}>
-                                            <Text>2x</Text>
+                                            <Text>{roundTableCount}x</Text>
                                             <Text style={styles.summaryLabel}>1,500</Text>
                                         </View>
                                     </View>
@@ -409,7 +409,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                     <View style={styles.detail_miniField}>
                                         <Text style={styles.summaryLabel}>Mono Block</Text>
                                         <View style={styles.detail_subminiField}>
-                                            <Text>2x</Text>
+                                            <Text>{monoBlockCount}x</Text>
                                             <Text style={styles.summaryLabel}>1,500</Text>
                                         </View>
                                     </View>
@@ -420,7 +420,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                     <View style={styles.detail_miniField}>
                                         <Text style={styles.summaryLabel}>Chair</Text>
                                         <View style={styles.detail_subminiField}>
-                                            <Text>2x</Text>
+                                            <Text>{chairsCount}x</Text>
                                             <Text style={styles.summaryLabel}>1,500</Text>
                                         </View>
                                     </View>
@@ -431,7 +431,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                     <View style={styles.detail_miniField}>
                                         <Text style={styles.summaryLabel}>Cork Cage</Text>
                                         <View style={styles.detail_subminiField}>
-                                            <Text>2x</Text>
+                                            <Text>{corkCageCount}x</Text>
                                             <Text style={styles.summaryLabel}>1,500</Text>
                                         </View>
                                     </View>
