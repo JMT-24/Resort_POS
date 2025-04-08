@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
   },
+  exitButton: {
+    fontSize: 15,
+    fontWeight: "bold",
+  },
   formContainerLeft: {
     width: '65%',
     //backgroundColor: 'yellow',
@@ -62,22 +66,45 @@ const styles = StyleSheet.create({
   },
 
   checkInPersonalInfoFormLeft: {
-    width: '48%', // Adjust width as needed
+    width: '48%', 
     flexDirection: 'column',
   },
 
   checkInPersonalInfoFormRight: {
-    width: '48%', // Adjust width as needed
+    width: '48%',
     flexDirection: 'column',
   },
 
+  formToggleField: {
+    marginBottom: 15, 
+    //backgroundColor: "red",
+    height: "45%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  formTogglePic: {
+    backgroundColor: "gray",
+    height: 40,
+    width: 40,
+  },
+
+  formToggleLabel: {
+    fontSize: 30,
+    fontWeight: "bold", 
+    marginBottom: 5,
+    //backgroundColor: "teal",
+  },
+
   formField: {
-    marginBottom: 15, // Space between fields
+    marginBottom: 15, 
+    //backgroundColor: "violet",
   },
 
   formLabel: {
-    fontSize: 16, // Adjust the size as needed
-    marginBottom: 5, // Space between label and input field
+    fontSize: 16, 
+    marginBottom: 5,
   },
 
   textInput: {
@@ -87,6 +114,50 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
   },
+
+  toggleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F1F1F1',
+    borderRadius: 25,
+    padding: 5,
+    paddingHorizontal: 10,
+  },
+  toggleCircleWhite: {
+    backgroundColor: '#fff',
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 5,
+  },
+  toggleCircleBlue: {
+    backgroundColor: '#007AFF',
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 5,
+  },
+  toggleSymbol: {
+    fontSize: 20,
+    color: '#999',
+    fontWeight: 'bold',
+  },
+  toggleSymbolPlus: {
+    fontSize: 20,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  toggleValue: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginHorizontal: 10,
+  },
+
+
 
 
   checkInNumOfGuestForm: {
@@ -100,6 +171,9 @@ const styles = StyleSheet.create({
   checkInNumOfGuestFormTop: {
     height: "50%",
     //backgroundColor: "gray",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: 'space-between',
   },
   checkInNumOfGuestFormBottom: {
     height: "50%",
@@ -108,6 +182,31 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: 'space-between',
   },
+
+
+  checkInOtherChargesForm: {
+    //backgroundColor: 'gray',
+    height: "80%", 
+    width: 800,
+    flexDirection: 'row', 
+    justifyContent: 'space-between',
+    paddingTop: "5%",
+  },
+  checkInOtherChargesFormLeft: {
+    //backgroundColor: "blue",
+    width: '48%',
+    flexDirection: 'column',
+    height: 150,
+  },
+  checkInOtherChargesFormRight: {
+    //backgroundColor: "violet",
+    width: '48%',
+    flexDirection: 'column',
+    height: 150,
+  },
+
+
+
   
   formContainerRight: {
     width: '35%',

@@ -19,6 +19,10 @@ interface AddCheckinFormProps {
 const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalVisible }) => {
   const [firestoreName, setFirestoreName] = useState('');
   const [sqliteName, setSqliteName] = useState('');
+  const [count, setCount] = useState(1);
+
+  const increment = () => setCount(prev => prev + 1);
+  const decrement = () => setCount(prev => (prev > 0 ? prev -1 : 0));
 
   useEffect(() => {
     const loadData = async () => {
@@ -42,6 +46,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
       loadData();
     }
   }, [modalVisible]);
+  
 
   return (
     <View>
@@ -58,7 +63,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                         <View style={styles.formContainerLeft}>
                             <View style={styles.checkInPageTop}>
                                 <TouchableOpacity onPress={() => setModalVisible(false)}>
-                                <Text>{`<`} Exit</Text>
+                                <Text style={styles.exitButton}>{`<`} Exit</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.checkInFormContainer}>
@@ -68,11 +73,11 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                     <View style={styles.checkInPersonalInfoFormLeft}>
                                         <View style={styles.formField}>
                                             <Text style={styles.formLabel}>First Name</Text>
-                                            <TextInput style={styles.textInput} placeholder="Enter First Name" />
+                                            <TextInput style={styles.textInput} placeholder="Enter First Name (Optional)" />
                                         </View>
                                         <View style={styles.formField}>
                                             <Text style={styles.formLabel}>Contact No.</Text>
-                                            <TextInput style={styles.textInput} placeholder="Enter Contact No." keyboardType="phone-pad" />
+                                            <TextInput style={styles.textInput} placeholder="Enter Contact No. (Optional)" keyboardType="phone-pad" />
                                         </View>
                                             <View style={styles.formField}>
                                             <Text style={styles.formLabel}>Date</Text>
@@ -83,11 +88,11 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                     <View style={styles.checkInPersonalInfoFormRight}>
                                         <View style={styles.formField}>
                                             <Text style={styles.formLabel}>Last Name</Text>
-                                            <TextInput style={styles.textInput} placeholder="Enter Last Name" />
+                                            <TextInput style={styles.textInput} placeholder="Enter Last Name (Optional)" />
                                         </View>
                                         <View style={styles.formField}>
                                             <Text style={styles.formLabel}>Address</Text>
-                                            <TextInput style={styles.textInput} placeholder="Enter Address" multiline />
+                                            <TextInput style={styles.textInput} placeholder="Enter Address (Optional)" multiline />
                                         </View>
                                     </View>
                                 </View>
@@ -99,7 +104,71 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                 <Text style={styles.formInstruction}>Please double check information</Text>
                                 <View style={styles.checkInNumOfGuestForm}>
                                     <View style={styles.checkInNumOfGuestFormTop}>
-                                        
+                                        <View style={styles.checkInPersonalInfoFormLeft}>
+                                            <View style={styles.formToggleField}>
+                                                <View style={styles.formTogglePic}></View>
+                                                <Text style={styles.formToggleLabel}>Adults</Text>
+                                                <View style={styles.toggleContainer}>
+                                                    <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                        <Text style={styles.toggleSymbol}>−</Text>
+                                                    </TouchableOpacity>
+
+                                                    <Text style={styles.toggleValue}>{count}</Text>
+
+                                                    <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                        <Text style={styles.toggleSymbolPlus}>＋</Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            </View>
+                                            <View style={styles.formToggleField}>
+                                                <View style={styles.formTogglePic}></View>
+                                                <Text style={styles.formToggleLabel}>Senior</Text>
+                                                <View style={styles.toggleContainer}>
+                                                    <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                        <Text style={styles.toggleSymbol}>−</Text>
+                                                    </TouchableOpacity>
+
+                                                    <Text style={styles.toggleValue}>{count}</Text>
+
+                                                    <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                        <Text style={styles.toggleSymbolPlus}>＋</Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            </View>
+                                        </View>
+
+                                        <View style={styles.checkInPersonalInfoFormRight}>
+                                            <View style={styles.formToggleField}>
+                                                <View style={styles.formTogglePic}></View>
+                                                <Text style={styles.formToggleLabel}>Kids</Text>
+                                                <View style={styles.toggleContainer}>
+                                                    <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                        <Text style={styles.toggleSymbol}>−</Text>
+                                                    </TouchableOpacity>
+
+                                                    <Text style={styles.toggleValue}>{count}</Text>
+
+                                                    <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                        <Text style={styles.toggleSymbolPlus}>＋</Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            </View>
+                                            <View style={styles.formToggleField}>
+                                                <View style={styles.formTogglePic}></View>
+                                                <Text style={styles.formToggleLabel}>PWD</Text>
+                                                <View style={styles.toggleContainer}>
+                                                    <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                        <Text style={styles.toggleSymbol}>−</Text>
+                                                    </TouchableOpacity>
+
+                                                    <Text style={styles.toggleValue}>{count}</Text>
+
+                                                    <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                        <Text style={styles.toggleSymbolPlus}>＋</Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            </View>
+                                        </View>
                                     </View>
 
                                     <View style={styles.checkInNumOfGuestFormBottom}>
@@ -131,8 +200,83 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                             <View style={styles.checkInFormContainer}>
                                 <Text style={styles.formHeader}>Other Charges</Text>
                                 <Text style={styles.formInstruction}>Please double check information</Text>
-                                <View style={styles.checkInPersonalInfoForm}>
-                                
+                                <View style={styles.checkInOtherChargesForm}>
+                                    <View style={styles.checkInOtherChargesFormLeft}>
+                                        <View style={styles.formToggleField}>
+                                            <Text style={styles.formToggleLabel}>Cottages</Text>
+                                            <View style={styles.toggleContainer}>
+                                                <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                    <Text style={styles.toggleSymbol}>−</Text>
+                                                </TouchableOpacity>
+
+                                                <Text style={styles.toggleValue}>{count}</Text>
+
+                                                <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                    <Text style={styles.toggleSymbolPlus}>＋</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+                                        <View style={styles.formToggleField}>
+                                            <Text style={styles.formToggleLabel}>Electric Charge</Text>
+                                            <View style={styles.toggleContainer}>
+                                                <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                    <Text style={styles.toggleSymbol}>−</Text>
+                                                </TouchableOpacity>
+
+                                                <Text style={styles.toggleValue}>{count}</Text>
+
+                                                <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                    <Text style={styles.toggleSymbolPlus}>＋</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+                                        <View style={styles.formToggleField}>
+                                            <Text style={styles.formToggleLabel}>Round Table</Text>
+                                            <View style={styles.toggleContainer}>
+                                                <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                    <Text style={styles.toggleSymbol}>−</Text>
+                                                </TouchableOpacity>
+
+                                                <Text style={styles.toggleValue}>{count}</Text>
+
+                                                <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                    <Text style={styles.toggleSymbolPlus}>＋</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+                                    </View>
+
+                                    <View style={styles.checkInOtherChargesFormRight}>
+                                        <View style={styles.formToggleField}>
+                                            <Text style={styles.formToggleLabel}>Mono Block</Text>
+                                            <View style={styles.toggleContainer}>
+                                                <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                    <Text style={styles.toggleSymbol}>−</Text>
+                                                </TouchableOpacity>
+
+                                                <Text style={styles.toggleValue}>{count}</Text>
+
+                                                <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                    <Text style={styles.toggleSymbolPlus}>＋</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+                                        <View style={styles.formToggleField}>
+                                            <Text style={styles.formToggleLabel}>Chairs</Text>
+                                            <View style={styles.toggleContainer}>
+                                                <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                    <Text style={styles.toggleSymbol}>−</Text>
+                                                </TouchableOpacity>
+
+                                                <Text style={styles.toggleValue}>{count}</Text>
+
+                                                <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                    <Text style={styles.toggleSymbolPlus}>＋</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+                                    </View>
+                                    
                                 </View>
                             </View>
                         </View>
