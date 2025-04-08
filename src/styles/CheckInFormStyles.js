@@ -42,11 +42,11 @@ const styles = StyleSheet.create({
  
   checkInFormContainer: {
     //backgroundColor: 'violet',
-    height: 450,
+    height: 400,
     paddingLeft: 30,
     paddingRight: 20,
     justifyContent: 'flex-end', 
-    marginBottom: 40,
+    marginVertical: 20,
   },
 
   formHeader: {
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     height: "80%", 
     flexDirection: 'row', 
     justifyContent: 'space-between',
-    paddingTop: "5%",
+    paddingTop: "8%",
   },
 
   checkInPersonalInfoFormLeft: {
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   },
 
   formToggleLabel: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: "bold", 
     marginBottom: 5,
     //backgroundColor: "teal",
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   checkInOtherChargesForm: {
     //backgroundColor: 'gray',
     height: "80%", 
-    width: 800,
+    width: 600,
     flexDirection: 'row', 
     justifyContent: 'space-between',
     paddingTop: "5%",
@@ -220,8 +220,12 @@ const styles = StyleSheet.create({
     //backgroundColor: 'blue',
   },
   summaryBox: {
-    height: 700,
-    width: "100%",
+    position: "absolute",
+    bottom: 25,
+    left: 685,
+    right: 0,
+    height: 550,
+    width: "33%",
     borderWidth: 1, 
     borderColor: 'black',
     //backgroundColor: "red",
@@ -229,21 +233,56 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-between",
     padding: 20,
+    paddingTop: 10,
   },
   paymentDetailsSummary: {
-    height: 250,
-    backgroundColor: "gray",
+    height: 320,
+    //backgroundColor: "gray",
   },
-  paymentDetailsContainer: {
-    //backgroundColor: "whitesmoke",
-    height: 250,
+  detailSummaryField: {
+    //backgroundColor: "red",
+    height: 50,
+    width: "100%",
+    marginVertical: 5,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  detail_miniField: {
+    //backgroundColor: "blue",
     display: "flex",
     flexDirection: "column",
+    width: "80%",
+    marginLeft: 15,
+  },
+  detail_subminiField: {
+    //backgroundColor: "violet",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  summaryLabel: {
+    fontWeight: "bold",
+    fontSize: 15
+  },
+
+
+
+
+
+
+
+  paymentDetailsContainer: {
+    //backgroundColor: "whitesmoke",
+    height: 170,
+    display: "flex",
+    flexDirection: "column",
+    marginTop: 25,
   },
   paymentDetailHeader: {
-    fontSize: 20, 
+    fontSize: 16, 
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 5,
   },
 
   detailsField: {
@@ -256,13 +295,12 @@ const styles = StyleSheet.create({
   horizontalLine: {
     borderBottomColor: '#000',
     borderBottomWidth: 1,
-    marginVertical: 8,
   },
   paymentDetailLabel: {
-    fontSize: 18,
+    fontSize: 14,
   },
   paymentDetailData: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: "bold",
   },
   Confirmbtn: {
@@ -273,10 +311,11 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 40,
     alignSelf: "center",
-    marginTop: 45
+    marginTop: 15,
+    
   },
   ConfirmbtnText: {
-    fontSize: 28,
+    fontSize: 25,
     fontWeight: "bold",
     color: "white",
   },

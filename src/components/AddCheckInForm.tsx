@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { View, Text, Modal, LogBox, TouchableOpacity, TextInput } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import styles from "../styles/CheckInFormStyles";
 import { initDatabase, fetchFirstName } from '../sqliteService';
 import { ScrollView } from 'react-native-gesture-handler';
+
+type Setter = Dispatch<SetStateAction<number>>;
 
 // Suppress Firebase deprecation warnings (safe for now)
 LogBox.ignoreLogs([
@@ -19,10 +21,30 @@ interface AddCheckinFormProps {
 const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalVisible }) => {
   const [firestoreName, setFirestoreName] = useState('');
   const [sqliteName, setSqliteName] = useState('');
-  const [count, setCount] = useState(1);
 
-  const increment = () => setCount(prev => prev + 1);
-  const decrement = () => setCount(prev => (prev > 0 ? prev -1 : 0));
+    // Guests
+    const [adultCount, setAdultCount] = useState<number>(0);
+    const [seniorCount, setSeniorCount] = useState<number>(0);
+    const [kidsCount, setKidsCount] = useState<number>(0);
+    const [pwdCount, setPwdCount] = useState<number>(0);
+
+    // Facilities / Charges
+    const [cottagesCount, setCottagesCount] = useState<number>(0);
+    const [electricChargeCount, setElectricChargeCount] = useState<number>(0);
+    const [roundTableCount, setRoundTableCount] = useState<number>(0);
+    const [monoBlockCount, setMonoBlockCount] = useState<number>(0);
+    const [chairsCount, setChairsCount] = useState<number>(0);
+    const [corkCageCount, setCorkCageCount] = useState<number>(0);
+
+
+
+  const increment = (setter: Setter) => {
+    setter(prev => prev + 1);
+  };
+
+  const decrement = (setter: Setter) => {
+    setter(prev => (prev > 0 ? prev - 1 : 0));
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -109,13 +131,13 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                                 <View style={styles.formTogglePic}></View>
                                                 <Text style={styles.formToggleLabel}>Adults</Text>
                                                 <View style={styles.toggleContainer}>
-                                                    <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                    <TouchableOpacity style={styles.toggleCircleWhite} onPress={() => decrement(setAdultCount)}>
                                                         <Text style={styles.toggleSymbol}>−</Text>
                                                     </TouchableOpacity>
 
-                                                    <Text style={styles.toggleValue}>{count}</Text>
+                                                    <Text style={styles.toggleValue}>{adultCount}</Text>
 
-                                                    <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                    <TouchableOpacity style={styles.toggleCircleBlue} onPress={() => increment(setAdultCount)}>
                                                         <Text style={styles.toggleSymbolPlus}>＋</Text>
                                                     </TouchableOpacity>
                                                 </View>
@@ -124,13 +146,13 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                                 <View style={styles.formTogglePic}></View>
                                                 <Text style={styles.formToggleLabel}>Senior</Text>
                                                 <View style={styles.toggleContainer}>
-                                                    <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                    <TouchableOpacity style={styles.toggleCircleWhite} onPress={() => decrement(setSeniorCount)}>
                                                         <Text style={styles.toggleSymbol}>−</Text>
                                                     </TouchableOpacity>
 
-                                                    <Text style={styles.toggleValue}>{count}</Text>
+                                                    <Text style={styles.toggleValue}>{seniorCount}</Text>
 
-                                                    <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                    <TouchableOpacity style={styles.toggleCircleBlue} onPress={() => increment(setSeniorCount)}>
                                                         <Text style={styles.toggleSymbolPlus}>＋</Text>
                                                     </TouchableOpacity>
                                                 </View>
@@ -142,13 +164,13 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                                 <View style={styles.formTogglePic}></View>
                                                 <Text style={styles.formToggleLabel}>Kids</Text>
                                                 <View style={styles.toggleContainer}>
-                                                    <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                    <TouchableOpacity style={styles.toggleCircleWhite} onPress={() => decrement(setKidsCount)}>
                                                         <Text style={styles.toggleSymbol}>−</Text>
                                                     </TouchableOpacity>
 
-                                                    <Text style={styles.toggleValue}>{count}</Text>
+                                                    <Text style={styles.toggleValue}>{kidsCount}</Text>
 
-                                                    <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                    <TouchableOpacity style={styles.toggleCircleBlue} onPress={() => increment(setKidsCount)}>
                                                         <Text style={styles.toggleSymbolPlus}>＋</Text>
                                                     </TouchableOpacity>
                                                 </View>
@@ -157,13 +179,13 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                                 <View style={styles.formTogglePic}></View>
                                                 <Text style={styles.formToggleLabel}>PWD</Text>
                                                 <View style={styles.toggleContainer}>
-                                                    <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                    <TouchableOpacity style={styles.toggleCircleWhite} onPress={() => decrement(setPwdCount)}>
                                                         <Text style={styles.toggleSymbol}>−</Text>
                                                     </TouchableOpacity>
 
-                                                    <Text style={styles.toggleValue}>{count}</Text>
+                                                    <Text style={styles.toggleValue}>{pwdCount}</Text>
 
-                                                    <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                    <TouchableOpacity style={styles.toggleCircleBlue} onPress={() => increment(setPwdCount)}>
                                                         <Text style={styles.toggleSymbolPlus}>＋</Text>
                                                     </TouchableOpacity>
                                                 </View>
@@ -205,27 +227,27 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                         <View style={styles.formToggleField}>
                                             <Text style={styles.formToggleLabel}>Cottages</Text>
                                             <View style={styles.toggleContainer}>
-                                                <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                <TouchableOpacity style={styles.toggleCircleWhite} onPress={() => decrement(setCottagesCount)}>
                                                     <Text style={styles.toggleSymbol}>−</Text>
                                                 </TouchableOpacity>
 
-                                                <Text style={styles.toggleValue}>{count}</Text>
+                                                <Text style={styles.toggleValue}>{cottagesCount}</Text>
 
-                                                <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                <TouchableOpacity style={styles.toggleCircleBlue} onPress={() => increment(setCottagesCount)}>
                                                     <Text style={styles.toggleSymbolPlus}>＋</Text>
                                                 </TouchableOpacity>
                                             </View>
                                         </View>
                                         <View style={styles.formToggleField}>
-                                            <Text style={styles.formToggleLabel}>Electric Charge</Text>
+                                            <Text style={styles.formToggleLabel}>E-Charge</Text>
                                             <View style={styles.toggleContainer}>
-                                                <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                <TouchableOpacity style={styles.toggleCircleWhite} onPress={() => decrement(setElectricChargeCount)}>
                                                     <Text style={styles.toggleSymbol}>−</Text>
                                                 </TouchableOpacity>
 
-                                                <Text style={styles.toggleValue}>{count}</Text>
+                                                <Text style={styles.toggleValue}>{electricChargeCount}</Text>
 
-                                                <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                <TouchableOpacity style={styles.toggleCircleBlue} onPress={() => increment(setElectricChargeCount)}>
                                                     <Text style={styles.toggleSymbolPlus}>＋</Text>
                                                 </TouchableOpacity>
                                             </View>
@@ -233,13 +255,13 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                         <View style={styles.formToggleField}>
                                             <Text style={styles.formToggleLabel}>Round Table</Text>
                                             <View style={styles.toggleContainer}>
-                                                <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                <TouchableOpacity style={styles.toggleCircleWhite} onPress={() => decrement(setRoundTableCount)}>
                                                     <Text style={styles.toggleSymbol}>−</Text>
                                                 </TouchableOpacity>
 
-                                                <Text style={styles.toggleValue}>{count}</Text>
+                                                <Text style={styles.toggleValue}>{roundTableCount}</Text>
 
-                                                <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                <TouchableOpacity style={styles.toggleCircleBlue} onPress={() => increment(setRoundTableCount)}>
                                                     <Text style={styles.toggleSymbolPlus}>＋</Text>
                                                 </TouchableOpacity>
                                             </View>
@@ -250,13 +272,13 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                         <View style={styles.formToggleField}>
                                             <Text style={styles.formToggleLabel}>Mono Block</Text>
                                             <View style={styles.toggleContainer}>
-                                                <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                <TouchableOpacity style={styles.toggleCircleWhite} onPress={() => decrement(setMonoBlockCount)}>
                                                     <Text style={styles.toggleSymbol}>−</Text>
                                                 </TouchableOpacity>
 
-                                                <Text style={styles.toggleValue}>{count}</Text>
+                                                <Text style={styles.toggleValue}>{monoBlockCount}</Text>
 
-                                                <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                <TouchableOpacity style={styles.toggleCircleBlue} onPress={() => increment(setMonoBlockCount)}>
                                                     <Text style={styles.toggleSymbolPlus}>＋</Text>
                                                 </TouchableOpacity>
                                             </View>
@@ -264,13 +286,27 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                         <View style={styles.formToggleField}>
                                             <Text style={styles.formToggleLabel}>Chairs</Text>
                                             <View style={styles.toggleContainer}>
-                                                <TouchableOpacity style={styles.toggleCircleWhite} onPress={decrement}>
+                                                <TouchableOpacity style={styles.toggleCircleWhite} onPress={() => decrement(setChairsCount)}>
                                                     <Text style={styles.toggleSymbol}>−</Text>
                                                 </TouchableOpacity>
 
-                                                <Text style={styles.toggleValue}>{count}</Text>
+                                                <Text style={styles.toggleValue}>{chairsCount}</Text>
 
-                                                <TouchableOpacity style={styles.toggleCircleBlue} onPress={increment}>
+                                                <TouchableOpacity style={styles.toggleCircleBlue} onPress={() => increment(setChairsCount)}>
+                                                    <Text style={styles.toggleSymbolPlus}>＋</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+                                        <View style={styles.formToggleField}>
+                                            <Text style={styles.formToggleLabel}>Cork Cage</Text>
+                                            <View style={styles.toggleContainer}>
+                                                <TouchableOpacity style={styles.toggleCircleWhite} onPress={() => decrement(setCorkCageCount)}>
+                                                    <Text style={styles.toggleSymbol}>−</Text>
+                                                </TouchableOpacity>
+
+                                                <Text style={styles.toggleValue}>{corkCageCount}</Text>
+
+                                                <TouchableOpacity style={styles.toggleCircleBlue} onPress={() => increment(setCorkCageCount)}>
                                                     <Text style={styles.toggleSymbolPlus}>＋</Text>
                                                 </TouchableOpacity>
                                             </View>
@@ -282,35 +318,149 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                         </View>
 
                         <View style={styles.formContainerRight}>
-                            <View style={styles.summaryBox}>
-                                <View style={styles.paymentDetailsSummary}>
-                                    
-                                </View>
-
-                                <View style={styles.paymentDetailsContainer}>
-                                    <Text style={styles.paymentDetailHeader}>Payment Details</Text>
-                                    <View style={styles.detailsField}>
-                                        <Text style={styles.paymentDetailLabel}>Subtotal</Text>
-                                        <Text style={styles.paymentDetailData}>98.00</Text>
-                                    </View>
-                                    <View style={styles.detailsField}>
-                                        <Text style={styles.paymentDetailLabel}>Discount</Text>
-                                        <Text style={styles.paymentDetailData}>0.00</Text>
-                                    </View>
-                                    <View style={styles.horizontalLine} />
-                                    <View style={styles.detailsField}>
-                                        <Text style={styles.paymentDetailData}>Total</Text>
-                                        <Text style={styles.paymentDetailData}>98.00</Text>
-                                    </View>
-                                    <TouchableOpacity style={styles.Confirmbtn}>
-                                        <Text style={styles.ConfirmbtnText}>CONFIRM</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
+                            
                         </View>
 
                     </View>
                     </ScrollView>
+                    <View style={styles.summaryBox}>
+                        <ScrollView style={{ height: '100%' }} contentContainerStyle={{ paddingBottom: 300 }}>
+                            <View style={styles.paymentDetailsSummary}>
+
+                                <View style={styles.detailSummaryField}>
+                                    <View style={styles.formTogglePic}></View>
+                                    <View style={styles.detail_miniField}>
+                                        <Text style={styles.summaryLabel}>Adults</Text>
+                                        <View style={styles.detail_subminiField}>
+                                            <Text>2x</Text>
+                                            <Text style={styles.summaryLabel}>1,500</Text>
+                                        </View>
+                                    </View>
+                                </View>
+
+                                <View style={styles.detailSummaryField}>
+                                    <View style={styles.formTogglePic}></View>
+                                    <View style={styles.detail_miniField}>
+                                        <Text style={styles.summaryLabel}>Senior</Text>
+                                        <View style={styles.detail_subminiField}>
+                                            <Text>2x</Text>
+                                            <Text style={styles.summaryLabel}>1,500</Text>
+                                        </View>
+                                    </View>
+                                </View>
+
+                                <View style={styles.detailSummaryField}>
+                                    <View style={styles.formTogglePic}></View>
+                                    <View style={styles.detail_miniField}>
+                                        <Text style={styles.summaryLabel}>Kids</Text>
+                                        <View style={styles.detail_subminiField}>
+                                            <Text>2x</Text>
+                                            <Text style={styles.summaryLabel}>1,500</Text>
+                                        </View>
+                                    </View>
+                                </View>
+
+                                <View style={styles.detailSummaryField}>
+                                    <View style={styles.formTogglePic}></View>
+                                    <View style={styles.detail_miniField}>
+                                        <Text style={styles.summaryLabel}>PWD</Text>
+                                        <View style={styles.detail_subminiField}>
+                                            <Text>2x</Text>
+                                            <Text style={styles.summaryLabel}>1,500</Text>
+                                        </View>
+                                    </View>
+                                </View>
+
+                                <View style={styles.detailSummaryField}>
+                                    <View style={styles.formTogglePic}></View>
+                                    <View style={styles.detail_miniField}>
+                                        <Text style={styles.summaryLabel}>Cottages</Text>
+                                        <View style={styles.detail_subminiField}>
+                                            <Text>2x</Text>
+                                            <Text style={styles.summaryLabel}>1,500</Text>
+                                        </View>
+                                    </View>
+                                </View>
+
+                                <View style={styles.detailSummaryField}>
+                                    <View style={styles.formTogglePic}></View>
+                                    <View style={styles.detail_miniField}>
+                                        <Text style={styles.summaryLabel}>E-Charge</Text>
+                                        <View style={styles.detail_subminiField}>
+                                            <Text>2x</Text>
+                                            <Text style={styles.summaryLabel}>1,500</Text>
+                                        </View>
+                                    </View>
+                                </View>
+
+                                <View style={styles.detailSummaryField}>
+                                    <View style={styles.formTogglePic}></View>
+                                    <View style={styles.detail_miniField}>
+                                        <Text style={styles.summaryLabel}>Round Table</Text>
+                                        <View style={styles.detail_subminiField}>
+                                            <Text>2x</Text>
+                                            <Text style={styles.summaryLabel}>1,500</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                                
+                                <View style={styles.detailSummaryField}>
+                                    <View style={styles.formTogglePic}></View>
+                                    <View style={styles.detail_miniField}>
+                                        <Text style={styles.summaryLabel}>Mono Block</Text>
+                                        <View style={styles.detail_subminiField}>
+                                            <Text>2x</Text>
+                                            <Text style={styles.summaryLabel}>1,500</Text>
+                                        </View>
+                                    </View>
+                                </View>
+
+                                <View style={styles.detailSummaryField}>
+                                    <View style={styles.formTogglePic}></View>
+                                    <View style={styles.detail_miniField}>
+                                        <Text style={styles.summaryLabel}>Chair</Text>
+                                        <View style={styles.detail_subminiField}>
+                                            <Text>2x</Text>
+                                            <Text style={styles.summaryLabel}>1,500</Text>
+                                        </View>
+                                    </View>
+                                </View>
+
+                                <View style={styles.detailSummaryField}>
+                                    <View style={styles.formTogglePic}></View>
+                                    <View style={styles.detail_miniField}>
+                                        <Text style={styles.summaryLabel}>Cork Cage</Text>
+                                        <View style={styles.detail_subminiField}>
+                                            <Text>2x</Text>
+                                            <Text style={styles.summaryLabel}>1,500</Text>
+                                        </View>
+                                    </View>
+                                </View>
+
+                            </View>
+                        </ScrollView>
+
+                            <View style={styles.paymentDetailsContainer}>
+                                <Text style={styles.paymentDetailHeader}>Payment Details</Text>
+                                <View style={styles.detailsField}>
+                                    <Text style={styles.paymentDetailLabel}>Subtotal</Text>
+                                    <Text style={styles.paymentDetailData}>98.00</Text>
+                                </View>
+                                <View style={styles.detailsField}>
+                                    <Text style={styles.paymentDetailLabel}>Discount</Text>
+                                    <Text style={styles.paymentDetailData}>0.00</Text>
+                                </View>
+                                <View style={styles.horizontalLine} />
+                                <View style={styles.detailsField}>
+                                    <Text style={styles.paymentDetailData}>Total</Text>
+                                    <Text style={styles.paymentDetailData}>98.00</Text>
+                                </View>
+                                <TouchableOpacity style={styles.Confirmbtn}>
+                                    <Text style={styles.ConfirmbtnText}>CONFIRM</Text>
+                                </TouchableOpacity>
+                            </View>
+                
+                    </View>
                 </View>
             </View>
         </Modal>
