@@ -62,9 +62,10 @@ const styles = StyleSheet.create({
   checkInPersonalInfoForm: {
     //backgroundColor: 'whitesmoke',
     height: "80%", 
+    width: 600,
     flexDirection: 'row', 
     justifyContent: 'space-between',
-    paddingTop: "8%",
+    paddingTop: "3%",
   },
 
   checkInPersonalInfoFormLeft: {
@@ -87,9 +88,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   formTogglePic: {
-    backgroundColor: "gray",
     height: 40,
     width: 40,
+    borderRadius: 20, // for circle
+    resizeMode: 'cover', // makes sure image fits nicely
   },
 
   formToggleLabel: {
@@ -117,6 +119,21 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
   },
 
+  chooseDatebtn: {
+    backgroundColor: "#164CFF",
+    height: "37%",
+    width: "60%",
+    display: "flex",
+    alignItems: "center", 
+    justifyContent: "center",
+    marginTop: 20,
+  },
+  chooseDatebtnText: {
+    fontWeight: "bold",
+    fontSize: 20,
+    color: "white",
+  },
+
   toggleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -135,7 +152,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   toggleCircleBlue: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#164CFF',
     width: 36,
     height: 36,
     borderRadius: 18,
@@ -165,6 +182,7 @@ const styles = StyleSheet.create({
   checkInNumOfGuestForm: {
     //backgroundColor: 'whitesmoke',
     height: "80%", 
+    width: 600,
     flexDirection: 'column', 
     justifyContent: 'space-between',
     paddingTop: "5%",
@@ -223,6 +241,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 25,
     left: 685,
+    
+    // bottom: 50,
+    // left: 825,
+
     right: 0,
     height: 550,
     width: "33%",
@@ -304,7 +326,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   Confirmbtn: {
-    backgroundColor: "blue",
+    backgroundColor: "#164CFF",
     alignItems: "center",
     justifyContent: "center",
     display: "flex",

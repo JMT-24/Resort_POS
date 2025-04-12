@@ -1,9 +1,12 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
-import { View, Text, Modal, LogBox, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, Modal, LogBox, TouchableOpacity, TextInput, Image } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import styles from "../styles/CheckInFormStyles";
 import { initDatabase, fetchFirstName } from '../sqliteService';
 import { ScrollView } from 'react-native-gesture-handler';
+
+import avatarIcon from '../icons/avatarIcon.png';
+
 
 type Setter = Dispatch<SetStateAction<number>>;
 
@@ -116,6 +119,11 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                             <Text style={styles.formLabel}>Address</Text>
                                             <TextInput style={styles.textInput} placeholder="Enter Address (Optional)" multiline />
                                         </View>
+                                        <View style={styles.formField}>
+                                            <TouchableOpacity style={styles.chooseDatebtn}>
+                                                <Text style={styles.chooseDatebtnText}>CHOOSE DATE</Text>
+                                            </TouchableOpacity>
+                                        </View>
                                     </View>
                                 </View>
 
@@ -128,7 +136,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                     <View style={styles.checkInNumOfGuestFormTop}>
                                         <View style={styles.checkInPersonalInfoFormLeft}>
                                             <View style={styles.formToggleField}>
-                                                <View style={styles.formTogglePic}></View>
+                                                <Image source={avatarIcon} style={styles.formTogglePic} />
                                                 <Text style={styles.formToggleLabel}>Adults</Text>
                                                 <View style={styles.toggleContainer}>
                                                     <TouchableOpacity style={styles.toggleCircleWhite} onPress={() => decrement(setAdultCount)}>
@@ -143,7 +151,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                                 </View>
                                             </View>
                                             <View style={styles.formToggleField}>
-                                                <View style={styles.formTogglePic}></View>
+                                                <Image source={avatarIcon} style={styles.formTogglePic} />
                                                 <Text style={styles.formToggleLabel}>Senior</Text>
                                                 <View style={styles.toggleContainer}>
                                                     <TouchableOpacity style={styles.toggleCircleWhite} onPress={() => decrement(setSeniorCount)}>
@@ -161,7 +169,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
 
                                         <View style={styles.checkInPersonalInfoFormRight}>
                                             <View style={styles.formToggleField}>
-                                                <View style={styles.formTogglePic}></View>
+                                                <Image source={avatarIcon} style={styles.formTogglePic} />
                                                 <Text style={styles.formToggleLabel}>Kids</Text>
                                                 <View style={styles.toggleContainer}>
                                                     <TouchableOpacity style={styles.toggleCircleWhite} onPress={() => decrement(setKidsCount)}>
@@ -176,7 +184,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                                                 </View>
                                             </View>
                                             <View style={styles.formToggleField}>
-                                                <View style={styles.formTogglePic}></View>
+                                                <Image source={avatarIcon} style={styles.formTogglePic} />
                                                 <Text style={styles.formToggleLabel}>PWD</Text>
                                                 <View style={styles.toggleContainer}>
                                                     <TouchableOpacity style={styles.toggleCircleWhite} onPress={() => decrement(setPwdCount)}>
@@ -195,25 +203,33 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
 
                                     <View style={styles.checkInNumOfGuestFormBottom}>
                                         <View style={styles.checkInPersonalInfoFormLeft}>
-                                            <View style={styles.formField}>
-                                                <Text style={styles.formLabel}>ID Number 1</Text>
-                                                <TextInput style={styles.textInput} placeholder="X72D779GG997DYUG" />
-                                            </View>
-                                            <View style={styles.formField}>
-                                                <Text style={styles.formLabel}>ID Number 2</Text>
-                                                <TextInput style={styles.textInput} placeholder="X72D779GG997DYUG" />
-                                            </View>
+                                            {(seniorCount > 0 && (
+                                                <View style={styles.formField}>
+                                                    <Text style={styles.formLabel}>Senior ID Numbers</Text>
+                                                    {Array.from({ length: seniorCount}).map((_, index) => (
+                                                        <TextInput
+                                                            key={`senior-${index}`}
+                                                            style={styles.textInput}
+                                                            placeholder = {`Senior ID #${index + 1}`}
+                                                        />
+                                                    ))}
+                                                </View>
+                                            ))}
                                         </View>
 
                                         <View style={styles.checkInPersonalInfoFormRight}>
-                                            <View style={styles.formField}>
-                                                <Text style={styles.formLabel}>ID Number 1</Text>
-                                                <TextInput style={styles.textInput} placeholder="X72D779GG997DYUG" />
-                                            </View>
-                                            <View style={styles.formField}>
-                                                <Text style={styles.formLabel}>ID Number 2</Text>
-                                                <TextInput style={styles.textInput} placeholder="X72D779GG997DYUG" />
-                                            </View>
+                                            {(pwdCount > 0 && (
+                                                <View style={styles.formField}>
+                                                    <Text style={styles.formLabel}>PWD ID Numbers</Text>
+                                                    {Array.from({ length: pwdCount}).map((_, index) => (
+                                                        <TextInput
+                                                            key={`pwd-${index}`}
+                                                            style={styles.textInput}
+                                                            placeholder = {`PWD ID #${index + 1}`}
+                                                        />
+                                                    ))}
+                                                </View>
+                                            ))}
                                         </View>
                                     </View>
                                 </View>
