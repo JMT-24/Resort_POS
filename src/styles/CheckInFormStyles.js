@@ -25,19 +25,20 @@ const styles = StyleSheet.create({
   },
   checkInPageTop: {
     //backgroundColor: 'pink',
-    height: 50,
+    height: 70,
     display: "flex",
     justifyContent: "center",
+    right: 25,
   },
   exitButton: {
-    fontSize: 15,
+    fontSize: 20,
     fontWeight: "bold",
   },
   formContainerLeft: {
     width: '65%',
     //backgroundColor: 'yellow',
     paddingLeft: 25,
-    paddingTop: 5,
+    paddingTop: 50,
   },
  
   checkInFormContainer: {
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     justifyContent: 'flex-end', 
     marginVertical: 20,
+    width: 650,
   },
 
   formHeader: {
