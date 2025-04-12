@@ -1,7 +1,7 @@
 // CheckInForm/PersonalInfoSection.tsx
 import React from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
-import styles from '../../styles/CheckInFormStyles';
+import styles from '../../styles/CheckInForm/PersonalInfoSectionStyles';
 
 interface Props {
     setModalVisible: (visible: boolean) => void;

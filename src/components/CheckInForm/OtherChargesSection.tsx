@@ -1,7 +1,7 @@
 // CheckInForm/OtherChargesSection.tsx
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import styles from '../../styles/CheckInFormStyles';
+import styles from '../../styles/CheckInForm/OtherChargesSectionStyles';
 
 interface Charges {
   cottages: number;

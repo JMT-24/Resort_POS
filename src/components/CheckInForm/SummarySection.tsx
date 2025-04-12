@@ -1,7 +1,7 @@
 // CheckInForm/SummarySection.tsx
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import styles from '../../styles/CheckInFormStyles';
+import styles from '../../styles/CheckInForm/SummarySectionStyles';
 
 interface GuestCounts {
   adult: number;

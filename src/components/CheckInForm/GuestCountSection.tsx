@@ -1,7 +1,7 @@
 // CheckInForm/GuestCountSection.tsx
 import React from 'react';
 import { View, Text, TouchableOpacity, TextInput, Image } from 'react-native';
-import styles from '../../styles/CheckInFormStyles';
+import styles from '../../styles/CheckInForm/GuestCountSectionStyles';
 import avatarIcon from '../../icons/avatarIcon.png';
 
 interface GuestCounts {
