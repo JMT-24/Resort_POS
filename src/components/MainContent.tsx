@@ -20,7 +20,7 @@ const MainContent = () => {
           guestName="Angel Cabalhin"
           referenceNumber="ZX7723345"
           room="Room 306 - Superior Room"
-          date="March 27 2025"
+          date="March 27, 2025"
           adults={2}
           kids={5}
           senior={2}
