@@ -9,6 +9,7 @@ interface Props {
 
 const PersonalInfoSection: React.FC<Props> = ({ setModalVisible }) => {
   const [showDateModal, setShowDateModal] = useState(false);
+  const [showCottageModal, setCottageModal] = useState(false);
 
   return (
     <View style={styles.checkInFormContainer}>
@@ -31,7 +32,15 @@ const PersonalInfoSection: React.FC<Props> = ({ setModalVisible }) => {
           </View>
           <View style={styles.formField}>
             <Text style={styles.formLabel}>Date</Text>
-            <TextInput style={styles.textInput} placeholder="Enter Date" />
+            <TouchableOpacity onPress={() => setShowDateModal(true)}>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Enter Date"
+                //value={selectedDate} 
+                editable={false}         
+                pointerEvents="none"      
+              />
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -45,15 +54,25 @@ const PersonalInfoSection: React.FC<Props> = ({ setModalVisible }) => {
             <TextInput style={styles.textInput} placeholder="Enter Address (Optional)" multiline />
           </View>
           <View style={styles.formField}>
-            <TouchableOpacity style={styles.chooseDatebtn} onPress={() => setShowDateModal(true)}>
-              <Text style={styles.chooseDatebtnText}>CHOOSE DATE</Text>
+            <Text style={styles.formLabel}>Cottage</Text>
+            <TouchableOpacity onPress={() => setCottageModal(true)}>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Choose Cottage Number"
+                //value={selectedDate} 
+                editable={false}         
+                pointerEvents="none"      
+              />
             </TouchableOpacity>
           </View>
         </View>
       </View>
 
-      {/* Render the ChooseDateModal */}
+      {/* ChooseDateModal */}
       <ChooseDateModal modalVisible={showDateModal} setModalVisible={setShowDateModal} />
+      {/* Cottage Picker Modal */}
+      
+
     </View>
   );
 };

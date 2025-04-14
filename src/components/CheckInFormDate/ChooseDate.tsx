@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, TouchableOpacity, Modal, ScrollView } from "react-native";
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, Modal, ScrollView, Switch } from "react-native";
 import styles from '../../styles/CheckInFormDate/ChooseDateStyles';
 
 interface Props {
@@ -8,6 +8,9 @@ interface Props {
 }
 
 const ChooseDate: React.FC<Props> = ({ modalVisible, setModalVisible }) => {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previous => !previous);
+
   return (
     <Modal
       animationType="fade"
@@ -30,15 +33,43 @@ const ChooseDate: React.FC<Props> = ({ modalVisible, setModalVisible }) => {
                     </View>
 
                     <View style={styles.middleView}>
+                      <View style={styles.calendarBox}>
 
+                      </View>
                     </View>
 
                     <View style={styles.bottomView}>
 
+                      <View style={styles.bottTopView}>
+                        <View style={styles.hourToggleView}>
+                          <Switch
+                            trackColor={{ false: '#ccc', true: '#007aff' }} // blue when active
+                            thumbColor={isEnabled ? '#fff' : '#fff'} // white circle
+                            ios_backgroundColor="#ccc"
+                            onValueChange={toggleSwitch}
+                            value={isEnabled}
+                            style={styles.hourTogglebtn}
+                          />
+                        </View>
+                        <View style={styles.hourHeaderView}>
+                          <Text style={styles.headerText}>Customize by hour</Text>
+                          <Text style={styles.headersubText}>Set specific time ranges for your schedule</Text>
+                        </View>
+                      </View>
+
+                      <View style={styles.bottBottView}>
+
+                      </View>
                     </View>
 
                     <View style={styles.buttonView}>
+                      <TouchableOpacity style={styles.cancelbtn}>
+                        <Text style={styles.btnText}>Cancel</Text>
+                      </TouchableOpacity>
 
+                      <TouchableOpacity style={styles.applybtn}>
+                        <Text style={styles.btnText}>Apply</Text>
+                      </TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>
