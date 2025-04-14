@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Modal, ScrollView, Switch, Image } from "react-native";
-import styles from '../../styles/CheckInFormDate/ChooseDateStyles';
+import styles from '../../styles/CheckInFormDate/TimePicker';
 import { TextInput } from "react-native-gesture-handler";
 import arrowLeft from '../../icons/arrowLeft.png';
 import dropdownArrow from '../../icons/dropdownArrow.png';
 
 interface Props {
   modalVisible: boolean;
-  setModalVisible: (visible: boolean) => void;
 }
 
 const TimePicker: React.FC<Props> = ( ) => {

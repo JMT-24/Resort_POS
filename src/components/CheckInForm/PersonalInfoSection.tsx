@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import styles from '../../styles/CheckInForm/PersonalInfoSectionStyles';
-import ChooseDateModal from '../CheckInFormDate/ChooseDate';
+import ChooseDate from '../CheckInFormDate/ChooseDate';
+import ChooseDateModal from '../CheckInFormDate/ChooseDateModal';
 
 interface Props {
   setModalVisible: (visible: boolean) => void;

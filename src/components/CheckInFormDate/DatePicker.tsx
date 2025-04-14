@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Modal, ScrollView, Switch, Image } from "react-native";
-import styles from '../../styles/CheckInFormDate/ChooseDateStyles';
+import styles from '../../styles/CheckInFormDate/DatePicker';
 import { Calendar } from "react-native-calendars";
 
 interface Props {
-  modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
 }
 
-const DatePicker: React.FC<Props> = ({ modalVisible, setModalVisible }) => {
+const DatePicker: React.FC<Props> = ({ setModalVisible }) => {
   
   const [range, setRange] = useState({});
   // const handleDayPress = (day) => {
@@ -16,17 +15,6 @@ const DatePicker: React.FC<Props> = ({ modalVisible, setModalVisible }) => {
   // };
 
   return (
-    <View>
-        <View style={styles.topView}>
-            <View style={styles.headerView}>
-                <Text style={styles.headerText}>Choose Days</Text>
-                <Text style={styles.headersubText}>Select date and time for the appointment</Text>
-            </View>
-            <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.exitbtn}>
-                <Text style={styles.exitbtnText}>X</Text>
-            </TouchableOpacity>
-        </View>
-
         <View style={styles.middleView}>
             <View style={styles.calendarBox}>
             <Calendar
@@ -84,7 +72,6 @@ const DatePicker: React.FC<Props> = ({ modalVisible, setModalVisible }) => {
 
             </View>
         </View>
-    </View>
   );
 };
 
