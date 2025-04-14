@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     calendar: {
         //backgroundColor: "blue",
         height: "95%",
-        width: "100%",
+        width: "95%",
     },
 
 
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     bottBottView: {
         //backgroundColor: "yellow",
         width: "100%",
-        height: "80%",
+        height: "65%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-evenly",
@@ -142,19 +142,46 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+        paddingRight: 80,
     },
     timePickerStyle: {
-        //backgroundColor: "blue",
         width: "44%",
-        height: 90,
-        fontSize: 27,
+        height: 80,
         borderRadius: 20,
-        borderWidth: 1,
-        borderColor: "gray",
         paddingLeft: 25,
+        justifyContent: "center",
+        fontSize: 27,
+        fontWeight: "bold",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderWidth: .5,
+        borderColor: "gray",
     },
+    timePickerText: {
+        fontSize: 27,
+        fontWeight: "bold",
+    },
+    dropdownArrow: {
+        transform: [{scaleX: .7},{scaleY: .6}],
+        marginRight: 20,
+        opacity: 0.5,
+    },  
+
+
+    TimePickerManualView: {
+        //backgroundColor: "gray",
+        width: "90%",
+        height: 130,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+
     arrowLeft: {
-        transform: [{ scaleX: .7 }, { scaleY: .7 }], 
+        transform: [{ scaleX: .6 }, { scaleY: .6 }], 
     },
 
 
