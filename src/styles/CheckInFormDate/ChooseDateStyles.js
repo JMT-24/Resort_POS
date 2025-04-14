@@ -75,11 +75,16 @@ const styles = StyleSheet.create({
     calendarBox: {
         width: "100%",
         height: "95%",
-        borderWidth: .5,
+        borderWidth: 1,
         borderColor: "gray",
         borderRadius: 15,
+        justifyContent: "center"
     },
-
+    calendar: {
+        //backgroundColor: "blue",
+        height: "95%",
+        width: "100%",
+    },
 
 
 
@@ -144,7 +149,7 @@ const styles = StyleSheet.create({
         height: 90,
         fontSize: 27,
         borderRadius: 20,
-        borderWidth: .5,
+        borderWidth: 1,
         borderColor: "gray",
         paddingLeft: 25,
     },
