@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Modal, ScrollView, Switch } from "react-native";
+import { View, Text, TouchableOpacity, Modal, ScrollView, Switch, Image } from "react-native";
 import styles from '../../styles/CheckInFormDate/ChooseDateStyles';
+import { TextInput } from "react-native-gesture-handler";
+import arrowLeft from '../../icons/arrowLeft.png';
 
 interface Props {
   modalVisible: boolean;
@@ -58,7 +60,41 @@ const ChooseDate: React.FC<Props> = ({ modalVisible, setModalVisible }) => {
                       </View>
 
                       <View style={styles.bottBottView}>
+                        <View style={styles.TimePickerView}>
+                          <TextInput
+                            style={styles.timePickerStyle}
+                            placeholder="Start Time"
+                            //value={selectedDate} 
+                            editable={false}         
+                            pointerEvents="none"   
+                          />
+                          <Image source={arrowLeft} style={styles.arrowLeft}></Image>
+                          <TextInput
+                            style={styles.timePickerStyle}
+                            placeholder="End Time"
+                            //value={selectedDate} 
+                            editable={false}         
+                            pointerEvents="none"   
+                          />
+                        </View>
 
+                        <View style={styles.TimePickerView}>
+                          <TextInput
+                            style={styles.timePickerStyle}
+                            placeholder="Start Time"
+                            //value={selectedDate} 
+                            editable={false}         
+                            pointerEvents="none"   
+                          />
+                          <Image source={arrowLeft} style={styles.arrowLeft}></Image>
+                          <TextInput
+                            style={styles.timePickerStyle}
+                            placeholder="End Time"
+                            //value={selectedDate} 
+                            editable={false}         
+                            pointerEvents="none"   
+                          />
+                        </View>
                       </View>
                     </View>
 

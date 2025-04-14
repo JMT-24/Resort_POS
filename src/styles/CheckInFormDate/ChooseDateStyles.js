@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     },
     exitbtnText: {
         fontSize: 30,
+        transform: [{scaleX: 1.5}, {scaleY: 1}],
     },
 
 
@@ -74,8 +75,8 @@ const styles = StyleSheet.create({
     calendarBox: {
         width: "100%",
         height: "95%",
-        borderWidth: 1,
-        borderColor: "black",
+        borderWidth: .5,
+        borderColor: "gray",
         borderRadius: 15,
     },
 
@@ -120,12 +121,36 @@ const styles = StyleSheet.create({
         flexDirection: "column"
     },
     bottBottView: {
-        backgroundColor: "yellow",
+        //backgroundColor: "yellow",
         width: "100%",
-        height: "80%"
+        height: "80%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-evenly",
+        paddingLeft: 20,
     },
-
-
+    TimePickerView: {
+        //backgroundColor: "gray",
+        width: "90%",
+        height: 130,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    timePickerStyle: {
+        //backgroundColor: "blue",
+        width: "44%",
+        height: 90,
+        fontSize: 27,
+        borderRadius: 20,
+        borderWidth: .5,
+        borderColor: "gray",
+        paddingLeft: 25,
+    },
+    arrowLeft: {
+        transform: [{ scaleX: .7 }, { scaleY: .7 }], 
+    },
 
 
 
