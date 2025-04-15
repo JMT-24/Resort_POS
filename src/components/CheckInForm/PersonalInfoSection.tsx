@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import styles from '../../styles/CheckInForm/PersonalInfoSectionStyles';
-import ChooseDate from '../CheckInFormDate/ChooseDate';
 import ChooseDateModal from '../CheckInFormDate/ChooseDateModal';
+import CottagePickerModal from './CottagePickerModal';
 
 interface Props {
   setModalVisible: (visible: boolean) => void;
@@ -72,7 +72,7 @@ const PersonalInfoSection: React.FC<Props> = ({ setModalVisible }) => {
       {/* ChooseDateModal */}
       <ChooseDateModal modalVisible={showDateModal} setModalVisible={setShowDateModal} />
       {/* Cottage Picker Modal */}
-      
+      <CottagePickerModal modalVisible={showCottageModal} setModalVisible={setCottageModal} />
 
     </View>
   );

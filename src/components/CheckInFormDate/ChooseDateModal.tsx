@@ -38,7 +38,7 @@ const ChooseDateModal: React.FC<Props> = ({ modalVisible, setModalVisible }) => 
                     <TimePicker modalVisible />
 
                     <View style={styles.buttonView}>
-                      <TouchableOpacity style={styles.cancelbtn}>
+                      <TouchableOpacity style={styles.cancelbtn} onPress={() => setModalVisible(false)}>
                         <Text style={styles.btnText}>Cancel</Text>
                       </TouchableOpacity>
 
