@@ -39,7 +39,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
   });
 
   const [charges, setCharges] = useState({
-    cottages: 0,
+    cottages: 1,
     electric: 0,
     roundTable: 0,
     monoBlock: 0,
@@ -60,10 +60,6 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
 
   //   if (modalVisible) loadData();
   // }, [modalVisible]);
-
-  useEffect(() => {
-    initCheckInTable();
-  }, []);
   
   return (
     <View>
@@ -77,13 +73,13 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
             <ScrollView contentContainerStyle={styles.scrollContent}>
               <View style={styles.scrollRow}>
                 <View style={styles.formContainerLeft}>
-                  <PersonalInfoSection 
-                    setModalVisible={setModalVisible} 
-                    firstname={setFirstname}
-                    lastname={setLastname}
-                    address={setAddress}
-                    contactNo={setContactNo}
-                    />
+                <PersonalInfoSection 
+                  setModalVisible={setModalVisible} 
+                  setFirstname={setFirstname}
+                  setLastname={setLastname}
+                  setAddress={setAddress}
+                  setContactNo={setContactNo}
+                />
                   <GuestCountSection guestCounts={guestCounts} setGuestCounts={setGuestCounts} />
                   <OtherChargesSection charges={charges} setCharges={setCharges} />
                 </View>

@@ -61,13 +61,25 @@
 
 // export default App;
 
-import React, { PureComponent } from "react";
+import React, { PureComponent, useEffect } from "react";
 import AppNavigator from "./src/navigation/AppNavigator";
+import { initDatabase } from "./src/sqliteService";
 
 const App = () => {
-  return (
-    <AppNavigator />
-  );
+  useEffect(() => {
+    const initDB = async () => {
+      try {
+        await initDatabase();
+        console.log('✅ SQLite table initialized');
+      } catch (error) {
+        console.error('❌ Failed to initialize DB:', error);
+      }
+    };
+
+    initDB();
+  }, []);
+
+  return <AppNavigator />;
 };
 
 export default App;

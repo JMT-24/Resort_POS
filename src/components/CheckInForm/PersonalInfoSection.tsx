@@ -6,13 +6,13 @@ import CottagePickerModal from './CottagePickerModal';
 
 interface Props {
   setModalVisible: (visible: boolean) => void;
-  firstname: (text: string) => void;
-  lastname: (text: string) => void;
-  contactNo: (text: string) => void;
-  address: (text: string) => void;
+  setFirstname: (text: string) => void;
+  setLastname: (text: string) => void;
+  setContactNo: (text: string) => void;
+  setAddress: (text: string) => void;
 }
 
-const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, firstname, lastname, contactNo, address }) => {
+const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, setLastname, setContactNo, setAddress }) => {
   const [showDateModal, setShowDateModal] = useState(false);
   const [showCottageModal, setCottageModal] = useState(false);
 
@@ -29,12 +29,12 @@ const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, firstname, last
         <View style={styles.checkInPersonalInfoFormLeft}>
           <View style={styles.formField}>
             <Text style={styles.formLabel}>First Name</Text>
-            <TextInput style={styles.textInput} placeholder="Enter First Name (Optional)" onChangeText={firstname}/>
+            <TextInput style={styles.textInput} placeholder="Enter First Name (Optional)" onChangeText={setFirstname}/>
           </View>
           <View style={styles.formField}>
             <Text style={styles.formLabel}>Contact No.</Text>
             <TextInput style={styles.textInput} placeholder="Enter Contact No. (Optional)" 
-              keyboardType="phone-pad" onChangeText={contactNo} />
+              keyboardType="phone-pad" onChangeText={setContactNo} />
           </View>
           <View style={styles.formField}>
             <Text style={styles.formLabel}>Date</Text>
@@ -53,11 +53,11 @@ const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, firstname, last
         <View style={styles.checkInPersonalInfoFormRight}>
           <View style={styles.formField}>
             <Text style={styles.formLabel}>Last Name</Text>
-            <TextInput style={styles.textInput} placeholder="Enter Last Name (Optional)" onChangeText={lastname}/>
+            <TextInput style={styles.textInput} placeholder="Enter Last Name (Optional)" onChangeText={setLastname}/>
           </View>
           <View style={styles.formField}>
             <Text style={styles.formLabel}>Address</Text>
-            <TextInput style={styles.textInput} placeholder="Enter Address (Optional)" multiline onChangeText={address}/>
+            <TextInput style={styles.textInput} placeholder="Enter Address (Optional)" multiline onChangeText={setAddress}/>
           </View>
           <View style={styles.formField}>
             <Text style={styles.formLabel}>Cottage</Text>
