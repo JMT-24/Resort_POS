@@ -2,6 +2,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import styles from '../../styles/CheckInForm/SummarySectionStyles';
+import { saveCheckInData } from '../../database/checkInSqlite';
 
 interface GuestCounts {
   adult: number;
@@ -22,9 +23,20 @@ interface Charges {
 interface SummarySectionProps {
   guestCounts: GuestCounts;
   charges: Charges;
+  firstname: string;
+  lastname: string;
+  contactNo: string;
+  address: string;
 }
 
-const SummarySection: React.FC<SummarySectionProps> = ({ guestCounts, charges }) => {
+const SummarySection: React.FC<SummarySectionProps> = ({ 
+  guestCounts,
+  charges,
+  firstname,
+  lastname,
+  contactNo,
+  address, 
+}) => {
   const summaryItems = [
     { label: 'Adults', value: guestCounts.adult },
     { label: 'Senior', value: guestCounts.senior },
@@ -37,6 +49,10 @@ const SummarySection: React.FC<SummarySectionProps> = ({ guestCounts, charges })
     { label: 'Chair', value: charges.chairs },
     { label: 'Cork Cage', value: charges.corkCage },
   ];
+  const handleSave = async () => {
+    await saveCheckInData(firstname, lastname, contactNo, address, guestCounts, charges);
+    console.log('Saved to SQLite!');
+  };
 
   return (
     <View style={styles.summaryBox}>
@@ -72,7 +88,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({ guestCounts, charges })
           <Text style={styles.paymentDetailData}>Total</Text>
           <Text style={styles.paymentDetailData}>98.00</Text>
         </View>
-        <TouchableOpacity style={styles.Confirmbtn}>
+        <TouchableOpacity style={styles.Confirmbtn} onPress={handleSave}>
           <Text style={styles.ConfirmbtnText}>CONFIRM</Text>
         </TouchableOpacity>
       </View>

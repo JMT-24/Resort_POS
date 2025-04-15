@@ -5,6 +5,7 @@ import firestore from '@react-native-firebase/firestore';
 
 import styles from '../styles/CheckInFormStyles';
 import { initDatabase, fetchFirstName } from '../sqliteService';
+import { initCheckInTable } from '../database/checkInSqlite';
 
 import PersonalInfoSection from './CheckInForm/PersonalInfoSection';
 import GuestCountSection from './CheckInForm/GuestCountSection';
@@ -25,6 +26,11 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
   const [sqliteName, setSqliteName] = useState('');
   const [firestoreName, setFirestoreName] = useState('');
 
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [contactNo, setContactNo] = useState('');
+  const [address, setAddress] = useState('');
+
   const [guestCounts, setGuestCounts] = useState({
     adult: 0,
     senior: 0,
@@ -41,20 +47,24 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
     corkCage: 0,
   });
 
+  // useEffect(() => {
+  //   const loadData = async () => {
+  //     await initDatabase();
+  //     const fetchedName = await fetchFirstName();
+  //     setSqliteName(fetchedName);
+
+  //     const snapshot = await firestore().collection('testCollection').get();
+  //     const doc = snapshot.docs[0];
+  //     if (doc?.exists) setFirestoreName(doc.data()?.name ?? '');
+  //   };
+
+  //   if (modalVisible) loadData();
+  // }, [modalVisible]);
+
   useEffect(() => {
-    const loadData = async () => {
-      await initDatabase();
-      const fetchedName = await fetchFirstName();
-      setSqliteName(fetchedName);
-
-      const snapshot = await firestore().collection('testCollection').get();
-      const doc = snapshot.docs[0];
-      if (doc?.exists) setFirestoreName(doc.data()?.name ?? '');
-    };
-
-    if (modalVisible) loadData();
-  }, [modalVisible]);
-
+    initCheckInTable();
+  }, []);
+  
   return (
     <View>
       <Modal 
@@ -67,14 +77,27 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
             <ScrollView contentContainerStyle={styles.scrollContent}>
               <View style={styles.scrollRow}>
                 <View style={styles.formContainerLeft}>
-                  <PersonalInfoSection setModalVisible={setModalVisible} />
+                  <PersonalInfoSection 
+                    setModalVisible={setModalVisible} 
+                    firstname={setFirstname}
+                    lastname={setLastname}
+                    address={setAddress}
+                    contactNo={setContactNo}
+                    />
                   <GuestCountSection guestCounts={guestCounts} setGuestCounts={setGuestCounts} />
                   <OtherChargesSection charges={charges} setCharges={setCharges} />
                 </View>
                 <View style={styles.formContainerRight}></View>
               </View>
             </ScrollView>
-            <SummarySection guestCounts={guestCounts} charges={charges} />
+            <SummarySection 
+              guestCounts={guestCounts}
+              charges={charges}
+              firstname={firstname}
+              lastname={lastname}
+              contactNo={contactNo}
+              address={address}
+            />
           </View>
         </View>
       </Modal>
