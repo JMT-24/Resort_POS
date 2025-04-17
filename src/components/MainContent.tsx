@@ -1,15 +1,22 @@
-import React from 'react';
+import React, {act, useState} from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import styles from '../styles/MainContentStyles';
 import Card from '../components/TransactCard';
 
 const MainContent = () => {
+  const [activeTab, setActiveTab] = useState('Check In')
   return (
     <View style={styles.mainContent}>
       <View style={styles.tabContainer}>
-        <TouchableOpacity style={styles.activeTab}><Text style={[styles.tabText, { color: "black" }]}>Check In</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.inactiveTab}><Text style={styles.tabText}>Check Out</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.inactiveTab}><Text style={styles.tabText}>Canceled</Text></TouchableOpacity>
+        <TouchableOpacity style={activeTab == "Check In" ? styles.activeTab : styles.inactiveTab} onPress={() => setActiveTab("Check In")}>
+          <Text style={activeTab == "Check In" ? styles.activeTabText : styles. inactiveTabText}>Check In</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={activeTab == "Check Out" ? styles.activeTab: styles.inactiveTab} onPress={() => setActiveTab("Check Out")}>
+          <Text style={activeTab == "Check Out" ? styles.activeTabText : styles. inactiveTabText}>Check Out</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={activeTab == "Canceled" ? styles.activeTab: styles.inactiveTab} onPress={() => setActiveTab("Canceled")}>
+          <Text style={activeTab == "Canceled" ? styles.activeTabText : styles. inactiveTabText}>Canceled</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.header}>
         <Text style={styles.headerText}>Today   |   Upcomings</Text>

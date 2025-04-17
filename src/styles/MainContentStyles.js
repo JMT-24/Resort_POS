@@ -13,24 +13,29 @@ const styles = StyleSheet.create({
   },
   activeTab: {
     padding: 10,
-    backgroundColor: '#D9D9D9',
-    borderRadius: 5,
+    backgroundColor: '#2388FF',
     flex: 0.2,
     alignItems: 'center',
     marginRight: 10,
+  },
+  activeTabText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white',
   },
   inactiveTab: {
     padding: 10,
-    backgroundColor: '#E0E0E0',
-    borderRadius: 5,
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: "#A2CDFF",
     flex: 0.2,
     alignItems: 'center',
     marginRight: 10,
   },
-  tabText: {
+  inactiveTabText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#A2CDFF',
   },
   header: {
     flexDirection: "row",  // Align items in a row
@@ -42,6 +47,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 20,
     fontWeight: "bold",
+    color: "#2388FF",
   },
   
   headerSortBtn: {
