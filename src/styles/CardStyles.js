@@ -4,7 +4,8 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
     borderRadius: 10,
-    padding: 15,
+    paddingVertical: 15,
+    paddingHorizontal: 25,
     marginVertical: 10,
     shadowColor: '#000',
     shadowOpacity: 0.1,
@@ -17,34 +18,35 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   guestName: {
-    fontSize: 25,
+    fontSize: 30,
     fontWeight: 'bold',
+    color: "#2388FF",
     flex: 1,
   },
-  roomTag: {
-    backgroundColor: '#E5E5E5',
-    paddingHorizontal: 8,
+  cottageNumTag: {
+    backgroundColor: '#EEF2FF',
+    paddingHorizontal: 15,
     paddingVertical: 4,
-    borderRadius: 5,
     marginLeft: 5,
   },
-  roomText: {
-    fontSize: 13,
+  cottageNumText: {
+    fontSize: 14,
     fontWeight: 'bold',
+    color: "#0E00FF",
   },
   dateTag: {
-    backgroundColor: '#E5E5E5',
-    paddingHorizontal: 8,
+    backgroundColor: '#EEF2FF',
+    paddingHorizontal: 15,
     paddingVertical: 4,
-    borderRadius: 5,
-    marginLeft: 5,
+    marginLeft: 10,
   },
   dateText: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: 'bold',
+    color: "#0E00FF",
   },
   refNumber: {
-    fontSize: 13,
+    fontSize: 14,
     color: '#555',
     marginBottom: 5,
   },
@@ -53,9 +55,11 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     marginVertical: 10,
+    //backgroundColor: "gray",
   },
   detailsRow: {
-    width: '15%', 
+    width: 120, 
+    //backgroundColor: "yellow" 
   },
   hr: {
     borderBottomWidth: 1,
@@ -65,37 +69,27 @@ const styles = StyleSheet.create({
   },
   
   detailsLabel: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#666',
   },
   detailsValue: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: 'bold',
     color: '#000',
   },
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginTop: 10,
-  },
-  button: {
-    backgroundColor: '#E0E0E0',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-    marginLeft: 10,
-    marginTop: 15,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    height: 60,
+    //backgroundColor: "blue",
   },
   assignContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 15,
     //backgroundColor: "blue",
+    marginRight: 95,
   },
   profilePlaceholder: {
     width: 35,
@@ -108,6 +102,23 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: 'bold',
   },
+  button: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: "#2388FF",
+    marginLeft: 20,
+    marginTop: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 150,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: "#2388FF",
+  },
+  
   
 });
 

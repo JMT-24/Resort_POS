@@ -13,12 +13,12 @@ const RightSidebar: React.FC = () => {
           </TouchableOpacity>
           <AddCheckinForm modalVisible={modalVisible} setModalVisible={setModalVisible} />
         </View>
-      <View style={styles.barHeader}>
-        <Text style={styles.sidebarHeader}>Cottages</Text>
-        <Text style={styles.sidebarSort_btn}>Sort</Text>
-      </View>
+      
       <View style={styles.cottageBoxes}>
-        <Text style={styles.subHeader}>Available Cottages</Text>
+        <View style={styles.HeaderContainer}>
+          <Text style={styles.Header}>TODAY</Text>
+          <Text style={styles.subHeader}>AVAILABLE COTTAGES</Text>
+        </View>
         <View style={styles.cottagesGrid}>
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((cottage) => (
             <TouchableOpacity 
@@ -27,7 +27,7 @@ const RightSidebar: React.FC = () => {
             >
               <Text style={[
                 styles.cottageText, 
-                (cottage % 5 === 0 || cottage % 9 === 0 || cottage === 10) ? { color: "#fff" } : { color: "#000" }
+                (cottage % 5 === 0 || cottage % 9 === 0 || cottage === 10) ? { color: "#FF6666" } : { color: "#2388FF" }
               ]}>
                 {cottage}
               </Text>

@@ -7,6 +7,7 @@ import homeIcon from '../icons/homeIcon.png';
 import calendarIcon from '../icons/calendarIcon.png';
 import messageIcon from '../icons/messagesIcon.png';
 import remarksIcon from '../icons/remarksIcon.png';
+import haciendaIcon from "../icons/haciendaIcon.png";
   
 const LeftSidebar: React.FC = () => {
   type RootStackParamList = {
@@ -18,7 +19,7 @@ const LeftSidebar: React.FC = () => {
   
   return (
     <View style={styles.sidebar}>
-      <View style={styles.pictureCircle} />
+      <Image source={haciendaIcon} style={styles.pictureCircle} />
       
       <View style={styles.navButtonContainer}>
         <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('CheckIn')}>

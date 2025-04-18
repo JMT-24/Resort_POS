@@ -72,11 +72,11 @@ export const saveCheckInData = async (
 };
 
 // 📥 Fetch all check-in records
-export const getAllCheckIns = async () => {
+export const getAllCheckIns = async (): Promise<GuestCheckIn[]> => {
   const db = await getDBConnection();
   const results = await db.executeSql(`SELECT * FROM guestCheckIn ORDER BY id DESC`);
   const rows = results[0].rows;
-  const checkIns = [];
+  const checkIns: GuestCheckIn[] = [];
 
   for (let i = 0; i < rows.length; i++) {
     checkIns.push(rows.item(i));
@@ -84,3 +84,21 @@ export const getAllCheckIns = async () => {
 
   return checkIns;
 };
+
+export interface GuestCheckIn {
+  id: number;
+  firstname: string;
+  lastname: string;
+  contactNo: string;
+  address: string;
+  adult: number;
+  senior: number;
+  kids: number;
+  pwd: number;
+  cottages: number;
+  electric: number;
+  roundTable: number;
+  monoBlock: number;
+  chairs: number;
+  corkCage: number;
+}

@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   mainContent: {
     flex: .7,
     padding: 15,
-    //backgroundColor: '#F5F5F5',
+    //backgroundColor: 'gray',
     paddingTop: 30
   },
   tabContainer: {
@@ -38,10 +38,11 @@ const styles = StyleSheet.create({
     color: '#A2CDFF',
   },
   header: {
-    flexDirection: "row",  // Align items in a row
-    justifyContent: "space-between",  // Push "Sort" to the right
+    flexDirection: "row", 
+    justifyContent: "space-between",  
     alignItems: "center",
     paddingVertical: 10,
+    //backgroundColor: "yellow",
   },
   
   headerText: {
@@ -50,8 +51,35 @@ const styles = StyleSheet.create({
     color: "#2388FF",
   },
   
-  headerSortBtn: {
-    fontSize: 16,
+  container: {
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: '#2388FF',
+    alignItems: 'center',
+    margin: 10,
+    width: "70%",
+  },
+  searchIcon: {
+    transform: [{scaleX: .6}, {scaleY: .6}],
+  },
+  input: {
+    flex: 1,
+    color: '#2388FF',
+    fontWeight: 'bold',
+    paddingVertical: 8,
+    paddingHorizontal: 4,
+    fontSize: 20,
+  },
+  button: {
+    backgroundColor: '#2388FF',
+    paddingHorizontal: 30,
+    paddingVertical: 13,
+    borderTopRightRadius: 2,
+    borderBottomRightRadius: 2,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
   },
   
 });
