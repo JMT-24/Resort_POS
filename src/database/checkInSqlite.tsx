@@ -28,7 +28,8 @@ export const initCheckInTable = async () => {
       roundTable INTEGER,
       monoBlock INTEGER,
       chairs INTEGER,
-      corkCage INTEGER
+      corkCage INTEGER,
+      cottageNumber INTEGER
     );
   `);
 
@@ -42,7 +43,8 @@ export const saveCheckInData = async (
   contactNo: string,
   address: string,
   guestCounts: { adult: number; senior: number; kids: number; pwd: number },
-  charges: { cottages: number; electric: number; roundTable: number; monoBlock: number; chairs: number; corkCage: number }
+  charges: { cottages: number; electric: number; roundTable: number; monoBlock: number; chairs: number; corkCage: number },
+  cottageNumber: number
 ) => {
   const db = await getDBConnection();
 
@@ -50,8 +52,8 @@ export const saveCheckInData = async (
     `INSERT INTO guestCheckIn (
       firstname, lastname, contactNo, address,
       adult, senior, kids, pwd,
-      cottages, electric, roundTable, monoBlock, chairs, corkCage
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      cottages, electric, roundTable, monoBlock, chairs, corkCage, cottageNumber
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       firstname,
       lastname,
@@ -67,6 +69,7 @@ export const saveCheckInData = async (
       charges.monoBlock,
       charges.chairs,
       charges.corkCage,
+      cottageNumber
     ]
   );
 };
@@ -101,4 +104,21 @@ export interface GuestCheckIn {
   monoBlock: number;
   chairs: number;
   corkCage: number;
+  cottageNumber: number;
 }
+
+export const getReservedCottages = async (): Promise<number[]> => {
+  const db = await getDBConnection();
+  const results = await db.executeSql(`SELECT cottageNumber FROM guestCheckIn`);
+  const rows = results[0].rows;
+  const reserved: number[] = [];
+
+  for (let i = 0; i < rows.length; i++) {
+    const cottageNum = rows.item(i).cottageNumber;
+    if (typeof cottageNum === 'number') {
+      reserved.push(cottageNum);
+    }
+  }
+
+  return reserved;
+};

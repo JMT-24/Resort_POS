@@ -58,7 +58,7 @@ const MainContent = () => {
             key={item.id}
             guestName={`${item.firstname} ${item.lastname}`}
             referenceNumber={`0000${item.id}`}
-            cottageNumber="Cottage 2"
+            cottageNumber={`Cottage Number ${item.cottageNumber}`}
             date="March 27 2025"
             adults={item.adult}
             kids={item.kids}

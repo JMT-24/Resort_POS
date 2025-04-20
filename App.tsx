@@ -64,6 +64,7 @@
 import React, { PureComponent, useEffect } from "react";
 import AppNavigator from "./src/navigation/AppNavigator";
 import { initDatabase } from "./src/sqliteService";
+import { initCheckInTable } from "./src/database/checkInSqlite";
 
 const App = () => {
   useEffect(() => {
@@ -71,6 +72,8 @@ const App = () => {
       try {
         await initDatabase();
         console.log('✅ SQLite table initialized');
+        await initCheckInTable();
+        console.log('table created');
       } catch (error) {
         console.error('❌ Failed to initialize DB:', error);
       }
