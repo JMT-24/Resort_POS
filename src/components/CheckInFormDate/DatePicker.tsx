@@ -7,20 +7,86 @@ interface Props {
   setModalVisible: (visible: boolean) => void;
 }
 
+type CalendarDay = {
+    dateString: string;
+    day: number;
+    month: number,
+    year: number;
+    timestamp: number;
+};
+
 const DatePicker: React.FC<Props> = ({ setModalVisible }) => {
-  
-  const [range, setRange] = useState({});
-  // const handleDayPress = (day) => {
-  //   // Add your range selection logic here
-  // };
+  const [startDate, setStartDate] = useState<string | null>(null);
+  const [endDate, setEndDate] = useState<string | null>(null);
+
+  const onDayPress = (day: CalendarDay) => {
+    const selectedDate = day.dateString;
+
+    if (!startDate || (startDate && endDate))
+    {
+        setStartDate(selectedDate);
+        setEndDate(null);
+    }
+    else if (!endDate)
+    {
+        if (selectedDate < startDate)
+        {
+            setStartDate(selectedDate);
+            setEndDate(startDate);
+        }
+        else 
+        {
+            setEndDate(selectedDate);
+        }
+    }
+  };
+
+  const getMarkedDates = () => {
+    if (!startDate) return {};
+    const marked: {[key: string]: any} = {
+        [startDate]: {startingDay: true, color: '#2388FF', textColor: 'white'},
+    };
+
+    if (endDate)
+    {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        for (
+            let d = new Date(start);
+            d <= end;
+            d.setDate(d.getDate() + 1)
+        )
+        {
+            const dateStr = d.toISOString().split('T')[0];
+            if (dateStr === startDate) continue;
+            if (dateStr === endDate) 
+            {
+                marked[dateStr] = {
+                    endingDay: true,
+                    color: "#2388FF",
+                    textColor: "white"
+                };
+            }
+            else 
+            {
+                marked[dateStr] = {
+                    color: "#F3F8FE",
+                    textColor: "black"
+                };
+            }
+        }
+    }
+    return marked;  
+  }
 
   return (
         <View style={styles.middleView}>
             <View style={styles.calendarBox}>
             <Calendar
             markingType={'period'}
-            markedDates={range}
-            // onDayPress={handleDayPress}
+            markedDates={getMarkedDates()}
+            onDayPress={onDayPress}
             renderHeader={(date) => {
                 const monthNames = [
                 'January', 'February', 'March', 'April', 'May', 'June',
@@ -71,6 +137,13 @@ const DatePicker: React.FC<Props> = ({ setModalVisible }) => {
             />
 
             </View>
+            <Text>
+                {startDate && endDate
+                ? `Selected: ${startDate} to ${endDate}`
+                : startDate
+                ? `Start: ${startDate}`
+                : 'Select a date range'}
+            </Text>
         </View>
   );
 };
