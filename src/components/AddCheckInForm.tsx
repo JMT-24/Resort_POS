@@ -31,7 +31,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
   const [lastname, setLastname] = useState('');
   const [contactNo, setContactNo] = useState('');
   const [address, setAddress] = useState('');
-  const [cottageNum, setCottageNumber] = useState<number | undefined>(undefined);
+  const [cottageNum, setCottageNumber] = useState(0);
 
   const [guestCounts, setGuestCounts] = useState({
     adult: 0,
@@ -83,6 +83,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                     setContactNo={setContactNo}
                     setCottageNum={setCottageNumber}
                     reservedCottages={reservedCottages}
+                    cottageNum={cottageNum}
                   />
                   <GuestCountSection guestCounts={guestCounts} setGuestCounts={setGuestCounts} />
                   <OtherChargesSection charges={charges} setCharges={setCharges} />

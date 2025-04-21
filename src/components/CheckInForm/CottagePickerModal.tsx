@@ -63,7 +63,9 @@ const CottagePickerModal: React.FC<Props> = ({
             </View>
 
             <View style={styles.buttonView}>
-              <TouchableOpacity style={styles.cancelbtn} onPress={() => setModalVisible(false)}>
+              <TouchableOpacity style={styles.cancelbtn} onPress={() => {
+                setModalVisible(false); SetCottageNumber(0);
+              }}>
                 <Text style={styles.btnText}>Cancel</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.applybtn}>

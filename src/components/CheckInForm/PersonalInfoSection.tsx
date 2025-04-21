@@ -12,10 +12,11 @@ interface Props {
   setAddress: (text: string) => void;
   setCottageNum: (number: number) => void;
   reservedCottages: number[];
+  cottageNum: number;
 }
 
 const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, setLastname, 
-  setContactNo, setAddress, setCottageNum, reservedCottages }) => {
+  setContactNo, setAddress, setCottageNum, reservedCottages, cottageNum }) => {
   const [showDateModal, setShowDateModal] = useState(false);
   const [showCottageModal, setCottageModal] = useState(false);
 
@@ -68,7 +69,7 @@ const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, s
               <TextInput
                 style={styles.textInput}
                 placeholder="Choose Cottage Number"
-                //value={selectedDate} 
+                value={cottageNum !== 0 ? cottageNum.toString(): ""} 
                 editable={false}         
                 pointerEvents="none"      
               />

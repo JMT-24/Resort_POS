@@ -1,7 +1,13 @@
   import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ImageSourcePropType, Image } from 'react-native';
 import styles from '../styles/CardStyles';
 import TransactDetails from '../components/TransactDetails';
+
+const profilePic: ImageSourcePropType = require('../img/rhenzie.png');
+const remarksIcon: ImageSourcePropType = require('../icons/remarksIcon.png');
+const editIcon: ImageSourcePropType = require('../icons/editIcons.png');
+const detailsIcon: ImageSourcePropType = require('../icons/detailsIcon.png');
+
 
 export interface CardProps {
   guestName: string;
@@ -79,16 +85,24 @@ const Card: React.FC<CardProps> = (props) => {
       {/* Button to Open Details */}
       <View style={styles.buttonRow}>
         <View style={styles.assignContainer}>
-          <View style={styles.profilePlaceholder} />
-          <Text style={styles.assignText}>Assign Staff</Text>
+          <View style={styles.profilePlaceholder}>
+            <Image style={styles.profilePic} source={profilePic} />
+          </View>
+          <View style={styles.assignTextContainer}>
+            <Text style={styles.staffName}>Staff Rhenzie</Text>
+            <Text style={styles.transactionDate}>Date Created 01/22/2025</Text>
+          </View>
         </View>
         <TouchableOpacity style={styles.button}>
+          <Image source={remarksIcon} />
           <Text style={styles.buttonText}>Remarks</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
+          <Image source={editIcon} style={styles.buttonIcon}/>
           <Text style={styles.buttonText}>Edit Info</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}  onPress={() => setModalVisible(true)}>
+          <Image source={detailsIcon} style={styles.buttonIcon}/>
           <Text style={styles.buttonText}>Full Details</Text>
         </TouchableOpacity>
       </View>

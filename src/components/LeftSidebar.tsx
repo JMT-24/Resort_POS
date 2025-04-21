@@ -1,61 +1,74 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  Image,
+  Pressable,
+  ImageSourcePropType,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import styles from '../styles/LeftSidebarStyles';
-import homeIcon from '../icons/homeIcon.png';
-import calendarIcon from '../icons/calendarIcon.png';
-import messageIcon from '../icons/messagesIcon.png';
-import remarksIcon from '../icons/remarksIcon.png';
-import haciendaIcon from "../icons/haciendaIcon.png";
-  
-const LeftSidebar: React.FC = () => {
-  type RootStackParamList = {
-    CheckIn: undefined;
-    Calendar: undefined;
-  };
 
+const homeIcon: ImageSourcePropType = require('../icons/homeIcon.png');
+const calendarIcon: ImageSourcePropType = require('../icons/calendarIcon.png');
+const messageIcon: ImageSourcePropType = require('../icons/messagesIcon.png');
+const remarksIcon: ImageSourcePropType = require('../icons/remarksIcon.png');
+const haciendaIcon: ImageSourcePropType = require('../icons/haciendaIcon.png');
+const rhenziePic: ImageSourcePropType = require('../img/rhenzie.png');
+
+type RootStackParamList = {
+  CheckIn: undefined;
+  Calendar: undefined;
+};
+
+type NavButtonProps = {
+  label: string;
+  icon: ImageSourcePropType;
+  screen: keyof RootStackParamList;
+};
+
+const RenderNavButton: React.FC<NavButtonProps> = ({ label, icon, screen }) => {
+  const [isHovered, setIsHovered] = useState(false);
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  
+
+  return (
+    <Pressable
+      onPress={() => navigation.navigate(screen)}
+      onHoverIn={() => setIsHovered(true)}
+      onHoverOut={() => setIsHovered(false)}
+      style={({ pressed }) => [
+        styles.navButton,
+        isHovered && styles.isHovered,
+        pressed && styles.pressed,
+      ]}
+    >
+      <Image source={icon} style={styles.navButtonIcon} />
+      <Text style={styles.navText}>{label}</Text>
+    </Pressable>
+  );
+};
+
+const LeftSidebar: React.FC = () => {
   return (
     <View style={styles.sidebar}>
       <Image source={haciendaIcon} style={styles.pictureCircle} />
-      
+
       <View style={styles.navButtonContainer}>
-        <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('CheckIn')}>
-          <Image source={homeIcon} style={styles.navButtonIcon}></Image>
-          <Text style={styles.navText}>Home</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Calendar')}>
-          <Image source={calendarIcon} style={styles.navButtonIcon}></Image>
-          <Text style={styles.navText}>Calendar</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('CheckIn')}>
-        <Image source={calendarIcon} style={styles.navButtonIcon}></Image>
-          <Text style={styles.navText}>Transactions</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('CheckIn')}>
-        <Image source={messageIcon} style={styles.navButtonIcon}></Image>
-          <Text style={styles.navText}>Messages</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('CheckIn')}>
-        <Image source={remarksIcon} style={styles.navButtonIcon}></Image>
-          <Text style={styles.navText}>Remarks</Text>
-        </TouchableOpacity>
+        <RenderNavButton label="Home" icon={homeIcon} screen="CheckIn" />
+        <RenderNavButton label="Calendar" icon={calendarIcon} screen="Calendar" />
+        <RenderNavButton label="Transactions" icon={calendarIcon} screen="CheckIn" />
+        <RenderNavButton label="Messages" icon={messageIcon} screen="CheckIn" />
+        <RenderNavButton label="Remarks" icon={remarksIcon} screen="CheckIn" />
       </View>
 
       <View style={styles.staffContainer}>
         <View style={styles.staffContLeft}>
-
+          <Image source={rhenziePic} style={styles.staffPic}/>
         </View>
-
         <View style={styles.staffContRight}>
           <Text style={styles.staffName}>Rhenzie Reyes</Text>
-          <Text style={styles.staffRole }>Assigned Staff</Text>
+          <Text style={styles.staffRole}>Assigned Staff</Text>
         </View>
       </View>
     </View>

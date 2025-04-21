@@ -89,18 +89,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 15,
     //backgroundColor: "blue",
-    marginRight: 95,
+    marginRight: 85,
   },
   profilePlaceholder: {
-    width: 35,
-    height: 35,
-    borderRadius: 17.5,
-    backgroundColor: '#D9D9D9',
+    width: 40,
+    height: 40,
+    //backgroundColor: '#D9D9D9',
     marginRight: 10,
   },
-  assignText: {
-    fontSize: 17,
-    fontWeight: 'bold',
+  profilePic: {
+    width: 40,         
+    height: 40,         
+    borderRadius: 30,    
+    resizeMode: 'cover', 
+  },
+  assignTextContainer: {
+    //backgroundColor: "red",
+    alignSelf: "flex-start",
+  },
+  staffName: {
+    fontSize: 15,
+  },
+  transactionDate: {
+    fontSize: 10,
   },
   button: {
     paddingVertical: 10,
@@ -112,6 +123,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: 150,
+    backgroundColor: "red",
+    flexDirection: "row",
+  },
+  buttonIcon: {
+    transform: [{scaleX: .7},{scaleY: .7}],
   },
   buttonText: {
     fontSize: 16,

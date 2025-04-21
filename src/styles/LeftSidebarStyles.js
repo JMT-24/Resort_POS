@@ -42,20 +42,26 @@ export default StyleSheet.create({
   },
   navButton: { 
     padding: 10, 
-    backgroundColor: '#FFFFFF3B', 
+    
     marginVertical: 8,
     borderRadius: 50,
-    width: "90%",
+    width: "85%",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
   },
+  isHovered: {
+    backgroundColor: '#FFFFFF3B', 
+  },
+  pressed: {
+    backgroundColor: '#FFFFFF3B', 
+  },
   navButtonIcon: {
     //backgroundColor: "gray"
-    transform: [{scaleX: .8}, {scaleY: .8}]
+    transform: [{scaleX: .7}, {scaleY: .7}]
   },
   navText: { 
-    fontSize: 16,
+    fontSize: 15,
     textAlign: "center",
     color: "white",
     //backgroundColor: "yellow",
@@ -72,16 +78,26 @@ export default StyleSheet.create({
     justifyContent: "center",
   },
   staffContLeft: {
-    backgroundColor: "gray",
-    width: "25%",
-    borderRadius: 100,
+    //backgroundColor: 'gray',
+    width: '25%',
     marginRight: 5,
+    alignItems: 'center', 
+    justifyContent: 'flex-start',
   },
+  
+  staffPic: {
+    width: 40,         
+    height: 40,         
+    borderRadius: 30,    
+    resizeMode: 'cover', 
+  },
+
   staffContRight: {
     //backgroundColor: "yellow",
     width: "60%",
     display: "flex",
   },
+  
 
   staffName: { 
     fontSize: 14, 

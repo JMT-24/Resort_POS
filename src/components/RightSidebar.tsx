@@ -49,7 +49,7 @@ const RightSidebar: React.FC = () => {
               <Text
                 style={[
                   styles.cottageText,
-                  isUnavailable(cottage) ? { color: '#fff' } : { color: '#000' },
+                  isUnavailable(cottage) ? { color: '#FF6666' } : { color: '#2388FF' },
                 ]}
               >
                 {cottage}
