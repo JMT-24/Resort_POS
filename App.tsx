@@ -72,6 +72,11 @@ const App = () => {
       try {
         await initDatabase();
         console.log('✅ SQLite table initialized');
+        const now = new Date();
+        const formattedTime = now.toLocaleString('en-PH', {
+          timeZone: 'Asia/Manila',
+        });
+        console.log(formattedTime);
         await initCheckInTable();
         console.log('table created');
       } catch (error) {

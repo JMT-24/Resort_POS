@@ -43,42 +43,50 @@ const DatePicker: React.FC<Props> = ({ setModalVisible }) => {
 
   const getMarkedDates = () => {
     if (!startDate) return {};
-    const marked: {[key: string]: any} = {
-        [startDate]: {startingDay: true, color: '#2388FF', textColor: 'white'},
-    };
-
-    if (endDate)
-    {
-        const start = new Date(startDate);
-        const end = new Date(endDate);
-
-        for (
-            let d = new Date(start);
-            d <= end;
-            d.setDate(d.getDate() + 1)
-        )
-        {
-            const dateStr = d.toISOString().split('T')[0];
-            if (dateStr === startDate) continue;
-            if (dateStr === endDate) 
-            {
-                marked[dateStr] = {
-                    endingDay: true,
-                    color: "#2388FF",
-                    textColor: "white"
-                };
-            }
-            else 
-            {
-                marked[dateStr] = {
-                    color: "#F3F8FE",
-                    textColor: "black"
-                };
-            }
+    const marked: { [key: string]: any } = {};
+  
+    if (!endDate) {
+      // 1-day reservation
+      marked[startDate] = {
+        startingDay: true,
+        endingDay: true,
+        color: '#2388FF',
+        textColor: 'white',
+      };
+    } else {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+  
+      for (
+        let d = new Date(start);
+        d <= end;
+        d.setDate(d.getDate() + 1)
+      ) {
+        const dateStr = d.toISOString().split('T')[0];
+  
+        if (dateStr === startDate) {
+          marked[dateStr] = {
+            startingDay: true,
+            color: '#2388FF',
+            textColor: 'white',
+          };
+        } else if (dateStr === endDate) {
+          marked[dateStr] = {
+            endingDay: true,
+            color: '#2388FF',
+            textColor: 'white',
+          };
+        } else {
+          marked[dateStr] = {
+            color: '#F3F8FE',
+            textColor: 'black',
+          };
         }
+      }
     }
-    return marked;  
-  }
+  
+    return marked;
+  };
 
   return (
         <View style={styles.middleView}>
