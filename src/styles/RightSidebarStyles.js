@@ -4,9 +4,8 @@ export default StyleSheet.create({
   rightSidebar: { 
     flex: .3,  
     alignItems: "left",
-    paddingTop: 25,
+    paddingTop: 15,
     //backgroundColor: "#555",
-    paddingLeft: 15,
   },
 
   buttonContainer: {
@@ -16,62 +15,49 @@ export default StyleSheet.create({
   },
 
   checkInButton: { 
-    backgroundColor: 'black', 
+    backgroundColor: '#23DABC', 
     padding: 10, 
-    borderRadius: 5, 
-    width: 200,
-    marginBottom: 10,
+    width: 250,
+    height: 50,
     alignItems: "center",
-    alignSelf: "center"
+    alignSelf: "left",
+    justifyContent: "center",
   },
 
   checkInText: { 
     color: '#fff', 
     fontWeight: 'bold', 
-    fontSize: 16 
-  },
-
-  barHeader: {
-    //backgroundColor: "blue",
-    width: 245,
-    marginBottom: 15,
-    flexDirection: "row",  // Align items in a row
-    justifyContent: "space-between",  // Push "Sort" to the right
-    alignItems: "center",
-  },
-
-  sidebarHeader: { 
-    fontSize: 20, 
-    marginBottom: 10,
-    marginTop: 20,
-    textAlign: "left",
-    flex: 1
-  },
-
-  sidebarSort_btn: { 
-    fontSize: 18, 
-    marginBottom: 10,
-    marginTop: 20,
-    textAlign: "right",
-    flex: 1
+    fontSize: 18,
   },
 
   cottageBoxes: {
-    backgroundColor: "#E6E6E6",
+    backgroundColor: "white",
     padding: 15,
     alignItems: "flex-start",
-    height: "80%",
+    height: 440,
     width: 250,
-    borderRadius: 5
+    borderRadius: 5,
+    marginTop: 80,
   },
 
-  subHeader: { 
-    fontSize: 16, 
-    fontWeight: 'bold', 
-    marginBottom: 5,
-    marginLeft: 15, 
-    textAlign: "left", 
-    alignSelf: "flex-start" 
+  HeaderContainer: {
+    borderWidth: 1,
+    borderColor: "#CFCFCF",
+    width: 150,
+    height: 45,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+  },
+  Header: {
+    color: "#2388FF",
+    fontWeight: "900",
+    fontSize: 16,
+  },
+  subHeader: {
+    fontSize: 12,
+    fontWeight: "bold",
   },
 
   cottagesGrid: { 
@@ -88,17 +74,18 @@ export default StyleSheet.create({
     justifyContent: 'center', 
     alignItems: 'center', 
     margin: 5, 
-    borderRadius: 5 
   },
 
   available: { 
     backgroundColor: "#FFFFFF",
-    color: "black"
+    borderWidth: 1,
+    borderColor: "#2388FF",
   },
 
   unavailable: { 
-    backgroundColor: '#FFA0A0',
-    color: '#fff'  
+    backgroundColor: '#FFD8D8',
+    borderWidth: 1,
+    borderColor: "#4848483B",
   },
 
   cottageText: { 

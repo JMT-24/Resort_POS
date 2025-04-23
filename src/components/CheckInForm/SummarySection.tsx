@@ -27,6 +27,7 @@ interface SummarySectionProps {
   lastname: string;
   contactNo: string;
   address: string;
+  cottageNumber: number;
 }
 
 const SummarySection: React.FC<SummarySectionProps> = ({ 
@@ -36,6 +37,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({
   lastname,
   contactNo,
   address, 
+  cottageNumber,
 }) => {
   const summaryItems = [
     { label: 'Adults', value: guestCounts.adult },
@@ -50,13 +52,13 @@ const SummarySection: React.FC<SummarySectionProps> = ({
     { label: 'Cork Cage', value: charges.corkCage },
   ];
   const handleSave = async () => {
-    await saveCheckInData(firstname, lastname, contactNo, address, guestCounts, charges);
+    await saveCheckInData(firstname, lastname, contactNo, address, guestCounts, charges, cottageNumber);
     console.log('Saved to SQLite!');
   };
 
   return (
     <View style={styles.summaryBox}>
-      <ScrollView style={{ height: '100%' }} contentContainerStyle={{ paddingBottom: 300 }}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={{ paddingBottom: 300 }}>
         <View style={styles.paymentDetailsSummary}>
           {summaryItems.map(({ label, value }) => (
             <View key={label} style={styles.detailSummaryField}>

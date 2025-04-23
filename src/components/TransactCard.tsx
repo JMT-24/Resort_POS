@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+  import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, ImageSourcePropType, Image } from 'react-native';
 import styles from '../styles/CardStyles';
 import TransactDetails from '../components/TransactDetails';
+
+const profilePic: ImageSourcePropType = require('../img/rhenzie.png');
+const remarksIcon: ImageSourcePropType = require('../icons/remarksIcon.png');
+const editIcon: ImageSourcePropType = require('../icons/editIcons.png');
+const detailsIcon: ImageSourcePropType = require('../icons/detailsIcon.png');
+
 
 export interface CardProps {
   guestName: string;
   referenceNumber: string;
-  room: string;
+  cottageNumber: string;
   date: string;
   adults: number;
   kids: number;
@@ -42,7 +48,7 @@ const Card: React.FC<CardProps> = (props) => {
     <View style={styles.card}>
       <View style={styles.cardHeader}>
         <Text style={styles.guestName}>{props.guestName}</Text>
-        <View style={styles.roomTag}><Text style={styles.roomText}>{props.room}</Text></View>
+        <View style={styles.cottageNumTag}><Text style={styles.cottageNumText}>{props.cottageNumber}</Text></View>
         <View style={styles.dateTag}><Text style={styles.dateText}>{props.date}</Text></View>
       </View>
       <Text style={styles.refNumber}>
@@ -54,8 +60,8 @@ const Card: React.FC<CardProps> = (props) => {
         {/* First Row */}
         <DetailsRow label="Adults" value={props.adults} />
         <DetailsRow label="Kids" value={props.kids} />
-        <DetailsRow label="Senior" value={`${props.senior} Senior ID`} />
-        <DetailsRow label="PWD" value={`${props.pwd} PWD ID`} />
+        <DetailsRow label="Senior" value={`${props.senior} ID`} />
+        <DetailsRow label="PWD" value={`${props.pwd} ID`} />
         <DetailsRow label="Hours" value={`${props.hours} hours`} />
         <DetailsRow label="Time" value={props.time} />
         <View style={styles.hr} />
@@ -68,7 +74,7 @@ const Card: React.FC<CardProps> = (props) => {
         <DetailsRow label="Mono Block" value={props.monoBlock} />
         <DetailsRow label="Chairs" value={props.chairs} />
         <View style={styles.hr} />
-        <DetailsRow label="Others" value={props.others} />
+
 
         {/* Third Row (Financial Info) */}
         <DetailsRow label="Downpayment" value={`${props.downpayment} php`} />
@@ -78,11 +84,26 @@ const Card: React.FC<CardProps> = (props) => {
 
       {/* Button to Open Details */}
       <View style={styles.buttonRow}>
-        <TouchableOpacity style={styles.button} onPress={() => setModalVisible(true)}>
-          <Text style={styles.buttonText}>Details</Text>
+        <View style={styles.assignContainer}>
+          <View style={styles.profilePlaceholder}>
+            <Image style={styles.profilePic} source={profilePic} />
+          </View>
+          <View style={styles.assignTextContainer}>
+            <Text style={styles.staffName}>Staff Rhenzie</Text>
+            <Text style={styles.transactionDate}>Date Created 01/22/2025</Text>
+          </View>
+        </View>
+        <TouchableOpacity style={styles.button}>
+          <Image source={remarksIcon} />
+          <Text style={styles.buttonText}>Remarks</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button}>
+          <Image source={editIcon} style={styles.buttonIcon}/>
           <Text style={styles.buttonText}>Edit Info</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}  onPress={() => setModalVisible(true)}>
+          <Image source={detailsIcon} style={styles.buttonIcon}/>
+          <Text style={styles.buttonText}>Full Details</Text>
         </TouchableOpacity>
       </View>
 
@@ -93,11 +114,6 @@ const Card: React.FC<CardProps> = (props) => {
         setModalVisible={setModalVisible}  // Pass setModalVisible function
       />
 
-      {/* Assign Staff */}
-      <View style={styles.assignContainer}>
-        <View style={styles.profilePlaceholder} />
-        <Text style={styles.assignText}>Assign Staff</Text>
-      </View>
     </View>
   );
 };

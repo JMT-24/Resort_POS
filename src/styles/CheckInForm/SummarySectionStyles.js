@@ -15,6 +15,9 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 10,
   },
+  scrollView: {
+    height: '100%'
+  },
   paymentDetailsSummary: {
     height: 320,
   },

@@ -3,59 +3,80 @@ import { View, Text, TouchableOpacity, Modal, ScrollView, Switch, Image } from "
 import styles from '../../styles/CheckInForm/CottagePickerModal';
 
 interface Props {
+  SetCottageNumber: (number: number) => void;
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
+  reservedCottages: number[];
 }
 
-const CottagePickerModal: React.FC<Props> = ({ modalVisible, setModalVisible }) => {
+const CottagePickerModal: React.FC<Props> = ({ 
+  modalVisible, setModalVisible, SetCottageNumber, reservedCottages }) => {
+    var numOfCottages = 14;
+    const cottages = Array.from({ length: numOfCottages }, (_, i) => i + 1);
+    const isUnavailable = (cottages: number) => reservedCottages.includes(cottages);
 
-
-  return (
-    <Modal
-      animationType="fade"
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => setModalVisible(false)}
-    >
-      <View style={styles.overlay}>
-        <View style={styles.container}>
-          <View style={styles.cottageView}>
-            <View style={styles.headerView}>
-              <Text style={styles.headerText}>Choose Cottage Number</Text>
-              <Text style={styles.headersubText}>kdkdkdkdkdk</Text>
-            </View>
-            <View style={styles.cottageGridView}>
-              <View style={styles.cottagesGrid}>
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((cottage) => (
-                    <TouchableOpacity 
-                      key={cottage} 
-                      style={[styles.cottageBox, (cottage % 5 === 0 || cottage % 9 === 0 || cottage === 10) ? styles.unavailable : styles.available]}
+    const getCottageNumber = (cottage: number) => {
+      if (!isUnavailable(cottage)) {
+        SetCottageNumber(cottage);
+        console.log("Cottage number " +cottage+ " is picked");
+        setModalVisible(false);
+      }
+    }
+    return (
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.overlay}>
+          <View style={styles.container}>
+            <View style={styles.cottageView}>
+              <View style={styles.headerView}>
+                <Text style={styles.headerText}>Choose Cottage Number</Text>
+                <Text style={styles.headersubText}>kdkdkdkdkdk</Text>
+              </View>
+              <View style={styles.cottageGridView}>
+                <View style={styles.cottagesGrid}>
+                  {cottages.map((cottage) => (
+                    <TouchableOpacity
+                      key={cottage}
+                      style={[
+                        styles.cottageBox,
+                        isUnavailable(cottage) ? styles.unavailable : styles.available,
+                      ]}
+                      disabled={isUnavailable(cottage)}
+                      onPress={() => getCottageNumber(cottage)}
                     >
-                      <Text style={[
-                        styles.cottageText, 
-                        (cottage % 5 === 0 || cottage % 9 === 0 || cottage === 10) ? { color: "#fff" } : { color: "#000" }
-                      ]}>
+                      <Text
+                        style={[
+                          styles.cottageText,
+                          isUnavailable(cottage) ? { color: '#fff' } : { color: '#000' },
+                        ]}
+                      >
                         {cottage}
                       </Text>
                     </TouchableOpacity>
                   ))}
+                </View>
               </View>
             </View>
-          </View>
 
-          <View style={styles.buttonView}>
-            <TouchableOpacity style={styles.cancelbtn} onPress={() => setModalVisible(false)}>
-              <Text style={styles.btnText}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.applybtn}>
-              <Text style={styles.btnText}>Apply</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonView}>
+              <TouchableOpacity style={styles.cancelbtn} onPress={() => {
+                setModalVisible(false); SetCottageNumber(0);
+              }}>
+                <Text style={styles.btnText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.applybtn}>
+                <Text style={styles.btnText}>Apply</Text>
+              </TouchableOpacity>
+            </View>
+            
           </View>
-          
         </View>
-      </View>
-    </Modal>
-  );
-};
+      </Modal>
+    );
+  };
 
 export default CottagePickerModal;

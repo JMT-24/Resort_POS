@@ -4,7 +4,8 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
     borderRadius: 10,
-    padding: 15,
+    paddingVertical: 15,
+    paddingHorizontal: 25,
     marginVertical: 10,
     shadowColor: '#000',
     shadowOpacity: 0.1,
@@ -17,34 +18,35 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   guestName: {
-    fontSize: 25,
+    fontSize: 30,
     fontWeight: 'bold',
+    color: "#2388FF",
     flex: 1,
   },
-  roomTag: {
-    backgroundColor: '#E5E5E5',
-    paddingHorizontal: 8,
+  cottageNumTag: {
+    backgroundColor: '#EEF2FF',
+    paddingHorizontal: 15,
     paddingVertical: 4,
-    borderRadius: 5,
     marginLeft: 5,
   },
-  roomText: {
-    fontSize: 13,
+  cottageNumText: {
+    fontSize: 14,
     fontWeight: 'bold',
+    color: "#0E00FF",
   },
   dateTag: {
-    backgroundColor: '#E5E5E5',
-    paddingHorizontal: 8,
+    backgroundColor: '#EEF2FF',
+    paddingHorizontal: 15,
     paddingVertical: 4,
-    borderRadius: 5,
-    marginLeft: 5,
+    marginLeft: 10,
   },
   dateText: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: 'bold',
+    color: "#0E00FF",
   },
   refNumber: {
-    fontSize: 13,
+    fontSize: 14,
     color: '#555',
     marginBottom: 5,
   },
@@ -53,9 +55,12 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     marginVertical: 10,
+    //backgroundColor: "gray",
   },
   detailsRow: {
-    width: '15%', 
+    width: 80, 
+    //backgroundColor: "yellow",
+    justifyContent: "space-between", 
   },
   hr: {
     borderBottomWidth: 1,
@@ -65,7 +70,7 @@ const styles = StyleSheet.create({
   },
   
   detailsLabel: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: 'bold',
     color: '#666',
   },
@@ -77,37 +82,60 @@ const styles = StyleSheet.create({
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginTop: 10,
-  },
-  button: {
-    backgroundColor: '#E0E0E0',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-    marginLeft: 10,
-    marginTop: 15,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    height: 60,
+    //backgroundColor: "blue",
   },
   assignContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 15,
-    //backgroundColor: "blue",
+    //backgroundColor: "gray",
+    marginRight: 15,
   },
   profilePlaceholder: {
-    width: 35,
-    height: 35,
-    borderRadius: 17.5,
-    backgroundColor: '#D9D9D9',
+    width: 40,
+    height: 40,
+    //backgroundColor: '#D9D9D9',
     marginRight: 10,
   },
-  assignText: {
-    fontSize: 17,
-    fontWeight: 'bold',
+  profilePic: {
+    width: 40,         
+    height: 40,         
+    borderRadius: 30,    
+    resizeMode: 'cover', 
   },
+  assignTextContainer: {
+    //backgroundColor: "red",
+    alignSelf: "flex-start",
+  },
+  staffName: {
+    fontSize: 15,
+  },
+  transactionDate: {
+    fontSize: 10,
+  },
+  button: {
+    paddingVertical: 10,
+    paddingRight: 10,
+    borderWidth: 1,
+    borderColor: "#2388FF",
+    marginLeft: 20,
+    marginTop: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 115,
+    backgroundColor: "#FFD8D8",
+    flexDirection: "row",
+  },
+  buttonIcon: {
+    transform: [{scaleX: .6},{scaleY: .6}],
+  },
+  buttonText: {
+    fontSize: 13,
+    fontWeight: 'bold',
+    color: "#2388FF",
+  },
+  
   
 });
 

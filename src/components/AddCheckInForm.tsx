@@ -20,9 +20,10 @@ LogBox.ignoreLogs([
 interface AddCheckinFormProps {
     modalVisible: boolean;
     setModalVisible: (visible: boolean) => void;
+    reservedCottages: number[];
   }
 
-const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalVisible }) => {
+const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalVisible, reservedCottages }) => {
   const [sqliteName, setSqliteName] = useState('');
   const [firestoreName, setFirestoreName] = useState('');
 
@@ -30,6 +31,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
   const [lastname, setLastname] = useState('');
   const [contactNo, setContactNo] = useState('');
   const [address, setAddress] = useState('');
+  const [cottageNum, setCottageNumber] = useState(0);
 
   const [guestCounts, setGuestCounts] = useState({
     adult: 0,
@@ -73,13 +75,16 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
             <ScrollView contentContainerStyle={styles.scrollContent}>
               <View style={styles.scrollRow}>
                 <View style={styles.formContainerLeft}>
-                <PersonalInfoSection 
-                  setModalVisible={setModalVisible} 
-                  setFirstname={setFirstname}
-                  setLastname={setLastname}
-                  setAddress={setAddress}
-                  setContactNo={setContactNo}
-                />
+                  <PersonalInfoSection 
+                    setModalVisible={setModalVisible} 
+                    setFirstname={setFirstname}
+                    setLastname={setLastname}
+                    setAddress={setAddress}
+                    setContactNo={setContactNo}
+                    setCottageNum={setCottageNumber}
+                    reservedCottages={reservedCottages}
+                    cottageNum={cottageNum}
+                  />
                   <GuestCountSection guestCounts={guestCounts} setGuestCounts={setGuestCounts} />
                   <OtherChargesSection charges={charges} setCharges={setCharges} />
                 </View>
@@ -93,6 +98,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
               lastname={lastname}
               contactNo={contactNo}
               address={address}
+              cottageNumber={cottageNum ?? 0}
             />
           </View>
         </View>
