@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
   },
   formContainerLeft: {
     width: '65%',
-    paddingLeft: 25,
-    paddingTop: 50,
+    paddingLeft: 15,
+    paddingTop: 40,
   },
   formContainerRight: {
     width: '35%',

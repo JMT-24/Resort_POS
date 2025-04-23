@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     },
 
     cottageBox: { 
-        width: 120, 
-        height: 120, 
+        width: 90, 
+        height: 90, 
         justifyContent: 'center', 
         alignItems: 'center', 
         margin: 20, 

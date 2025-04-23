@@ -10,13 +10,16 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
       backgroundColor: 'white',
-      padding: 20,
+      paddingHorizontal: 20,
+      paddingTop: 20,
+      paddingBottom: 10,
       borderRadius: 10,
       width: '60%',
       height: "90%",
     },
     scrollContainer: {
       flexGrow: 1,
+      alignItems: "center",
     },
     closeBtn: {
       alignSelf: "flex-start",

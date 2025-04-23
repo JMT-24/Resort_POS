@@ -4,10 +4,9 @@ const styles = StyleSheet.create({
     
     middleView: {
         //backgroundColor: "yellow",
-        height: 500,
-        width: "100%",
-        display: "flex",
-        justifyContent: "flex-end",
+        height: 435,
+        width: "95%",
+        justifyContent: "center",
         alignItems: "center",
     },
     calendarBox: {
@@ -16,12 +15,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "gray",
         borderRadius: 15,
-        justifyContent: "center"
+        justifyContent: "center",
+        paddingLeft: 15,
     },
     calendar: {
         //backgroundColor: "blue",
-        height: "95%",
-        width: "95%",
+        height: "98%",
+        width: "98%",
     },
 
 });

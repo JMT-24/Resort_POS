@@ -42,12 +42,11 @@ const OtherChargesSection: React.FC<OtherChargesSectionProps> = ({ charges, setC
       <Text style={styles.formInstruction}>Please double check information</Text>
       <View style={styles.checkInOtherChargesForm}>
         <View style={styles.checkInOtherChargesFormLeft}>
-          {chargeField('Cottages', 'cottages')}
           {chargeField('E-Charge', 'electric')}
           {chargeField('Round Table', 'roundTable')}
+          {chargeField('Long Table', 'roundTable')}
         </View>
         <View style={styles.checkInOtherChargesFormRight}>
-          {chargeField('Mono Block', 'monoBlock')}
           {chargeField('Chairs', 'chairs')}
           {chargeField('Cork Cage', 'corkCage')}
         </View>
