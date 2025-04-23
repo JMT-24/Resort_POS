@@ -12,14 +12,16 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    padding: 20,
+    padding: 15,
     paddingTop: 10,
   },
   scrollView: {
-    height: '100%'
+    height: '100%',
+    //backgroundColor: "gray",
   },
   paymentDetailsSummary: {
-    height: 320,
+    height: '320',
+    //backgroundColor: "red",
   },
   detailSummaryField: {
     height: 50,
@@ -27,12 +29,14 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     flexDirection: 'row',
     alignItems: 'center',
+    //backgroundColor: "blue",
   },
   formTogglePic: {
     height: 40,
     width: 40,
     borderRadius: 20,
     resizeMode: 'cover',
+    backgroundColor: "gray",
   },
   detail_miniField: {
     flexDirection: 'column',

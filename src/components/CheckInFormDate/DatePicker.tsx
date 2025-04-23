@@ -137,9 +137,9 @@ const DatePicker: React.FC<Props> = ({ setModalVisible }) => {
                 textDayFontWeight: '600',
                 textMonthFontWeight: 'bold',
                 textDayHeaderFontWeight: '600',
-                textDayFontSize: 22,
+                textDayFontSize: 18,
                 textMonthFontSize: 26,
-                textDayHeaderFontSize: 22,
+                textDayHeaderFontSize: 15,
             }}
             style={styles.calendar}
             />

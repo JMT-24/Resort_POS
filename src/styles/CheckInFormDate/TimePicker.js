@@ -13,8 +13,9 @@ const styles = StyleSheet.create({
     
     bottomView: {
         //backgroundColor: "blue",
-        height: 450,
+        height: 400,
         width: "100%",
+        marginTop: 50,
     },
     bottTopView: {
         //backgroundColor: "gray",
@@ -51,6 +52,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "space-evenly",
         paddingLeft: 20,
+        paddingTop: 30,
     },
     TimePickerView: {
         //backgroundColor: "gray",

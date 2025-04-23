@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     right: 25,
+    //backgroundColor: "red",
   },
   exitButton: {
     fontSize: 20,

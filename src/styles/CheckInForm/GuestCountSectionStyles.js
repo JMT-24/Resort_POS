@@ -2,11 +2,12 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   checkInFormContainer: {
-    height: 400,
+    height: 300,
     paddingLeft: 30,
     paddingRight: 20,
     marginVertical: 20,
     width: 650,
+    //backgroundColor: "red",
   },
   formHeader: {
     fontSize: 32,
@@ -102,6 +103,7 @@ const styles = StyleSheet.create({
   },
   formField: {
     marginBottom: 15,
+    //backgroundColor: "gray",
   },
   formLabel: {
     fontSize: 16,
