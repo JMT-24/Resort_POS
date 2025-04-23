@@ -11,6 +11,7 @@ import PersonalInfoSection from './CheckInForm/PersonalInfoSection';
 import GuestCountSection from './CheckInForm/GuestCountSection';
 import OtherChargesSection from './CheckInForm/OtherChargesSection';
 import SummarySection from './CheckInForm/SummarySection';
+import ConfirmPopupModal from './CheckInForm/ConfirmPopupModal';
 
 LogBox.ignoreLogs([
     'This method is deprecated', 
@@ -26,6 +27,7 @@ interface AddCheckinFormProps {
 const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalVisible, reservedCottages }) => {
   const [sqliteName, setSqliteName] = useState('');
   const [firestoreName, setFirestoreName] = useState('');
+  const [confirmVisible, setConfirmVisible] = useState(false);
 
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
@@ -99,6 +101,10 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
               contactNo={contactNo}
               address={address}
               cottageNumber={cottageNum ?? 0}
+            />
+            <ConfirmPopupModal 
+            visible={confirmVisible}
+            onClose={() => setConfirmVisible(false)}
             />
           </View>
         </View>

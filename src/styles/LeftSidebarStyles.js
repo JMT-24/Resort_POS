@@ -55,6 +55,9 @@ export default StyleSheet.create({
   pressed: {
     backgroundColor: '#FFFFFF3B', 
   },
+  activePage: {
+    backgroundColor: '#FFFFFF3B',
+  },
   navButtonIcon: {
     //backgroundColor: "gray"
     transform: [{scaleX: .7}, {scaleY: .7}]
