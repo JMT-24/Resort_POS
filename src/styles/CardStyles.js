@@ -58,8 +58,9 @@ const styles = StyleSheet.create({
     //backgroundColor: "gray",
   },
   detailsRow: {
-    width: 120, 
-    //backgroundColor: "yellow" 
+    width: 80, 
+    //backgroundColor: "yellow",
+    justifyContent: "space-between", 
   },
   hr: {
     borderBottomWidth: 1,
@@ -69,12 +70,12 @@ const styles = StyleSheet.create({
   },
   
   detailsLabel: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: 'bold',
     color: '#666',
   },
   detailsValue: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#000',
   },
@@ -88,8 +89,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 15,
-    //backgroundColor: "blue",
-    marginRight: 85,
+    //backgroundColor: "gray",
+    marginRight: 15,
   },
   profilePlaceholder: {
     width: 40,
@@ -115,22 +116,22 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingRight: 10,
     borderWidth: 1,
     borderColor: "#2388FF",
     marginLeft: 20,
     marginTop: 15,
     justifyContent: "center",
     alignItems: "center",
-    width: 150,
-    backgroundColor: "red",
+    width: 115,
+    backgroundColor: "#FFD8D8",
     flexDirection: "row",
   },
   buttonIcon: {
-    transform: [{scaleX: .7},{scaleY: .7}],
+    transform: [{scaleX: .6},{scaleY: .6}],
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: 13,
     fontWeight: 'bold',
     color: "#2388FF",
   },

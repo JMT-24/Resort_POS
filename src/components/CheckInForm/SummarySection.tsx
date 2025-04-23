@@ -58,7 +58,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({
 
   return (
     <View style={styles.summaryBox}>
-      <ScrollView style={{ height: '100%' }} contentContainerStyle={{ paddingBottom: 300 }}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={{ paddingBottom: 300 }}>
         <View style={styles.paymentDetailsSummary}>
           {summaryItems.map(({ label, value }) => (
             <View key={label} style={styles.detailSummaryField}>

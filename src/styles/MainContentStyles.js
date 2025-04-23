@@ -5,11 +5,11 @@ const styles = StyleSheet.create({
     flex: .7,
     padding: 15,
     //backgroundColor: 'gray',
-    paddingTop: 30
+    paddingTop: 15
   },
   tabContainer: {
     flexDirection: 'row',
-    marginBottom: 10,
+    marginBottom: 5,
   },
   activeTab: {
     padding: 10,
@@ -41,12 +41,12 @@ const styles = StyleSheet.create({
     flexDirection: "row", 
     justifyContent: "space-between",  
     alignItems: "center",
-    paddingVertical: 10,
     //backgroundColor: "yellow",
+    paddingRight: 10,
   },
   
   headerText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     color: "#2388FF",
   },
@@ -57,10 +57,10 @@ const styles = StyleSheet.create({
     borderColor: '#2388FF',
     alignItems: 'center',
     margin: 10,
-    width: "70%",
+    width: "65%",
   },
   searchIcon: {
-    transform: [{scaleX: .6}, {scaleY: .6}],
+    transform: [{scaleX: .5}, {scaleY: .5}],
   },
   input: {
     flex: 1,

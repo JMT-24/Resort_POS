@@ -4,7 +4,7 @@ export default StyleSheet.create({
   rightSidebar: { 
     flex: .3,  
     alignItems: "left",
-    paddingTop: 25,
+    paddingTop: 15,
     //backgroundColor: "#555",
   },
 
@@ -34,10 +34,10 @@ export default StyleSheet.create({
     backgroundColor: "white",
     padding: 15,
     alignItems: "flex-start",
-    height: "80%",
+    height: 440,
     width: 250,
     borderRadius: 5,
-    marginTop: 70,
+    marginTop: 80,
   },
 
   HeaderContainer: {

@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   sidebar: {
-    flex: 0.14,
+    flex: 0.18,
     backgroundColor: '#2388FF',
     alignItems: 'center',
     display: "flex",
@@ -34,7 +34,7 @@ export default StyleSheet.create({
 
   navButtonContainer: {
     //  backgroundColor: "indigo",
-    marginTop: 50,
+    marginTop: 30,
     width: "100%",
     display: "flex",
     flexDirection: "column",
@@ -42,7 +42,6 @@ export default StyleSheet.create({
   },
   navButton: { 
     padding: 10, 
-    
     marginVertical: 8,
     borderRadius: 50,
     width: "85%",
@@ -71,7 +70,7 @@ export default StyleSheet.create({
   
   staffContainer: {
     //backgroundColor: "whitesmoke",
-    marginTop: 80,
+    marginTop: 50,
     flexDirection: "row",
     width: "100%",
     height: 50,
@@ -80,14 +79,13 @@ export default StyleSheet.create({
   staffContLeft: {
     //backgroundColor: 'gray',
     width: '25%',
-    marginRight: 5,
     alignItems: 'center', 
     justifyContent: 'flex-start',
   },
   
   staffPic: {
-    width: 40,         
-    height: 40,         
+    width: 35,         
+    height: 35,         
     borderRadius: 30,    
     resizeMode: 'cover', 
   },
