@@ -69,8 +69,7 @@ const MainContent = () => {
             cottages={item.cottages}
             electricCharge={item.electric}
             roundTable={item.roundTable}
-            longTable={0}
-            monoBlock={item.monoBlock}
+            longTable={item.longTable}
             chairs={item.chairs}
             others="-"
             downpayment={1500}

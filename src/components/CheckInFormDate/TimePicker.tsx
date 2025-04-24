@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Modal, ScrollView, Switch, Image } from "react-native";
+import { View, Text, TouchableOpacity, Modal, Switch, Image, ImageSourcePropType } from "react-native";
 import styles from '../../styles/CheckInFormDate/TimePicker';
 import { TextInput } from "react-native-gesture-handler";
-import arrowLeft from '../../icons/arrowLeft.png';
-import dropdownArrow from '../../icons/dropdownArrow.png';
+import DateTimePicker, {DateTimePickerEvent} from '@react-native-community/datetimepicker';
+
+const arrowLeft: ImageSourcePropType = require('../../icons/arrowLeft.png');
+const dropdownArrow: ImageSourcePropType = require('../../icons/dropdownArrow.png');
 
 interface Props {
   modalVisible: boolean;
+  setStartTimeCustom: (date: Date | undefined) => void;
+  setEndTimeCustom: (date: Date | undefined) => void;
 }
 
-const TimePicker: React.FC<Props> = ( ) => {
+const TimePicker: React.FC<Props> = ({setStartTimeCustom, setEndTimeCustom}) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previous => !previous);
   
@@ -18,32 +22,42 @@ const TimePicker: React.FC<Props> = ( ) => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const timeOptions = [
-    '08:00 AM', '09:00 AM', '10:00 AM',
-    '11:00 AM', '12:00 PM', '01:00 PM',
-    '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM'
+    'DAYTIME: 8:00 AM - 6:00 PM',
+    'NIGHT: 3:00 PM - 11:00 PM' 
   ];
 
   const handleSelectTime = (selected: string) => {
-    setStartTime(selected);
-
-    // Set end time +1 hour (naive logic)
-    const [hourStr, minPart] = selected.split(':');
-    let hour = parseInt(hourStr);
-    const isPM = selected.includes('PM');
+    // Split by ": " to separate label and time range
+    const [, timeRange] = selected.split(': ');
     
-    if (isPM && hour !== 12) hour += 12;
-    if (!isPM && hour === 12) hour = 0;
-
-    hour += 1;
-    const newHour = hour % 24;
-    const suffix = newHour >= 12 ? 'PM' : 'AM';
-    const displayHour = ((newHour + 11) % 12 + 1).toString().padStart(2, '0');
-    const newEndTime = `${displayHour}:${minPart.split(' ')[0]} ${suffix}`;
-
-    setEndTime(newEndTime);
+    // Split by " - " to get start and end time
+    const [startTime, endTime] = timeRange.split(' - ');
+  
+    setStartTime(startTime);   // e.g., "8:00 AM"
+    setEndTime(endTime);       // e.g., "6:00 PM"
     setDropdownVisible(false);
   };
 
+  const [startTimeCustom2, setStartTimeCustom2] = useState<Date>(new Date());
+  const [endTimeCustom2, setEndTimeCustom2] = useState<Date>(new Date());
+  const [pickerMode, setPickerMode] = useState<'start' | 'end' | null>(null);
+  const showPicker = (mode: 'start' | 'end') => {
+    if (!isEnabled) return;
+    setPickerMode(mode);
+  };
+  const onChange = (
+    event: DateTimePickerEvent,
+    selectedDate?: Date
+  ) => {
+    setPickerMode(null);
+    if (selectedDate) {
+    if (pickerMode === 'start') setStartTimeCustom2(selectedDate), console.log(selectedDate), setStartTimeCustom(selectedDate);
+    else if (pickerMode === 'end') setEndTimeCustom2(selectedDate), console.log(selectedDate), setEndTimeCustom(selectedDate);
+    }
+  };
+
+  const formatTime = (date: Date) =>
+    date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
   return (
 
@@ -108,7 +122,8 @@ const TimePicker: React.FC<Props> = ( ) => {
                     flex: 1,
                     justifyContent: 'center',
                     backgroundColor: 'rgba(0,0,0,0.4)',
-                    padding: 30
+                    padding: 30,
+                    alignItems: "center",
                     }}
                     activeOpacity={1}
                     onPressOut={() => setDropdownVisible(false)}
@@ -116,11 +131,13 @@ const TimePicker: React.FC<Props> = ( ) => {
                     <View style={{
                     backgroundColor: 'white',
                     borderRadius: 10,
-                    padding: 20
+                    padding: 20,
+                    width: "50%",
+                    alignItems: "center",
                     }}>
                     {timeOptions.map((time) => (
                         <TouchableOpacity key={time} onPress={() => handleSelectTime(time)} >
-                        <Text style={{ fontSize: 27, paddingVertical: 15 }}>{time}</Text>
+                        <Text style={{ fontSize: 27, paddingVertical: 30 }}>{time}</Text>
                         </TouchableOpacity>
                     ))}
                     </View>
@@ -150,36 +167,63 @@ const TimePicker: React.FC<Props> = ( ) => {
 
             </View>
 
-            <View style={styles.TimePickerManualView}>
-                <TextInput
-                style={[
-                    styles.timePickerStyle,
-                    {
-                    backgroundColor: isEnabled? "white": "#F1F3F7",
-                    color: isEnabled? "black" : "#6D758F",
-                    
-                    }
-                ]}
-                placeholder="0:00"
-                //value={selectedDate} 
-                editable={isEnabled}
-                pointerEvents={isEnabled ? 'none' : 'auto'}
-                />
-                <Image source={arrowLeft} style={styles.arrowLeft}></Image>
-                <TextInput
-                style={[
-                    styles.timePickerStyle,
-                    {
-                    backgroundColor: isEnabled? "white": "#F1F3F7",
-                    color: isEnabled? "black" : "#6D758F",
-                    }
-                ]}
-                placeholder="0:00"
-                //value={selectedDate} 
-                editable={isEnabled}
-                pointerEvents={isEnabled ? 'none' : 'auto'}   
-                />
-            </View>
+                <View style={styles.TimePickerManualView}>
+                    {/* Start time “input” */}
+                    <TouchableOpacity
+                        style={[
+                        styles.timePickerStyle,
+                        {
+                            backgroundColor: isEnabled ? 'white' : '#F1F3F7'
+                        }
+                        ]}
+                        onPress={() => showPicker('start')}
+                        activeOpacity={0.7}
+                    >
+                        <Text
+                        style={{
+                            color: isEnabled ? 'black' : '#6D758F',
+                            fontSize: 23,
+                            fontWeight: isEnabled ? 'bold' : 'normal'
+                        }}
+                        >
+                        {formatTime(startTimeCustom2)}
+                        </Text>
+                    </TouchableOpacity>
+
+                    <Image source={arrowLeft} style={styles.arrowLeft} />
+
+                    {/* End time “input” */}
+                    <TouchableOpacity
+                        style={[
+                        styles.timePickerStyle,
+                        {
+                            backgroundColor: isEnabled ? 'white' : '#F1F3F7'
+                        }
+                        ]}
+                        onPress={() => showPicker('end')}
+                        activeOpacity={0.7}
+                    >
+                        <Text
+                        style={{
+                            color: isEnabled ? 'black' : '#6D758F',
+                            fontSize: 23,
+                            fontWeight: isEnabled ? 'bold' : 'normal'
+                        }}
+                        >
+                        {formatTime(endTimeCustom2)}
+                        </Text>
+                    </TouchableOpacity>
+
+                    {/* Render the native picker */}
+                    {pickerMode && (
+                        <DateTimePicker
+                        value={pickerMode === 'start' ? startTimeCustom2 : endTimeCustom2}
+                        mode="time"
+                        display={'default'}
+                        onChange={onChange}
+                        />
+                    )}
+                </View>
             </View>
         </View>
 

@@ -8,10 +8,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     container: {
-        backgroundColor: 'green',
-        borderRadius: 10,
-        height: 200,
-        width: 200,
+        backgroundColor: 'rgba(99, 235, 94, 0.8)',
+        height: "60%",
+        width: "50%",
+        justifyContent: "center",
+        alignItems: "center",
+        paddingBottom: 30,
+    },
+    confirmIcon: {
+        transform: [{scaleX: .7},{ scaleY: .7}],
+    },
+    confirmText: {
+        color: "white",
+        fontSize: 40,
     },
 })
 
