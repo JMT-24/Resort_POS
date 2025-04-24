@@ -22,6 +22,7 @@ const MainContent = () => {
 
     fetchCheckIns();
   }, []);
+  
   return (
     <View style={styles.mainContent}>
       <View style={styles.tabContainer}>
