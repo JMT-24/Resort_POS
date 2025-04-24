@@ -24,7 +24,6 @@ export interface CardProps {
   electricCharge: number;
   roundTable: number;
   longTable: number;
-  monoBlock: number;
   chairs: number;
   others: string;
   downpayment: number;
@@ -62,7 +61,7 @@ const Card: React.FC<CardProps> = (props) => {
         <DetailsRow label="Kids" value={props.kids} />
         <DetailsRow label="Senior" value={`${props.senior} ID`} />
         <DetailsRow label="PWD" value={`${props.pwd} ID`} />
-        <DetailsRow label="Hours" value={`${props.hours} hours`} />
+        <DetailsRow label="Hours" value={`${props.hours}hrs`} />
         <DetailsRow label="Time" value={props.time} />
         <View style={styles.hr} />
 
@@ -71,7 +70,6 @@ const Card: React.FC<CardProps> = (props) => {
         <DetailsRow label="Electric Charge" value={props.electricCharge} />
         <DetailsRow label="Round Table" value={props.roundTable} />
         <DetailsRow label="Long Table" value={props.longTable} />
-        <DetailsRow label="Mono Block" value={props.monoBlock} />
         <DetailsRow label="Chairs" value={props.chairs} />
         <View style={styles.hr} />
 

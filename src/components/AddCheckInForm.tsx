@@ -11,6 +11,7 @@ import PersonalInfoSection from './CheckInForm/PersonalInfoSection';
 import GuestCountSection from './CheckInForm/GuestCountSection';
 import OtherChargesSection from './CheckInForm/OtherChargesSection';
 import SummarySection from './CheckInForm/SummarySection';
+import ConfirmPopupModal from './CheckInForm/ConfirmPopupModal';
 
 LogBox.ignoreLogs([
     'This method is deprecated', 
@@ -44,24 +45,17 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
     cottages: 1,
     electric: 0,
     roundTable: 0,
-    monoBlock: 0,
+    longTable: 0,
     chairs: 0,
     corkCage: 0,
   });
 
-  // useEffect(() => {
-  //   const loadData = async () => {
-  //     await initDatabase();
-  //     const fetchedName = await fetchFirstName();
-  //     setSqliteName(fetchedName);
-
-  //     const snapshot = await firestore().collection('testCollection').get();
-  //     const doc = snapshot.docs[0];
-  //     if (doc?.exists) setFirestoreName(doc.data()?.name ?? '');
-  //   };
-
-  //   if (modalVisible) loadData();
-  // }, [modalVisible]);
+  
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const openPopup = () => setIsPopupOpen(true);
+  const closePopup = () => setIsPopupOpen(false);   
+  const [startTimeCustom, setStartTimeCustom] = useState<Date | undefined>(new Date());
+  const [endTimeCustom, setEndTimeCustom] = useState<Date | undefined>(new Date());   
   
   return (
     <View>
@@ -84,6 +78,8 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                     setCottageNum={setCottageNumber}
                     reservedCottages={reservedCottages}
                     cottageNum={cottageNum}
+                    setStartTimeCustom={setStartTimeCustom}
+                    setEndTimeCustom={setEndTimeCustom}
                   />
                   <GuestCountSection guestCounts={guestCounts} setGuestCounts={setGuestCounts} />
                   <OtherChargesSection charges={charges} setCharges={setCharges} />
@@ -99,6 +95,13 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
               contactNo={contactNo}
               address={address}
               cottageNumber={cottageNum ?? 0}
+              onConfirmClick={openPopup}
+              startTimeCustom={startTimeCustom}
+              endTimeCustom={endTimeCustom}
+            />
+            <ConfirmPopupModal 
+            visible={isPopupOpen}
+            onClose={closePopup}
             />
           </View>
         </View>

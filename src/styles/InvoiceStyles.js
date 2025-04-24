@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
       paddingTop: 20,
       paddingBottom: 10,
       borderRadius: 10,
-      width: '60%',
+      width: '70%',
       height: "90%",
     },
     scrollContainer: {

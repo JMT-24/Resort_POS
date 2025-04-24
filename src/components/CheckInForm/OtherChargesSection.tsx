@@ -7,7 +7,7 @@ interface Charges {
   cottages: number;
   electric: number;
   roundTable: number;
-  monoBlock: number;
+  longTable: number;
   chairs: number;
   corkCage: number;
 }
@@ -42,9 +42,8 @@ const OtherChargesSection: React.FC<OtherChargesSectionProps> = ({ charges, setC
       <Text style={styles.formInstruction}>Please double check information</Text>
       <View style={styles.checkInOtherChargesForm}>
         <View style={styles.checkInOtherChargesFormLeft}>
-          {chargeField('E-Charge', 'electric')}
           {chargeField('Round Table', 'roundTable')}
-          {chargeField('Long Table', 'roundTable')}
+          {chargeField('Long Table', 'longTable')}
         </View>
         <View style={styles.checkInOtherChargesFormRight}>
           {chargeField('Chairs', 'chairs')}

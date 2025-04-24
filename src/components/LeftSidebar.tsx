@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { act, useState } from 'react';
 import {
   View,
   Text,
@@ -26,21 +26,25 @@ type NavButtonProps = {
   label: string;
   icon: ImageSourcePropType;
   screen: keyof RootStackParamList;
+  activeScreen: string;
+  setActiveScreen: (screen: string) => void;
 };
 
-const RenderNavButton: React.FC<NavButtonProps> = ({ label, icon, screen }) => {
+const RenderNavButton: React.FC<NavButtonProps> = ({ label, icon, screen, activeScreen, setActiveScreen }) => {
+  const isActive = activeScreen === screen;
   const [isHovered, setIsHovered] = useState(false);
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   return (
     <Pressable
-      onPress={() => navigation.navigate(screen)}
+      onPress={() => [navigation.navigate(screen), setActiveScreen(screen)]}
       onHoverIn={() => setIsHovered(true)}
       onHoverOut={() => setIsHovered(false)}
       style={({ pressed }) => [
         styles.navButton,
         isHovered && styles.isHovered,
         pressed && styles.pressed,
+        isActive && styles.activePage,
       ]}
     >
       <Image source={icon} style={styles.navButtonIcon} />
@@ -50,16 +54,17 @@ const RenderNavButton: React.FC<NavButtonProps> = ({ label, icon, screen }) => {
 };
 
 const LeftSidebar: React.FC = () => {
+  const [activeScreen, setActiveScreen] = useState('CheckIn')
   return (
     <View style={styles.sidebar}>
       <Image source={haciendaIcon} style={styles.pictureCircle} />
 
       <View style={styles.navButtonContainer}>
-        <RenderNavButton label="Home" icon={homeIcon} screen="CheckIn" />
-        <RenderNavButton label="Calendar" icon={calendarIcon} screen="Calendar" />
-        <RenderNavButton label="Transactions" icon={calendarIcon} screen="CheckIn" />
-        <RenderNavButton label="Messages" icon={messageIcon} screen="CheckIn" />
-        <RenderNavButton label="Remarks" icon={remarksIcon} screen="CheckIn" />
+        <RenderNavButton label="Home" icon={homeIcon} screen="CheckIn" activeScreen={activeScreen} setActiveScreen={setActiveScreen}/>
+        <RenderNavButton label="Calendar" icon={calendarIcon} screen="Calendar" activeScreen={activeScreen} setActiveScreen={setActiveScreen}/>
+        <RenderNavButton label="Transactions" icon={calendarIcon} screen="Transactions" activeScreen={activeScreen} setActiveScreen={setActiveScreen}/>
+        <RenderNavButton label="Messages" icon={messageIcon} screen="Messages" activeScreen={activeScreen} setActiveScreen={setActiveScreen}/>
+        <RenderNavButton label="Remarks" icon={remarksIcon} screen="Remarks" activeScreen={activeScreen} setActiveScreen={setActiveScreen}/>
       </View>
 
       <View style={styles.staffContainer}>

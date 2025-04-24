@@ -2,7 +2,7 @@ import SQLite from 'react-native-sqlite-storage';
 
 SQLite.enablePromise(true);
 
-const DB_NAME = 'checkin.db';
+const DB_NAME = 'checkin2.db';
 
 export const getDBConnection = async () => {
   return SQLite.openDatabase({ name: DB_NAME, location: 'default' });
@@ -26,7 +26,7 @@ export const initCheckInTable = async () => {
       cottages INTEGER,
       electric INTEGER,
       roundTable INTEGER,
-      monoBlock INTEGER,
+      longTable INTEGER,
       chairs INTEGER,
       corkCage INTEGER,
       cottageNumber INTEGER
@@ -43,7 +43,7 @@ export const saveCheckInData = async (
   contactNo: string,
   address: string,
   guestCounts: { adult: number; senior: number; kids: number; pwd: number },
-  charges: { cottages: number; electric: number; roundTable: number; monoBlock: number; chairs: number; corkCage: number },
+  charges: { cottages: number; electric: number; roundTable: number; longTable: number; chairs: number; corkCage: number },
   cottageNumber: number
 ) => {
   const db = await getDBConnection();
@@ -52,7 +52,7 @@ export const saveCheckInData = async (
     `INSERT INTO guestCheckIn (
       firstname, lastname, contactNo, address,
       adult, senior, kids, pwd,
-      cottages, electric, roundTable, monoBlock, chairs, corkCage, cottageNumber
+      cottages, electric, roundTable, longTable, chairs, corkCage, cottageNumber
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       firstname,
@@ -66,7 +66,7 @@ export const saveCheckInData = async (
       charges.cottages,
       charges.electric,
       charges.roundTable,
-      charges.monoBlock,
+      charges.longTable,
       charges.chairs,
       charges.corkCage,
       cottageNumber
@@ -101,7 +101,7 @@ export interface GuestCheckIn {
   cottages: number;
   electric: number;
   roundTable: number;
-  monoBlock: number;
+  longTable: number;
   chairs: number;
   corkCage: number;
   cottageNumber: number;

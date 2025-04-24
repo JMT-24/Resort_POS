@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
         transform: [{ scaleX: .6 }, { scaleY: .6 }], 
     },
 
-
 });
 
 export default styles
