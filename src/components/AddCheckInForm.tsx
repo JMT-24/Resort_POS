@@ -43,7 +43,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
 
   const [charges, setCharges] = useState({
     cottages: 1,
-    electric: 0,
+    electric: 1,
     roundTable: 0,
     longTable: 0,
     chairs: 0,
@@ -54,8 +54,10 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const openPopup = () => setIsPopupOpen(true);
   const closePopup = () => setIsPopupOpen(false);   
-  const [startTimeCustom, setStartTimeCustom] = useState<Date | undefined>(new Date());
-  const [endTimeCustom, setEndTimeCustom] = useState<Date | undefined>(new Date());   
+  const [startTimeCustom, setStartTimeCustom] = useState('None');
+  const [endTimeCustom, setEndTimeCustom] = useState('None'); 
+  const [startTimeManual, setStartTimeManual] = useState('None');
+  const [endTimeManual, setEndTimeManual] = useState('None');  
   
   return (
     <View>
@@ -80,6 +82,8 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                     cottageNum={cottageNum}
                     setStartTimeCustom={setStartTimeCustom}
                     setEndTimeCustom={setEndTimeCustom}
+                    setStartTimeManual={setStartTimeManual}
+                    setEndTimeManual={setEndTimeManual}
                   />
                   <GuestCountSection guestCounts={guestCounts} setGuestCounts={setGuestCounts} />
                   <OtherChargesSection charges={charges} setCharges={setCharges} />
@@ -98,6 +102,8 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
               onConfirmClick={openPopup}
               startTimeCustom={startTimeCustom}
               endTimeCustom={endTimeCustom}
+              startTimeManual={startTimeManual}
+              endTimeManual={endTimeManual}
             />
             <ConfirmPopupModal 
             visible={isPopupOpen}

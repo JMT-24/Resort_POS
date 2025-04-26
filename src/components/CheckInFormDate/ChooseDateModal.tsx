@@ -7,11 +7,15 @@ import TimePicker from "./TimePicker";
 interface Props {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
-  setStartTimeCustom: (date: Date | undefined) => void;
-  setEndTimeCustom: (date: Date | undefined) => void;
+  setStartTimeCustom: (text: string) => void;
+  setEndTimeCustom: (text: string) => void;
+  setStartTimeManual: (text: string) => void;
+  setEndTimeManual: (text: string) => void;
 }
 
-const ChooseDateModal: React.FC<Props> = ({ modalVisible, setModalVisible, setStartTimeCustom, setEndTimeCustom }) => {
+const ChooseDateModal: React.FC<Props> = ({ modalVisible, setModalVisible, setStartTimeCustom, setEndTimeCustom,
+  setStartTimeManual, setEndTimeManual
+ }) => {
 
   const logThings = () => {
     console.log(setStartTimeCustom + ' AND ' + setEndTimeCustom)
@@ -40,7 +44,8 @@ const ChooseDateModal: React.FC<Props> = ({ modalVisible, setModalVisible, setSt
                     </View>
 
                     <DatePicker setModalVisible={setModalVisible}/>
-                    <TimePicker modalVisible setStartTimeCustom={setStartTimeCustom} setEndTimeCustom={setEndTimeCustom}/>
+                    <TimePicker modalVisible setStartTimeCustom={setStartTimeCustom} setEndTimeCustom={setEndTimeCustom}
+                    setStartTimeManual={setStartTimeManual} setEndTimeManual={setEndTimeManual}/>
 
                     <View style={styles.buttonView}>
                       <TouchableOpacity style={styles.cancelbtn} onPress={() => setModalVisible(false)}>

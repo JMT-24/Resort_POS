@@ -29,8 +29,10 @@ interface SummarySectionProps {
   address: string;
   cottageNumber: number;
   onConfirmClick: () => void;
-  startTimeCustom: Date | undefined;
-  endTimeCustom:   Date | undefined;
+  startTimeCustom: string;
+  endTimeCustom:   string;
+  startTimeManual: string;
+  endTimeManual: string;
 }
 
 const SummarySection: React.FC<SummarySectionProps> = ({ 
@@ -43,7 +45,9 @@ const SummarySection: React.FC<SummarySectionProps> = ({
   cottageNumber,
   onConfirmClick,
   startTimeCustom,
-  endTimeCustom
+  endTimeCustom,
+  startTimeManual,
+  endTimeManual
 }) => {
   const summaryItems = [
     { label: 'Adults', value: guestCounts.adult },
@@ -51,17 +55,19 @@ const SummarySection: React.FC<SummarySectionProps> = ({
     { label: 'Kids', value: guestCounts.kids },
     { label: 'PWD', value: guestCounts.pwd },
     { label: 'Cottages', value: charges.cottages },
-    { label: 'E-Charge', value: charges.electric },
+    { label: 'Electric Charge', value: charges.electric },
     { label: 'Round Table', value: charges.roundTable },
     { label: 'Long Table', value: charges.longTable },
     { label: 'Chair', value: charges.chairs },
     { label: 'Cork Cage', value: charges.corkCage },
   ];
-  const handleSave = async () => {
-    await saveCheckInData(firstname, lastname, contactNo, address, guestCounts, charges, cottageNumber);
-    console.log('Saved to SQLite!');
-    console.log(startTimeCustom + ' and ' + endTimeCustom)
-    onConfirmClick();
+  const handleSave = () => {
+
+    // await saveCheckInData(firstname, lastname, contactNo, address, guestCounts, charges, cottageNumber);
+    // console.log('Saved to SQLite!');
+    console.log(startTimeCustom + ' custom and ' + endTimeCustom);
+    console.log(startTimeManual + ' manual and ' + endTimeManual);
+    // onConfirmClick();
   };
 
   return (

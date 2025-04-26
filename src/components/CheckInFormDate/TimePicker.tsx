@@ -9,11 +9,13 @@ const dropdownArrow: ImageSourcePropType = require('../../icons/dropdownArrow.pn
 
 interface Props {
   modalVisible: boolean;
-  setStartTimeCustom: (date: Date | undefined) => void;
-  setEndTimeCustom: (date: Date | undefined) => void;
+  setStartTimeCustom: (text: string) => void;
+  setEndTimeCustom: (text: string) => void;
+  setStartTimeManual: (text: string) => void;
+  setEndTimeManual: (text: string) => void;
 }
 
-const TimePicker: React.FC<Props> = ({setStartTimeCustom, setEndTimeCustom}) => {
+const TimePicker: React.FC<Props> = ({setStartTimeCustom, setEndTimeCustom, setStartTimeManual, setEndTimeManual}) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previous => !previous);
   
@@ -27,37 +29,78 @@ const TimePicker: React.FC<Props> = ({setStartTimeCustom, setEndTimeCustom}) => 
   ];
 
   const handleSelectTime = (selected: string) => {
-    // Split by ": " to separate label and time range
     const [, timeRange] = selected.split(': ');
-    
-    // Split by " - " to get start and end time
     const [startTime, endTime] = timeRange.split(' - ');
   
-    setStartTime(startTime);   // e.g., "8:00 AM"
-    setEndTime(endTime);       // e.g., "6:00 PM"
-    setDropdownVisible(false);
-  };
-
-  const [startTimeCustom2, setStartTimeCustom2] = useState<Date>(new Date());
-  const [endTimeCustom2, setEndTimeCustom2] = useState<Date>(new Date());
-  const [pickerMode, setPickerMode] = useState<'start' | 'end' | null>(null);
-  const showPicker = (mode: 'start' | 'end') => {
-    if (!isEnabled) return;
-    setPickerMode(mode);
-  };
-  const onChange = (
-    event: DateTimePickerEvent,
-    selectedDate?: Date
-  ) => {
-    setPickerMode(null);
-    if (selectedDate) {
-    if (pickerMode === 'start') setStartTimeCustom2(selectedDate), console.log(selectedDate), setStartTimeCustom(selectedDate);
-    else if (pickerMode === 'end') setEndTimeCustom2(selectedDate), console.log(selectedDate), setEndTimeCustom(selectedDate);
+    setStartTime(startTime); // e.g., "8:00 AM"
+    setEndTime(endTime);     // e.g., "6:00 PM"
+  
+    if (!isEnabled) {
+      setStartTimeManual(startTime);
+      setEndTimeManual(endTime);
+      setStartTimeCustom('None');
+      setEndTimeCustom('None');
     }
-  };
+  
+    setDropdownVisible(false);
+    };
+    
+    const [startTimeCustom2, setStartTimeCustom2] = useState<Date>(new Date());
+    const [endTimeCustom2, setEndTimeCustom2] = useState<Date>(new Date());
+    const [pickerMode, setPickerMode] = useState<'start' | 'end' | null>(null);
+    
+    const showPicker = (mode: 'start' | 'end') => {
+        if (!isEnabled) return;  // Only allow picker if enabled
+        setPickerMode(mode);
+    };
+    
+    const onChange = (
+        event: DateTimePickerEvent,
+        selectedDate?: Date
+    ) => {
+        if (pickerMode === null) return;  // early exit
+        setPickerMode(null);
+    
+        if (selectedDate) {
+        if (pickerMode === 'start') {
+            setStartTimeCustom2(selectedDate);
+            console.log('Start Time selected:', selectedDate);
+    
+            if (isEnabled) {
+                const customStartTime = getTimeFromISOString(selectedDate.toISOString());
+                setStartTimeCustom(customStartTime);
+                setStartTimeManual('None');
+            }
+        } 
+        else if (pickerMode === 'end') {
+            setEndTimeCustom2(selectedDate);
+            console.log('End Time selected:', selectedDate);
+    
+            if (isEnabled) {
+                const customEndTime = getTimeFromISOString(selectedDate.toISOString())
+                setEndTimeCustom(customEndTime);
+                setEndTimeManual('None');
+            }
+        }
+        }
+    };
+  
 
   const formatTime = (date: Date) =>
     date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  function getTimeFromISOString(isoString: string): string {
+    const date = new Date(isoString);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+  
+    // Format with leading zero if needed
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+  
+    return `${formattedHours}:${formattedMinutes} ${ampm}`;
+  }
 
   return (
 
