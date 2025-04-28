@@ -5,6 +5,8 @@ import { Calendar } from "react-native-calendars";
 
 interface Props {
   setModalVisible: (visible: boolean) => void;
+  setStartDateText: (text: string) => void;
+  setEndDateText: (text: string) => void;
 }
 
 type CalendarDay = {
@@ -15,31 +17,40 @@ type CalendarDay = {
     timestamp: number;
 };
 
-const DatePicker: React.FC<Props> = ({ setModalVisible }) => {
+const DatePicker: React.FC<Props> = ({ setModalVisible, setStartDateText, setEndDateText }) => {
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
 
+
   const onDayPress = (day: CalendarDay) => {
     const selectedDate = day.dateString;
-
-    if (!startDate || (startDate && endDate))
-    {
-        setStartDate(selectedDate);
-        setEndDate(null);
+    const today = new Date().toISOString().split('T')[0]; // Get today's date in "YYYY-MM-DD"
+  
+    if (selectedDate < today) {
+      console.log('Cannot select a past date.');
+      return; // 🚫 Block selecting past dates
     }
-    else if (!endDate)
-    {
-        if (selectedDate < startDate)
-        {
-            setStartDate(selectedDate);
-            setEndDate(startDate);
-        }
-        else 
-        {
-            setEndDate(selectedDate);
-        }
+  
+    if (!startDate || (startDate && endDate)) {
+      setStartDate(selectedDate);
+      setEndDate(null);
+      setStartDateText(selectedDate);
+      setEndDateText(selectedDate);
+    } 
+    else if (!endDate) {
+      if (selectedDate < startDate) {
+        setStartDate(selectedDate);
+        setEndDate(startDate);
+        setStartDateText(selectedDate);
+        setEndDateText(startDate);
+      } 
+      else {
+        setEndDate(selectedDate);
+        setEndDateText(selectedDate);
+      }
     }
   };
+  
 
   const getMarkedDates = () => {
     if (!startDate) return {};

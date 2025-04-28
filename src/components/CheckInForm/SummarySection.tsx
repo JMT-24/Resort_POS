@@ -29,10 +29,10 @@ interface SummarySectionProps {
   address: string;
   cottageNumber: number;
   onConfirmClick: () => void;
-  startTimeCustom: string;
-  endTimeCustom:   string;
-  startTimeManual: string;
-  endTimeManual: string;
+  startDate: string;
+  endDate: string;
+  startTime: string;
+  endTime: string;
 }
 
 const SummarySection: React.FC<SummarySectionProps> = ({ 
@@ -44,10 +44,10 @@ const SummarySection: React.FC<SummarySectionProps> = ({
   address, 
   cottageNumber,
   onConfirmClick,
-  startTimeCustom,
-  endTimeCustom,
-  startTimeManual,
-  endTimeManual
+  startDate,
+  endDate,
+  startTime,
+  endTime
 }) => {
   const summaryItems = [
     { label: 'Adults', value: guestCounts.adult },
@@ -65,9 +65,10 @@ const SummarySection: React.FC<SummarySectionProps> = ({
 
     // await saveCheckInData(firstname, lastname, contactNo, address, guestCounts, charges, cottageNumber);
     // console.log('Saved to SQLite!');
-    console.log(startTimeCustom + ' custom and ' + endTimeCustom);
-    console.log(startTimeManual + ' manual and ' + endTimeManual);
-    // onConfirmClick();
+    console.log(startDate + ' date and ' + endDate);
+    console.log(startTime + ' time and ' + endTime);
+    console.log(new Date() + " date now");
+    onConfirmClick();
   };
 
   return (

@@ -13,15 +13,15 @@ interface Props {
   setCottageNum: (number: number) => void;
   reservedCottages: number[];
   cottageNum: number;
-  setStartTimeCustom: (text: string) => void;
-  setEndTimeCustom: (text: string) => void;
-  setStartTimeManual: (text: string) => void;
-  setEndTimeManual: (text: string) => void;
+  setStartDate: (text:string) => void;
+  setEndDate: (text:string) => void;
+  setStartTime: (text: string) => void;
+  setEndTime: (text: string) => void;
+  datetime: string;
 }
 
 const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, setLastname, 
-  setContactNo, setAddress, setCottageNum, reservedCottages, cottageNum, setStartTimeCustom, setEndTimeCustom,
-  setStartTimeManual, setEndTimeManual}) => {
+  setContactNo, setAddress, setCottageNum, reservedCottages, cottageNum, setStartDate, setEndDate, setStartTime, setEndTime, datetime}) => {
   const [showDateModal, setShowDateModal] = useState(false);
   const [showCottageModal, setCottageModal] = useState(false);
 
@@ -51,7 +51,7 @@ const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, s
               <TextInput
                 style={styles.textInput}
                 placeholder="Enter Date"
-                //value={selectedDate} 
+                value={datetime === 'All None' ? undefined : datetime}
                 editable={false}         
                 pointerEvents="none"      
               />
@@ -84,9 +84,8 @@ const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, s
       </View>
 
       {/* ChooseDateModal */}
-      <ChooseDateModal modalVisible={showDateModal} setModalVisible={setShowDateModal} 
-      setStartTimeCustom={setStartTimeCustom} setEndTimeCustom={setEndTimeCustom}
-      setStartTimeManual={setStartTimeManual} setEndTimeManual={setEndTimeManual}/>
+      <ChooseDateModal modalVisible={showDateModal} setModalVisible={setShowDateModal}
+      setStartDate={setStartDate} setEndDate={setEndDate} setStartTime={setStartTime} setEndTime={setEndTime}/>
       {/* Cottage Picker Modal */}
       <CottagePickerModal modalVisible={showCottageModal} setModalVisible={setCottageModal} 
        SetCottageNumber={setCottageNum} reservedCottages={reservedCottages}/>

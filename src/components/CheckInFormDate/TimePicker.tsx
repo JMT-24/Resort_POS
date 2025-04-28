@@ -9,13 +9,11 @@ const dropdownArrow: ImageSourcePropType = require('../../icons/dropdownArrow.pn
 
 interface Props {
   modalVisible: boolean;
-  setStartTimeCustom: (text: string) => void;
-  setEndTimeCustom: (text: string) => void;
-  setStartTimeManual: (text: string) => void;
-  setEndTimeManual: (text: string) => void;
+  setStartTimeTemp: (text: string) => void;
+  setEndTimeTemp: (text: string) => void;
 }
 
-const TimePicker: React.FC<Props> = ({setStartTimeCustom, setEndTimeCustom, setStartTimeManual, setEndTimeManual}) => {
+const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previous => !previous);
   
@@ -36,10 +34,12 @@ const TimePicker: React.FC<Props> = ({setStartTimeCustom, setEndTimeCustom, setS
     setEndTime(endTime);     // e.g., "6:00 PM"
   
     if (!isEnabled) {
-      setStartTimeManual(startTime);
-      setEndTimeManual(endTime);
-      setStartTimeCustom('None');
-      setEndTimeCustom('None');
+    //   setStartTimeManual(startTime);
+    //   setEndTimeManual(endTime);
+    //   setStartTimeCustom('None');
+    //   setEndTimeCustom('None');
+      setStartTimeTemp(startTime);
+      setEndTimeTemp(endTime);
     }
   
     setDropdownVisible(false);
@@ -68,8 +68,9 @@ const TimePicker: React.FC<Props> = ({setStartTimeCustom, setEndTimeCustom, setS
     
             if (isEnabled) {
                 const customStartTime = getTimeFromISOString(selectedDate.toISOString());
-                setStartTimeCustom(customStartTime);
-                setStartTimeManual('None');
+                // setStartTimeCustom(customStartTime);
+                // setStartTimeManual('None');
+                setStartTimeTemp(customStartTime);
             }
         } 
         else if (pickerMode === 'end') {
@@ -78,16 +79,22 @@ const TimePicker: React.FC<Props> = ({setStartTimeCustom, setEndTimeCustom, setS
     
             if (isEnabled) {
                 const customEndTime = getTimeFromISOString(selectedDate.toISOString())
-                setEndTimeCustom(customEndTime);
-                setEndTimeManual('None');
+                // setEndTimeCustom(customEndTime);
+                // setEndTimeManual('None');
+                setEndTimeTemp(customEndTime);
             }
         }
         }
     };
   
 
-  const formatTime = (date: Date) =>
-    date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const formatTime = (date: Date) =>
+        date.toLocaleTimeString('en-PH', { 
+          timeZone: 'Asia/Manila', 
+          hour: '2-digit', 
+          minute: '2-digit', 
+          hour12: true 
+        });
 
   function getTimeFromISOString(isoString: string): string {
     const date = new Date(isoString);

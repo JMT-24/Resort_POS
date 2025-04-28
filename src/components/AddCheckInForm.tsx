@@ -53,11 +53,30 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
   
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const openPopup = () => setIsPopupOpen(true);
-  const closePopup = () => setIsPopupOpen(false);   
-  const [startTimeCustom, setStartTimeCustom] = useState('None');
-  const [endTimeCustom, setEndTimeCustom] = useState('None'); 
-  const [startTimeManual, setStartTimeManual] = useState('None');
-  const [endTimeManual, setEndTimeManual] = useState('None');  
+  const closePopup = () => setIsPopupOpen(false); 
+  const [startDate, setStartDate] = useState('None');
+  const [endDate, setEndDate] = useState('None');
+  const [startTime, setStarTime] = useState('None');
+  const [endTime, setEndTime] = useState('None');
+
+  const formatDate = (dateString: string) => {
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+  
+    if (dateString === 'None') return '';
+  
+    const [, month, day] = dateString.split('-').map(Number);  // skip the year
+    return `${months[month - 1]} ${day}`;
+  };
+  
+  const isAllSet = (...values: string[]) => values.every(v => v !== 'None');
+  
+  const datetime = isAllSet(startDate, endDate, startTime, endTime)
+    ? `${formatDate(startDate)} - ${formatDate(endDate)} : ${startTime} - ${endTime}`
+    : 'All None';
+
   
   return (
     <View>
@@ -80,10 +99,11 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                     setCottageNum={setCottageNumber}
                     reservedCottages={reservedCottages}
                     cottageNum={cottageNum}
-                    setStartTimeCustom={setStartTimeCustom}
-                    setEndTimeCustom={setEndTimeCustom}
-                    setStartTimeManual={setStartTimeManual}
-                    setEndTimeManual={setEndTimeManual}
+                    setStartDate={setStartDate}
+                    setEndDate={setEndDate}
+                    setStartTime={setStarTime}
+                    setEndTime={setEndTime}
+                    datetime={datetime}
                   />
                   <GuestCountSection guestCounts={guestCounts} setGuestCounts={setGuestCounts} />
                   <OtherChargesSection charges={charges} setCharges={setCharges} />
@@ -100,10 +120,10 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
               address={address}
               cottageNumber={cottageNum ?? 0}
               onConfirmClick={openPopup}
-              startTimeCustom={startTimeCustom}
-              endTimeCustom={endTimeCustom}
-              startTimeManual={startTimeManual}
-              endTimeManual={endTimeManual}
+              startDate={startDate}
+              endDate={endDate}
+              startTime={startTime}
+              endTime={endTime}
             />
             <ConfirmPopupModal 
             visible={isPopupOpen}
