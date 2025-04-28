@@ -37,6 +37,7 @@ export const initCheckInTable = async () => {
 };
 
 // 💾 Save check-in record
+/// edit tables for cottageNumbers and DateTime
 export const saveCheckInData = async (
   firstname: string,
   lastname: string,

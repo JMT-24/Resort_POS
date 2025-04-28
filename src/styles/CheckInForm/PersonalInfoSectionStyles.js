@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
   },
-  textInput: {
+  textInputs: {
     backgroundColor: 'white',
     padding: 10,
     borderRadius: 5,
@@ -71,6 +71,31 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'white',
   },
+
+  textInput: {
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    paddingLeft: 35,
+  },
+
+  calendarIcon: {
+    position: 'absolute',
+    transform: [{scaleX : 0.5}, { scaleY : 0.5}],
+    bottom: 5,
+    left: 2.5,
+    zIndex: 10,
+  },
+  cottageIcon: {
+    position: 'absolute',
+    transform: [{scaleX : 0.5}, { scaleY : 0.5}],
+    bottom: 3.5,
+    left: -2,
+    zIndex: 10,
+  },
+  
 });
 
 export default styles;

@@ -27,7 +27,7 @@ interface SummarySectionProps {
   lastname: string;
   contactNo: string;
   address: string;
-  cottageNumber: number;
+  cottageNumbers: number[];
   onConfirmClick: () => void;
   startDate: string;
   endDate: string;
@@ -42,7 +42,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({
   lastname,
   contactNo,
   address, 
-  cottageNumber,
+  cottageNumbers,
   onConfirmClick,
   startDate,
   endDate,
@@ -63,7 +63,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({
   ];
   const handleSave = () => {
 
-    // await saveCheckInData(firstname, lastname, contactNo, address, guestCounts, charges, cottageNumber);
+    // await saveCheckInData(firstname, lastname, contactNo, address, guestCounts, charges, cottageNumbers);
     // console.log('Saved to SQLite!');
     console.log(startDate + ' date and ' + endDate);
     console.log(startTime + ' time and ' + endTime);

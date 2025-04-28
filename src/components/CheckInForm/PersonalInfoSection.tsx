@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Image, ImageSourcePropType } from 'react-native';
 import styles from '../../styles/CheckInForm/PersonalInfoSectionStyles';
 import ChooseDateModal from '../CheckInFormDate/ChooseDateModal';
 import CottagePickerModal from './CottagePickerModal';
+
+const calendarIcon: ImageSourcePropType = require('../../icons/calendarIcon.png');
+const cottageIcon: ImageSourcePropType = require('../../icons/cottageIcon.png');
+const numberIcon: ImageSourcePropType = require('../../icons/numberIcon.png');
 
 interface Props {
   setModalVisible: (visible: boolean) => void;
@@ -10,9 +14,9 @@ interface Props {
   setLastname: (text: string) => void;
   setContactNo: (text: string) => void;
   setAddress: (text: string) => void;
-  setCottageNum: (number: number) => void;
+  setCottageNums: (numbers: number[]) => void;
   reservedCottages: number[];
-  cottageNum: number;
+  cottageNums: number[];
   setStartDate: (text:string) => void;
   setEndDate: (text:string) => void;
   setStartTime: (text: string) => void;
@@ -21,7 +25,8 @@ interface Props {
 }
 
 const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, setLastname, 
-  setContactNo, setAddress, setCottageNum, reservedCottages, cottageNum, setStartDate, setEndDate, setStartTime, setEndTime, datetime}) => {
+  setContactNo, setAddress, reservedCottages, cottageNums, setStartDate, setEndDate, setStartTime, setEndTime, datetime,
+  setCottageNums}) => {
   const [showDateModal, setShowDateModal] = useState(false);
   const [showCottageModal, setCottageModal] = useState(false);
 
@@ -42,12 +47,14 @@ const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, s
           </View>
           <View style={styles.formField}>
             <Text style={styles.formLabel}>Contact No.</Text>
+            <Image source={numberIcon} style={styles.calendarIcon}/>
             <TextInput style={styles.textInput} placeholder="Enter Contact No. (Optional)" 
               keyboardType="phone-pad" onChangeText={setContactNo} />
           </View>
           <View style={styles.formField}>
             <Text style={styles.formLabel}>Date</Text>
             <TouchableOpacity onPress={() => setShowDateModal(true)}>
+              <Image source={calendarIcon} style={styles.calendarIcon}/>
               <TextInput
                 style={styles.textInput}
                 placeholder="Enter Date"
@@ -71,10 +78,11 @@ const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, s
           <View style={styles.formField}>
             <Text style={styles.formLabel}>Cottage</Text>
             <TouchableOpacity onPress={() => setCottageModal(true)}>
+              <Image source={cottageIcon} style={styles.cottageIcon} />
               <TextInput
                 style={styles.textInput}
                 placeholder="Choose Cottage Number"
-                value={cottageNum !== 0 ? cottageNum.toString(): ""} 
+                value={cottageNums.length > 0 ? cottageNums.join(', ') : ""} 
                 editable={false}         
                 pointerEvents="none"      
               />
@@ -88,7 +96,7 @@ const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, s
       setStartDate={setStartDate} setEndDate={setEndDate} setStartTime={setStartTime} setEndTime={setEndTime}/>
       {/* Cottage Picker Modal */}
       <CottagePickerModal modalVisible={showCottageModal} setModalVisible={setCottageModal} 
-       SetCottageNumber={setCottageNum} reservedCottages={reservedCottages}/>
+       reservedCottages={reservedCottages} setCottageNumbers={setCottageNums}/>
 
     </View>
   );

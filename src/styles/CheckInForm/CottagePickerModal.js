@@ -70,12 +70,13 @@ const styles = StyleSheet.create({
 
     available: { 
         backgroundColor: "#FFFFFF",
-        color: "black",
     },
 
     unavailable: { 
         backgroundColor: '#FFA0A0',
-        color: '#fff',
+    },
+    picked: {
+        backgroundColor: 'rgba(99, 235, 94, 0.8)',
     },
 
     cottageText: { 

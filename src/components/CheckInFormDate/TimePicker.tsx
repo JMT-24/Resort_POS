@@ -88,13 +88,16 @@ const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp }) => {
     };
   
 
-    const formatTime = (date: Date) =>
-        date.toLocaleTimeString('en-PH', { 
-          timeZone: 'Asia/Manila', 
-          hour: '2-digit', 
-          minute: '2-digit', 
-          hour12: true 
-        });
+  const formatTime = (date: Date) =>
+    date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+//   const formatTime = (date: Date) =>
+//     date.toLocaleTimeString('en-PH', { 
+//       timeZone: 'Asia/Manila', 
+//       hour: '2-digit', 
+//       minute: '2-digit', 
+//       hour12: true 
+//     });
 
   function getTimeFromISOString(isoString: string): string {
     const date = new Date(isoString);
