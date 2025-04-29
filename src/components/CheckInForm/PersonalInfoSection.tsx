@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Image, ImageSourcePropType } from 'react-native';
 import styles from '../../styles/CheckInForm/PersonalInfoSectionStyles';
-import ChooseDateModal from '../CheckInFormDate/ChooseDateModal';
-import CottagePickerModal from './CottagePickerModal';
+import ChooseDateModal, {ChooseDateModalHandle} from '../CheckInFormDate/ChooseDateModal';
+import CottagePickerModal, {ChooseCottageNumbersHandle} from './CottagePickerModal';
 
 const calendarIcon: ImageSourcePropType = require('../../icons/calendarIcon.png');
 const cottageIcon: ImageSourcePropType = require('../../icons/cottageIcon.png');
@@ -22,20 +22,27 @@ interface Props {
   setStartTime: (text: string) => void;
   setEndTime: (text: string) => void;
   datetime: string;
-  isCustomTime: boolean;
   setIsCustomTime: (choice: boolean) => void;
 }
 
 const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, setLastname, 
   setContactNo, setAddress, reservedCottages, cottageNums, setStartDate, setEndDate, setStartTime, setEndTime, datetime,
-  setCottageNums, isCustomTime, setIsCustomTime}) => {
+  setCottageNums, setIsCustomTime}) => {
   const [showDateModal, setShowDateModal] = useState(false);
   const [showCottageModal, setCottageModal] = useState(false);
+  const chooseDateRef = useRef<ChooseDateModalHandle>(null);
+  const chooseCottageRef = useRef<ChooseCottageNumbersHandle>(null);
+
+  const triggerReset = () => {
+    chooseDateRef.current?.resetDateTime();
+    chooseCottageRef.current?.cancelBtn();
+    console.log("Reset Personal Complete");
+  }
 
   return (
     <View style={styles.checkInFormContainer}>
       <View style={styles.checkInPageTop}>
-        <TouchableOpacity onPress={() => setModalVisible(false)}>
+        <TouchableOpacity onPress={() => {triggerReset(); setModalVisible(false);}}>
           <Text style={styles.exitButton}>{`<`} Exit</Text>
         </TouchableOpacity>
       </View>
@@ -96,10 +103,10 @@ const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, s
       {/* ChooseDateModal */}
       <ChooseDateModal modalVisible={showDateModal} setModalVisible={setShowDateModal}
       setStartDate={setStartDate} setEndDate={setEndDate} setStartTime={setStartTime} setEndTime={setEndTime}
-      isCustomTime={isCustomTime} setIsCustomTime={setIsCustomTime}/>
+      setIsCustomTime={setIsCustomTime} ref={chooseDateRef}/>
       {/* Cottage Picker Modal */}
       <CottagePickerModal modalVisible={showCottageModal} setModalVisible={setCottageModal} 
-       reservedCottages={reservedCottages} setCottageNumbers={setCottageNums}/>
+       reservedCottages={reservedCottages} setCottageNumbers={setCottageNums} ref={chooseCottageRef}/>
 
     </View>
   );

@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     paddingLeft: 35,
+    fontSize: 13,
   },
 
   calendarIcon: {

@@ -106,7 +106,6 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                     setStartTime={setStarTime}
                     setEndTime={setEndTime}
                     datetime={datetime}
-                    isCustomTime={isCustomTime}
                     setIsCustomTime={setIsCustomTime}
                   />
                   <GuestCountSection guestCounts={guestCounts} setGuestCounts={setGuestCounts} />
@@ -128,6 +127,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
               endDate={endDate}
               startTime={startTime}
               endTime={endTime}
+              isCustomTime={isCustomTime}
             />
             <ConfirmPopupModal 
             visible={isPopupOpen}

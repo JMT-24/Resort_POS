@@ -34,11 +34,7 @@ const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp, setIsCu
     setStartTime(startTime); // e.g., "8:00 AM"
     setEndTime(endTime);     // e.g., "6:00 PM"
   
-    if (!isCustomTime) {
-    //   setStartTimeManual(startTime);
-    //   setEndTimeManual(endTime);
-    //   setStartTimeCustom('None');
-    //   setEndTimeCustom('None');
+    if (!isCustomTimeTemp) {
       setStartTimeTemp(startTime);
       setEndTimeTemp(endTime);
     }

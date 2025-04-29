@@ -1,4 +1,4 @@
-import React, { use, useState, useEffect } from "react";
+import React, { use, useState, useEffect, forwardRef, useImperativeHandle } from "react";
 import { View, Text, TouchableOpacity, Modal, ScrollView, Switch, Image } from "react-native";
 import styles from '../../styles/CheckInForm/CottagePickerModal';
 
@@ -7,10 +7,28 @@ interface Props {
   setModalVisible: (visible: boolean) => void;
   reservedCottages: number[];
   setCottageNumbers: (numbers: number[]) => void;
-}
+};
 
-const CottagePickerModal: React.FC<Props> = ({ 
-  modalVisible, setModalVisible, reservedCottages, setCottageNumbers }) => {
+export type ChooseCottageNumbersHandle = {
+  cancelBtn: () => void;
+};
+
+  const CottagePickerModal = forwardRef<ChooseCottageNumbersHandle, Props>(({
+    modalVisible, setModalVisible, reservedCottages, setCottageNumbers
+  }, ref) => {
+    
+    const cancelBtn = async() => {
+      await setCottageNumbers([]);
+      await setTempPickedCottages([]);
+      console.log("Emptied picked cottages");
+      setModalVisible(false);
+    }; 
+
+    useImperativeHandle(ref, () => ({
+      cancelBtn,
+    }));
+
+
     var numOfCottages = 14;
     const cottages = Array.from({ length: numOfCottages }, (_, i) => i + 1);
 
@@ -39,13 +57,6 @@ const CottagePickerModal: React.FC<Props> = ({
       console.log("Saved: " + tempPickedCottages);
       setModalVisible(false);
     };
-
-    const cancelBtn = async() => {
-      await setCottageNumbers([]);
-      await setTempPickedCottages([]);
-      console.log("Emptied picked cottages");
-      setModalVisible(false);
-    }; 
 
     return (
       <Modal
@@ -103,6 +114,6 @@ const CottagePickerModal: React.FC<Props> = ({
         </View>
       </Modal>
     );
-  };
+  });
 
 export default CottagePickerModal;

@@ -33,6 +33,7 @@ interface SummarySectionProps {
   endDate: string;
   startTime: string;
   endTime: string;
+  isCustomTime: boolean;
 }
 
 const SummarySection: React.FC<SummarySectionProps> = ({ 
@@ -47,7 +48,8 @@ const SummarySection: React.FC<SummarySectionProps> = ({
   startDate,
   endDate,
   startTime,
-  endTime
+  endTime,
+  isCustomTime,
 }) => {
   const summaryItems = [
     { label: 'Adults', value: guestCounts.adult },
@@ -63,12 +65,13 @@ const SummarySection: React.FC<SummarySectionProps> = ({
   ];
   const handleSave = () => {
 
-    // await saveCheckInData(firstname, lastname, contactNo, address, guestCounts, charges, cottageNumbers);
+    // await saveCheckInData(firstname, lastname, contactNo, address, guestCounts, charges, cottageNumbers, isCustomTime);
     // console.log('Saved to SQLite!');
     console.log(startDate + ' date and ' + endDate);
     console.log(startTime + ' time and ' + endTime);
     console.log(new Date() + " date now");
     console.log("Reserved Cottages: " + cottageNumbers);
+    console.log("Custome Time " + isCustomTime);
     onConfirmClick();
   };
 

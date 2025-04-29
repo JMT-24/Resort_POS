@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { use, useState, forwardRef, useImperativeHandle } from "react";
 import { View, Text, TouchableOpacity, Modal, ScrollView, Switch, Image } from "react-native";
 import styles from '../../styles/CheckInFormDate/ChooseDateStyles';
 import DatePicker from "./DatePicker";
@@ -11,12 +11,34 @@ interface Props {
   setEndDate: (text: string) => void;
   setStartTime: (text: string) => void;
   setEndTime: (text: string) => void;
-  isCustomTime: boolean;
   setIsCustomTime: (choice: boolean) => void;
 }
 
-const ChooseDateModal: React.FC<Props> = ({ modalVisible, setModalVisible, setStartDate, setEndDate, setStartTime, setEndTime,
-  isCustomTime, setIsCustomTime }) => {
+export type ChooseDateModalHandle = {
+  resetDateTime: () => void;
+};
+
+const ChooseDateModal = forwardRef<ChooseDateModalHandle, Props>(({
+  modalVisible, setModalVisible, setStartDate, setEndDate, setStartTime, setEndTime,
+  setIsCustomTime
+}, ref) => {
+
+  const resetDateTime = () => {
+    setStartDate('None');
+    setEndDate('None');
+    setStartTime('None');
+    setEndTime('None');
+    setStartDateTemp('None');
+    setEndDateTemp('None');
+    setStartTimeTemp('None');
+    setEndTimeTemp('None');
+    setIsCustomTime(false);
+    setIsCustomTimeTemp(false);
+  }
+
+  useImperativeHandle(ref, () => ({
+    resetDateTime,
+  }));
 
   const applyBtn = async () => {
     console.log("Start Date: " +startDateTemp+ " End Date: " +endDateTemp);
@@ -43,20 +65,6 @@ const ChooseDateModal: React.FC<Props> = ({ modalVisible, setModalVisible, setSt
     setEndTime(endTimeTemp);
     setIsCustomTime(isCustomTimeTemp);
   }
-
-  const resetDateTime = () => {
-    setStartDate('None');
-    setEndDate('None');
-    setStartTime('None');
-    setEndTime('None');
-    setStartDateTemp('None');
-    setEndDateTemp('None');
-    setStartTimeTemp('None');
-    setEndTimeTemp('None');
-    setIsCustomTime(false);
-    setIsCustomTimeTemp(false);
-  }
-
 
   const [startTimeTemp, setStartTimeTemp] = useState('None');
   const [endTimeTemp, setEndTimeTemp] = useState('None');
@@ -107,6 +115,6 @@ const ChooseDateModal: React.FC<Props> = ({ modalVisible, setModalVisible, setSt
       </View>
     </Modal>
   );
-};
+});
 
 export default ChooseDateModal;
