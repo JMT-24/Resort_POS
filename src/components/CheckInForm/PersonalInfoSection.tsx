@@ -22,11 +22,13 @@ interface Props {
   setStartTime: (text: string) => void;
   setEndTime: (text: string) => void;
   datetime: string;
+  isCustomTime: boolean;
+  setIsCustomTime: (choice: boolean) => void;
 }
 
 const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, setLastname, 
   setContactNo, setAddress, reservedCottages, cottageNums, setStartDate, setEndDate, setStartTime, setEndTime, datetime,
-  setCottageNums}) => {
+  setCottageNums, isCustomTime, setIsCustomTime}) => {
   const [showDateModal, setShowDateModal] = useState(false);
   const [showCottageModal, setCottageModal] = useState(false);
 
@@ -93,7 +95,8 @@ const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, s
 
       {/* ChooseDateModal */}
       <ChooseDateModal modalVisible={showDateModal} setModalVisible={setShowDateModal}
-      setStartDate={setStartDate} setEndDate={setEndDate} setStartTime={setStartTime} setEndTime={setEndTime}/>
+      setStartDate={setStartDate} setEndDate={setEndDate} setStartTime={setStartTime} setEndTime={setEndTime}
+      isCustomTime={isCustomTime} setIsCustomTime={setIsCustomTime}/>
       {/* Cottage Picker Modal */}
       <CottagePickerModal modalVisible={showCottageModal} setModalVisible={setCottageModal} 
        reservedCottages={reservedCottages} setCottageNumbers={setCottageNums}/>

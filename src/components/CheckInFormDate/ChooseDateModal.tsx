@@ -11,13 +11,17 @@ interface Props {
   setEndDate: (text: string) => void;
   setStartTime: (text: string) => void;
   setEndTime: (text: string) => void;
+  isCustomTime: boolean;
+  setIsCustomTime: (choice: boolean) => void;
 }
 
-const ChooseDateModal: React.FC<Props> = ({ modalVisible, setModalVisible, setStartDate, setEndDate, setStartTime, setEndTime }) => {
+const ChooseDateModal: React.FC<Props> = ({ modalVisible, setModalVisible, setStartDate, setEndDate, setStartTime, setEndTime,
+  isCustomTime, setIsCustomTime }) => {
 
   const applyBtn = async () => {
     console.log("Start Date: " +startDateTemp+ " End Date: " +endDateTemp);
     console.log("Start Time: " +startTimeTemp+ " End Time: " +endTimeTemp);
+    console.log("Custom " + isCustomTimeTemp);
     await saveDateTime();
     setModalVisible(false);
     //make logic to prevent apply if date or time is missing
@@ -29,6 +33,7 @@ const ChooseDateModal: React.FC<Props> = ({ modalVisible, setModalVisible, setSt
     setModalVisible(false);
     console.log("Start Date: " +startDateTemp+ " End Date: " +endDateTemp);
     console.log("Start Time: " +startTimeTemp+ " End Time: " +endTimeTemp);
+    console.log("Custom " +isCustomTimeTemp);
   }
 
   const saveDateTime = () => {
@@ -36,6 +41,7 @@ const ChooseDateModal: React.FC<Props> = ({ modalVisible, setModalVisible, setSt
     setEndDate(endDateTemp);
     setStartTime(startTimeTemp);
     setEndTime(endTimeTemp);
+    setIsCustomTime(isCustomTimeTemp);
   }
 
   const resetDateTime = () => {
@@ -47,6 +53,8 @@ const ChooseDateModal: React.FC<Props> = ({ modalVisible, setModalVisible, setSt
     setEndDateTemp('None');
     setStartTimeTemp('None');
     setEndTimeTemp('None');
+    setIsCustomTime(false);
+    setIsCustomTimeTemp(false);
   }
 
 
@@ -54,6 +62,7 @@ const ChooseDateModal: React.FC<Props> = ({ modalVisible, setModalVisible, setSt
   const [endTimeTemp, setEndTimeTemp] = useState('None');
   const [startDateTemp, setStartDateTemp] = useState('None');
   const [endDateTemp, setEndDateTemp] = useState('None');
+  const [isCustomTimeTemp, setIsCustomTimeTemp] = useState<boolean>(false);
 
   return (
     <Modal
@@ -79,7 +88,8 @@ const ChooseDateModal: React.FC<Props> = ({ modalVisible, setModalVisible, setSt
 
                     <DatePicker setModalVisible={setModalVisible} setStartDateText={setStartDateTemp} setEndDateText={setEndDateTemp}/>
                     
-                    <TimePicker modalVisible setStartTimeTemp={setStartTimeTemp} setEndTimeTemp={setEndTimeTemp}/>
+                    <TimePicker modalVisible setStartTimeTemp={setStartTimeTemp} setEndTimeTemp={setEndTimeTemp}
+                    setIsCustomTimeTemp={setIsCustomTimeTemp} isCustomTimeTemp={isCustomTimeTemp}/>
 
                     <View style={styles.buttonView}>
                       <TouchableOpacity style={styles.cancelbtn} onPress={() => cancelBtn()}>

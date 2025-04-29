@@ -11,11 +11,12 @@ interface Props {
   modalVisible: boolean;
   setStartTimeTemp: (text: string) => void;
   setEndTimeTemp: (text: string) => void;
+  setIsCustomTimeTemp: (choice: boolean) => void;
+  isCustomTimeTemp: boolean;
 }
 
-const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp }) => {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previous => !previous);
+const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp, setIsCustomTimeTemp, isCustomTimeTemp }) => {
+  const toggleSwitch = () => setIsCustomTimeTemp(!isCustomTimeTemp);
   
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -33,7 +34,7 @@ const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp }) => {
     setStartTime(startTime); // e.g., "8:00 AM"
     setEndTime(endTime);     // e.g., "6:00 PM"
   
-    if (!isEnabled) {
+    if (!isCustomTime) {
     //   setStartTimeManual(startTime);
     //   setEndTimeManual(endTime);
     //   setStartTimeCustom('None');
@@ -50,7 +51,7 @@ const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp }) => {
     const [pickerMode, setPickerMode] = useState<'start' | 'end' | null>(null);
     
     const showPicker = (mode: 'start' | 'end') => {
-        if (!isEnabled) return;  // Only allow picker if enabled
+        if (!isCustomTimeTemp) return;  // Only allow picker if enabled
         setPickerMode(mode);
     };
     
@@ -66,7 +67,7 @@ const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp }) => {
             setStartTimeCustom2(selectedDate);
             console.log('Start Time selected:', selectedDate);
     
-            if (isEnabled) {
+            if (isCustomTimeTemp) {
                 const customStartTime = getTimeFromISOString(selectedDate.toISOString());
                 // setStartTimeCustom(customStartTime);
                 // setStartTimeManual('None');
@@ -77,7 +78,7 @@ const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp }) => {
             setEndTimeCustom2(selectedDate);
             console.log('End Time selected:', selectedDate);
     
-            if (isEnabled) {
+            if (isCustomTimeTemp) {
                 const customEndTime = getTimeFromISOString(selectedDate.toISOString())
                 // setEndTimeCustom(customEndTime);
                 // setEndTimeManual('None');
@@ -121,10 +122,10 @@ const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp }) => {
             <View style={styles.hourToggleView}>
                 <Switch
                 trackColor={{ false: '#ccc', true: '#007aff' }} // blue when active
-                thumbColor={isEnabled ? '#fff' : '#fff'} // white circle
+                thumbColor={isCustomTimeTemp ? '#fff' : '#fff'} // white circle
                 ios_backgroundColor="#ccc"
                 onValueChange={toggleSwitch}
-                value={isEnabled}
+                value={isCustomTimeTemp}
                 style={styles.hourTogglebtn}
                 />
             </View>
@@ -140,22 +141,22 @@ const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp }) => {
                 style={[
                     styles.timePickerStyle,
                     {
-                    backgroundColor: isEnabled? "#F1F3F7": "white"
+                    backgroundColor: isCustomTimeTemp? "#F1F3F7": "white"
                     }
                 ]}
                 onPress={() => {
-                    if (!isEnabled) {
+                    if (!isCustomTimeTemp) {
                     setDropdownVisible(true);
                     }
                 }}
-                activeOpacity={isEnabled ? 1 : 0.7}
+                activeOpacity={isCustomTimeTemp ? 1 : 0.7}
                 >
                 <Text 
                     style ={
                     [
                         styles.timePickerText,
                         {
-                        color: isEnabled? "#6D758F" : "black",
+                        color: isCustomTimeTemp? "#6D758F" : "black",
                         }
                     ]
                     }
@@ -203,7 +204,7 @@ const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp }) => {
                 style={[
                     styles.timePickerStyle,
                     {
-                    backgroundColor: isEnabled ? '#F1F3F7' : 'white',
+                    backgroundColor: isCustomTimeTemp ? '#F1F3F7' : 'white',
                     }
                 ]}
                 activeOpacity={1}
@@ -211,7 +212,7 @@ const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp }) => {
                 <Text style={
                     [
                     styles.timePickerText,
-                    { color: isEnabled ? '#6D758F' : 'black' }
+                    { color: isCustomTimeTemp ? '#6D758F' : 'black' }
                     ]
                 }>
                     {endTime || 'End Time'}
@@ -226,7 +227,7 @@ const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp }) => {
                         style={[
                         styles.timePickerStyle,
                         {
-                            backgroundColor: isEnabled ? 'white' : '#F1F3F7'
+                            backgroundColor: isCustomTimeTemp ? 'white' : '#F1F3F7'
                         }
                         ]}
                         onPress={() => showPicker('start')}
@@ -234,9 +235,9 @@ const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp }) => {
                     >
                         <Text
                         style={{
-                            color: isEnabled ? 'black' : '#6D758F',
+                            color: isCustomTimeTemp ? 'black' : '#6D758F',
                             fontSize: 23,
-                            fontWeight: isEnabled ? 'bold' : 'normal'
+                            fontWeight: isCustomTimeTemp ? 'bold' : 'normal'
                         }}
                         >
                         {formatTime(startTimeCustom2)}
@@ -250,7 +251,7 @@ const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp }) => {
                         style={[
                         styles.timePickerStyle,
                         {
-                            backgroundColor: isEnabled ? 'white' : '#F1F3F7'
+                            backgroundColor: isCustomTimeTemp ? 'white' : '#F1F3F7'
                         }
                         ]}
                         onPress={() => showPicker('end')}
@@ -258,9 +259,9 @@ const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp }) => {
                     >
                         <Text
                         style={{
-                            color: isEnabled ? 'black' : '#6D758F',
+                            color: isCustomTimeTemp ? 'black' : '#6D758F',
                             fontSize: 23,
-                            fontWeight: isEnabled ? 'bold' : 'normal'
+                            fontWeight: isCustomTimeTemp ? 'bold' : 'normal'
                         }}
                         >
                         {formatTime(endTimeCustom2)}

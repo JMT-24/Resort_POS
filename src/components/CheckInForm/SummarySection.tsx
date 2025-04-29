@@ -68,6 +68,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({
     console.log(startDate + ' date and ' + endDate);
     console.log(startTime + ' time and ' + endTime);
     console.log(new Date() + " date now");
+    console.log("Reserved Cottages: " + cottageNumbers);
     onConfirmClick();
   };
 

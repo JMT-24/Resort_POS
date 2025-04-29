@@ -77,6 +77,8 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
     ? `${formatDate(startDate)} - ${formatDate(endDate)} : ${startTime} - ${endTime}`
     : 'All None';
 
+  const [isCustomTime, setIsCustomTime] = useState(false);
+
   
   return (
     <View>
@@ -104,6 +106,8 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
                     setStartTime={setStarTime}
                     setEndTime={setEndTime}
                     datetime={datetime}
+                    isCustomTime={isCustomTime}
+                    setIsCustomTime={setIsCustomTime}
                   />
                   <GuestCountSection guestCounts={guestCounts} setGuestCounts={setGuestCounts} />
                   <OtherChargesSection charges={charges} setCharges={setCharges} />
