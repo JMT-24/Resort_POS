@@ -1,7 +1,7 @@
-import React, { use, useState, forwardRef, useImperativeHandle } from "react";
+import React, { use, useRef, useState, forwardRef, useImperativeHandle } from "react";
 import { View, Text, TouchableOpacity, Modal, ScrollView, Switch, Image } from "react-native";
 import styles from '../../styles/CheckInFormDate/ChooseDateStyles';
-import DatePicker from "./DatePicker";
+import DatePicker, {DatePickerHandle} from "./DatePicker";
 import TimePicker from "./TimePicker";
 
 interface Props {
@@ -12,15 +12,20 @@ interface Props {
   setStartTime: (text: string) => void;
   setEndTime: (text: string) => void;
   setIsCustomTime: (choice: boolean) => void;
+  startDate: string;
+  endDate: string;
+  startTime: string;
+  endTime: string;
 }
 
 export type ChooseDateModalHandle = {
   resetDateTime: () => void;
+  rememberSavedDatetime: () => void;
 };
 
 const ChooseDateModal = forwardRef<ChooseDateModalHandle, Props>(({
   modalVisible, setModalVisible, setStartDate, setEndDate, setStartTime, setEndTime,
-  setIsCustomTime
+  setIsCustomTime, startDate, endDate, startTime, endTime
 }, ref) => {
 
   const resetDateTime = () => {
@@ -36,8 +41,15 @@ const ChooseDateModal = forwardRef<ChooseDateModalHandle, Props>(({
     setIsCustomTimeTemp(false);
   }
 
+  const rememberSavedDatetime = () => {
+    chooseDateRef.current?.rememberSavedDate();
+    //console.log("2 is called");
+    //console.log(chooseDateRef.current);
+  }
+
   useImperativeHandle(ref, () => ({
     resetDateTime,
+    rememberSavedDatetime,
   }));
 
   const applyBtn = async () => {
@@ -71,6 +83,7 @@ const ChooseDateModal = forwardRef<ChooseDateModalHandle, Props>(({
   const [startDateTemp, setStartDateTemp] = useState('None');
   const [endDateTemp, setEndDateTemp] = useState('None');
   const [isCustomTimeTemp, setIsCustomTimeTemp] = useState<boolean>(false);
+  const chooseDateRef = useRef<DatePickerHandle>(null);
 
   return (
     <Modal
@@ -94,10 +107,12 @@ const ChooseDateModal = forwardRef<ChooseDateModalHandle, Props>(({
                         </TouchableOpacity>
                     </View>
 
-                    <DatePicker setModalVisible={setModalVisible} setStartDateText={setStartDateTemp} setEndDateText={setEndDateTemp}/>
+                    <DatePicker setStartDateText={setStartDateTemp} setEndDateText={setEndDateTemp} ref={chooseDateRef}
+                    startDateText={startDate} endDateText={endDate} modalVisible={modalVisible}/>
                     
-                    <TimePicker modalVisible setStartTimeTemp={setStartTimeTemp} setEndTimeTemp={setEndTimeTemp}
-                    setIsCustomTimeTemp={setIsCustomTimeTemp} isCustomTimeTemp={isCustomTimeTemp}/>
+                    <TimePicker modalVisible={modalVisible} setStartTimeTemp={setStartTimeTemp} setEndTimeTemp={setEndTimeTemp}
+                    setIsCustomTimeTemp={setIsCustomTimeTemp} isCustomTimeTemp={isCustomTimeTemp} savedStartTime={startTime}
+                    savedEndTime={endTime}/>
 
                     <View style={styles.buttonView}>
                       <TouchableOpacity style={styles.cancelbtn} onPress={() => cancelBtn()}>

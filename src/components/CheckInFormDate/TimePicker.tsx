@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, Modal, Switch, Image, ImageSourcePropType } from "react-native";
 import styles from '../../styles/CheckInFormDate/TimePicker';
 import { TextInput } from "react-native-gesture-handler";
@@ -13,9 +13,13 @@ interface Props {
   setEndTimeTemp: (text: string) => void;
   setIsCustomTimeTemp: (choice: boolean) => void;
   isCustomTimeTemp: boolean;
+  savedStartTime: string;
+  savedEndTime: string;
 }
 
-const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp, setIsCustomTimeTemp, isCustomTimeTemp }) => {
+const TimePicker: React.FC<Props> = ({ modalVisible, setStartTimeTemp, setEndTimeTemp, setIsCustomTimeTemp, isCustomTimeTemp,
+    savedStartTime, savedEndTime
+ }) => {
   const toggleSwitch = () => setIsCustomTimeTemp(!isCustomTimeTemp);
   
   const [startTime, setStartTime] = useState('');
@@ -108,6 +112,14 @@ const TimePicker: React.FC<Props> = ({ setStartTimeTemp, setEndTimeTemp, setIsCu
   
     return `${formattedHours}:${formattedMinutes} ${ampm}`;
   }
+
+  useEffect(() => {
+    if (modalVisible) {
+        console.log(startTime + ", temp " + endTime);
+        console.log(savedStartTime + ", saved " + savedEndTime);
+    }
+
+  }, [modalVisible]);
 
   return (
 

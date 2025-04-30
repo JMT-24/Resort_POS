@@ -23,11 +23,16 @@ interface Props {
   setEndTime: (text: string) => void;
   datetime: string;
   setIsCustomTime: (choice: boolean) => void;
+  startDate: string;
+  endDate: string;
+  startTime: string;
+  endTime: string;
+
 }
 
 const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, setLastname, 
   setContactNo, setAddress, reservedCottages, cottageNums, setStartDate, setEndDate, setStartTime, setEndTime, datetime,
-  setCottageNums, setIsCustomTime}) => {
+  setCottageNums, setIsCustomTime, startDate, endDate, startTime, endTime}) => {
   const [showDateModal, setShowDateModal] = useState(false);
   const [showCottageModal, setCottageModal] = useState(false);
   const chooseDateRef = useRef<ChooseDateModalHandle>(null);
@@ -37,6 +42,11 @@ const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, s
     chooseDateRef.current?.resetDateTime();
     chooseCottageRef.current?.cancelBtn();
     console.log("Reset Personal Complete");
+  }
+
+  const rememberDateTime = () => {
+    chooseDateRef.current?.rememberSavedDatetime();
+    //console.log("1 called");
   }
 
   return (
@@ -62,7 +72,7 @@ const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, s
           </View>
           <View style={styles.formField}>
             <Text style={styles.formLabel}>Date</Text>
-            <TouchableOpacity onPress={() => setShowDateModal(true)}>
+            <TouchableOpacity onPress={() => {setShowDateModal(true); rememberDateTime();}}>
               <Image source={calendarIcon} style={styles.calendarIcon}/>
               <TextInput
                 style={styles.textInput}
@@ -103,7 +113,8 @@ const PersonalInfoSection: React.FC<Props> = ({ setModalVisible, setFirstname, s
       {/* ChooseDateModal */}
       <ChooseDateModal modalVisible={showDateModal} setModalVisible={setShowDateModal}
       setStartDate={setStartDate} setEndDate={setEndDate} setStartTime={setStartTime} setEndTime={setEndTime}
-      setIsCustomTime={setIsCustomTime} ref={chooseDateRef}/>
+      setIsCustomTime={setIsCustomTime} ref={chooseDateRef} startDate={startDate} endDate={endDate}
+      startTime={startTime} endTime={endTime}/>
       {/* Cottage Picker Modal */}
       <CottagePickerModal modalVisible={showCottageModal} setModalVisible={setCottageModal} 
        reservedCottages={reservedCottages} setCottageNumbers={setCottageNums} ref={chooseCottageRef}/>

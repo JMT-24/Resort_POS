@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
 import { View, Text, TouchableOpacity, Modal, ScrollView, Switch, Image } from "react-native";
 import styles from '../../styles/CheckInFormDate/DatePicker';
 import { Calendar } from "react-native-calendars";
 
 interface Props {
-  setModalVisible: (visible: boolean) => void;
   setStartDateText: (text: string) => void;
   setEndDateText: (text: string) => void;
+  startDateText: string;
+  endDateText: string;
+  modalVisible: boolean;
 }
 
 type CalendarDay = {
@@ -17,7 +19,21 @@ type CalendarDay = {
     timestamp: number;
 };
 
-const DatePicker: React.FC<Props> = ({ setModalVisible, setStartDateText, setEndDateText }) => {
+export type DatePickerHandle = {
+  rememberSavedDate: () => void;
+}
+
+const DatePicker = forwardRef<DatePickerHandle, Props>(({modalVisible, setStartDateText, setEndDateText, startDateText, endDateText }, ref) => {
+
+  const rememberSavedDate = () => {
+    //console.log("test");
+  }
+
+  useImperativeHandle(ref, () => ({
+    rememberSavedDate,
+  }));
+
+
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
 
@@ -99,6 +115,27 @@ const DatePicker: React.FC<Props> = ({ setModalVisible, setStartDateText, setEnd
     return marked;
   };
 
+  
+  useEffect(() => {
+    if (modalVisible) {
+      console.log(startDateText + ",real " +endDateText);
+      // console.log(startDate + ",temp " + endDate);
+
+      if ( (startDateText && endDateText) && (!(startDateText == "None") && !(endDateText == "None")) ) {
+        if (startDateText === endDateText) {
+          // 1-day reservation
+          setStartDate(startDateText);
+          setEndDate(null);
+        } else {
+          // Date range reservation
+          setStartDate(startDateText);
+          setEndDate(endDateText);
+        }
+      }
+    }
+    
+  }, [modalVisible]);
+
   return (
         <View style={styles.middleView}>
             <View style={styles.calendarBox}>
@@ -165,6 +202,6 @@ const DatePicker: React.FC<Props> = ({ setModalVisible, setStartDateText, setEnd
             </Text>
         </View>
   );
-};
+});
 
 export default DatePicker;
