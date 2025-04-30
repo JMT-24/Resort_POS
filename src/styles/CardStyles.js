@@ -12,36 +12,45 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 3,
   },
+  topHeaderCont: {
+    //backgroundColor: '#EEF2FF',
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  guestTypeCont: {
+    backgroundColor: '#EEF2FF',
+    paddingHorizontal: 10,
+    paddingVertical: 4
+  },
+  timeCounterLabelCont: {
+    flexDirection: "row",
+    //backgroundColor: "red",
+    width: 95,
+    justifyContent: "space-evenly",
+  },
+  timeCounterLabel: {
+    fontSize: 10,
+    color: "#0E00FF",
+  },
   cardHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
   },
   guestName: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: 'bold',
     color: "#2388FF",
     flex: 1,
   },
-  cottageNumTag: {
+  headerVioletCont: {
     backgroundColor: '#EEF2FF',
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     paddingVertical: 4,
     marginLeft: 5,
   },
-  cottageNumText: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: "#0E00FF",
-  },
-  dateTag: {
-    backgroundColor: '#EEF2FF',
-    paddingHorizontal: 15,
-    paddingVertical: 4,
-    marginLeft: 10,
-  },
-  dateText: {
-    fontSize: 14,
+  violetText: {
+    fontSize: 12,
     fontWeight: 'bold',
     color: "#0E00FF",
   },
@@ -54,13 +63,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginVertical: 10,
     //backgroundColor: "gray",
+    marginTop: 10,
+  },
+  detailsGrid2: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    //backgroundColor: "gray",
+    marginBottom: 20,
   },
   detailsRow: {
-    width: 80, 
     //backgroundColor: "yellow",
     justifyContent: "space-between", 
+  },
+  detailsRow2: {
+    //backgroundColor: "yellow",
+    justifyContent: "space-between",
   },
   hr: {
     borderBottomWidth: 1,
@@ -79,11 +97,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#000',
   },
-  buttonRow: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    height: 60,
-    //backgroundColor: "blue",
+  otherChargesCont: {
+    flexDirection: "row", 
+    //backgroundColor: "red", 
+    justifyContent: "space-between"
+  },
+  leftBottomCont: {
+    justifyContent: "space-between", 
+    paddingVertical: 10,
+  },
+  BottomRowCont: {
+    //backgroundColor: "green", 
+    width: 395
+  },
+  assignStaffCont: {
+    //backgroundColor: "red",
   },
   assignContainer: {
     flexDirection: 'row',
@@ -114,9 +142,13 @@ const styles = StyleSheet.create({
   transactionDate: {
     fontSize: 10,
   },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    //backgroundColor: "blue",
+  },
   button: {
-    paddingVertical: 10,
-    paddingRight: 10,
+    height: 50,
     borderWidth: 1,
     borderColor: "#2388FF",
     marginLeft: 20,
@@ -124,8 +156,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: 115,
-    backgroundColor: "#FFD8D8",
+    //backgroundColor: "#FFD8D8",
     flexDirection: "row",
+    paddingRight: 10,
   },
   buttonIcon: {
     transform: [{scaleX: .6},{scaleY: .6}],

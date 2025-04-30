@@ -43,7 +43,7 @@ const TimePicker: React.FC<Props> = ({ modalVisible, setStartTimeTemp, setEndTim
       setEndTimeTemp(endTime);
     }
   
-    setDropdownVisible(false);
+        setDropdownVisible(false);
     };
     
     const [startTimeCustom2, setStartTimeCustom2] = useState<Date>(new Date());
@@ -115,10 +115,20 @@ const TimePicker: React.FC<Props> = ({ modalVisible, setStartTimeTemp, setEndTim
 
   useEffect(() => {
     if (modalVisible) {
-        console.log(startTime + ", temp " + endTime);
-        console.log(savedStartTime + ", saved " + savedEndTime);
+        // console.log(startTime + ", temp " + endTime);
+        // console.log("Custom is " + isCustomTimeTemp);
+        // console.log(savedStartTime + ", saved " + savedEndTime);
+        if (!isCustomTimeTemp) {
+            if (savedStartTime == "None" || savedEndTime == "None") {
+                setStartTime("Start Time")
+                setEndTime("End Time");
+            }
+            else {
+                setStartTime(savedStartTime);
+                setEndTime(savedEndTime);
+            }
+        }
     }
-
   }, [modalVisible]);
 
   return (
@@ -174,36 +184,36 @@ const TimePicker: React.FC<Props> = ({ modalVisible, setStartTimeTemp, setEndTim
                 <Image source={dropdownArrow} style={styles.dropdownArrow}/>
                 </TouchableOpacity>
                 <Modal
-                visible={dropdownVisible}
-                transparent={true}
-                animationType="fade"
-                onRequestClose={() => setDropdownVisible(false)}
+                    visible={dropdownVisible}
+                    transparent={true}
+                    animationType="fade"
+                    onRequestClose={() => setDropdownVisible(false)}
                 >
-                <TouchableOpacity
-                    style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    backgroundColor: 'rgba(0,0,0,0.4)',
-                    padding: 30,
-                    alignItems: "center",
-                    }}
-                    activeOpacity={1}
-                    onPressOut={() => setDropdownVisible(false)}
-                    >
-                    <View style={{
-                    backgroundColor: 'white',
-                    borderRadius: 10,
-                    padding: 20,
-                    width: "50%",
-                    alignItems: "center",
-                    }}>
-                    {timeOptions.map((time) => (
-                        <TouchableOpacity key={time} onPress={() => handleSelectTime(time)} >
-                        <Text style={{ fontSize: 27, paddingVertical: 30 }}>{time}</Text>
-                        </TouchableOpacity>
-                    ))}
-                    </View>
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        style={{
+                            flex: 1,
+                            justifyContent: 'center',
+                            backgroundColor: 'rgba(0,0,0,0.4)',
+                            padding: 30,
+                            alignItems: "center",
+                        }}
+                        activeOpacity={1}
+                        onPressOut={() => setDropdownVisible(false)}
+                        >
+                        <View style={{
+                            backgroundColor: 'white',
+                            borderRadius: 10,
+                            padding: 20,
+                            width: "50%",
+                            alignItems: "center",
+                        }}>
+                        {timeOptions.map((time) => (
+                            <TouchableOpacity key={time} onPress={() => handleSelectTime(time)} >
+                            <Text style={{ fontSize: 27, paddingVertical: 30 }}>{time}</Text>
+                            </TouchableOpacity>
+                        ))}
+                        </View>
+                    </TouchableOpacity>
                 </Modal>
 
                 <Image source={arrowLeft} style={styles.arrowLeft}></Image>

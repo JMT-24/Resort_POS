@@ -40,15 +40,34 @@ const DetailsRow: React.FC<{ label: string; value: string | number }> = ({ label
   </View>
 );
 
+const DetailsRow2: React.FC<{ label: string; value: string | number }> = ({ label, value }) => (
+  <View style={styles.detailsRow2}>
+    <Text style={styles.detailsLabel}>{label}</Text>
+    <Text style={styles.detailsValue}>{value}</Text>
+  </View>
+);
+
 const Card: React.FC<CardProps> = (props) => {
   const [modalVisible, setModalVisible] = useState(false);  // Add modal state here
 
   return (
     <View style={styles.card}>
+      <View style={styles.topHeaderCont}>
+        <View style={styles.guestTypeCont}>
+          <Text style={styles.violetText}>Walk-In</Text>
+        </View>
+        <View style={styles.timeCounterLabelCont}>
+          <Text style={styles.timeCounterLabel}>Day</Text>
+          <Text style={styles.timeCounterLabel}>Hr</Text>
+          <Text style={styles.timeCounterLabel}>Min</Text>
+          <Text style={styles.timeCounterLabel}>Sec</Text>
+        </View>
+      </View>
       <View style={styles.cardHeader}>
         <Text style={styles.guestName}>{props.guestName}</Text>
-        <View style={styles.cottageNumTag}><Text style={styles.cottageNumText}>{props.cottageNumber}</Text></View>
-        <View style={styles.dateTag}><Text style={styles.dateText}>{props.date}</Text></View>
+        <View style={styles.headerVioletCont}><Text style={styles.violetText}>{props.cottageNumber}</Text></View>
+        <View style={styles.headerVioletCont}><Text style={styles.violetText}>{props.date}</Text></View>
+        <View style={styles.headerVioletCont}><Text style={styles.violetText}>00: 11: 55: 34</Text></View>
       </View>
       <Text style={styles.refNumber}>
         Reference No. <Text style={{ fontWeight: 'bold' }}>{props.referenceNumber}</Text>
@@ -72,37 +91,65 @@ const Card: React.FC<CardProps> = (props) => {
         <DetailsRow label="Long Table" value={props.longTable} />
         <DetailsRow label="Chairs" value={props.chairs} />
         <View style={styles.hr} />
-
-
-        {/* Third Row (Financial Info) */}
-        <DetailsRow label="Downpayment" value={`${props.downpayment} php`} />
-        <DetailsRow label="Balance" value={`${props.balance} php`} />
-        <DetailsRow label="Discounts" value={`${props.discounts} php`} />
       </View>
 
-      {/* Button to Open Details */}
-      <View style={styles.buttonRow}>
-        <View style={styles.assignContainer}>
-          <View style={styles.profilePlaceholder}>
-            <Image style={styles.profilePic} source={profilePic} />
+      <View style={styles.detailsGrid2}>
+        <View style={styles.leftBottomCont}>
+          <View style={styles.otherChargesCont}>
+            <DetailsRow2 label="Downpayment" value={`${props.downpayment} php`} />
+            <DetailsRow2 label="Balance" value={`${props.balance} php`} />
+            {/* <DetailsRow label="Discounts" value={`${props.discounts} php`} /> */}
           </View>
-          <View style={styles.assignTextContainer}>
-            <Text style={styles.staffName}>Staff Rhenzie</Text>
-            <Text style={styles.transactionDate}>Date Created 01/22/2025</Text>
+          <View>
+            <View style={styles.assignStaffCont}>
+              <View style={styles.assignContainer}>
+                <View style={styles.profilePlaceholder}>
+                  <Image style={styles.profilePic} source={profilePic} />
+                </View>
+                <View style={styles.assignTextContainer}>
+                  <Text style={styles.staffName}>Staff Rhenzie</Text>
+                  <Text style={styles.transactionDate}>Date Created 01/22/2025</Text>
+                </View>
+              </View>
+            </View>
           </View>
         </View>
-        <TouchableOpacity style={styles.button}>
-          <Image source={remarksIcon} />
-          <Text style={styles.buttonText}>Remarks</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Image source={editIcon} style={styles.buttonIcon}/>
-          <Text style={styles.buttonText}>Edit Info</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}  onPress={() => setModalVisible(true)}>
-          <Image source={detailsIcon} style={styles.buttonIcon}/>
-          <Text style={styles.buttonText}>Full Details</Text>
-        </TouchableOpacity>
+
+        <View style={styles.BottomRowCont}>
+          <View>
+            <View style={styles.buttonRow}>
+              <TouchableOpacity style={styles.button}>
+                <Image source={editIcon} style={styles.buttonIcon}/>
+                <Text style={styles.buttonText}>Remarks</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button}  onPress={() => setModalVisible(true)}>
+                <Image source={editIcon} style={styles.buttonIcon}/>
+                <Text style={styles.buttonText}>Full Details</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button}>
+                <Image source={editIcon} style={styles.buttonIcon}/>
+                <Text style={styles.buttonText}>Edit Info</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View>
+            <View style={styles.buttonRow}>
+              <TouchableOpacity style={styles.button}>
+                <Image source={editIcon} style={styles.buttonIcon}/>
+                <Text style={styles.buttonText}>Notes</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button}>
+                <Image source={editIcon} style={styles.buttonIcon}/>
+                <Text style={styles.buttonText}>Start Time</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button}>
+                <Image source={editIcon} style={styles.buttonIcon}/>
+                <Text style={styles.buttonText}>Check Out</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+
       </View>
 
       {/* Pass modal state as props to TransactDetails */}
