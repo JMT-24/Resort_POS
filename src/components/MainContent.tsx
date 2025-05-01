@@ -1,4 +1,5 @@
-import React, {act, use, useEffect, useState} from 'react';
+import React, {act, use, useEffect, useState, useCallback} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, Text, ScrollView, TouchableOpacity, TextInput, Image } from 'react-native';
 import styles from '../styles/MainContentStyles';
 import Card from '../components/TransactCard';
@@ -14,14 +15,38 @@ const MainContent = () => {
     console.log("searching for: ", search);
   };
 
-  useEffect(() => {
-    const fetchCheckIns = async () => {
-      const data = await getAllCheckIns();
-      setTransactions(data);
-    };
+  const formatDate = (dateString: string) => {
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+  
+    if (dateString === 'None') return '';
+  
+    const [, month, day] = dateString.split('-').map(Number);  // skip the year
+    return `${months[month - 1]} ${day}`;
+  };
 
-    fetchCheckIns();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      let isActive = true;
+  
+      const fetchCheckIns = async () => {
+        if (!isActive) return;
+        const data = await getAllCheckIns();
+        setTransactions(data);
+      };
+  
+      fetchCheckIns(); // fetch immediately on focus
+  
+      const interval = setInterval(fetchCheckIns, 3000); // repeat every 3 seconds
+  
+      return () => {
+        isActive = false;     // stop any ongoing fetch
+        clearInterval(interval); // clear timer when screen loses focus
+      };
+    }, [])
+  );
   
   return (
     <View style={styles.mainContent}>
@@ -59,14 +84,14 @@ const MainContent = () => {
             key={item.id}
             guestName={`${item.firstname} ${item.lastname}`}
             referenceNumber={`0000${item.id}`}
-            cottageNumber={`Cottage ${item.cottageNumber}, 11, 11`}
-            date="March 27 - March 27"
+            cottageNumber={`Cottage ${item.cottageNumbers.join(', ')}`}
+            date={`${formatDate(item.startDate)} - ${formatDate(item.endDate)}`}
             adults={item.adult}
             kids={item.kids}
             senior={item.senior}
             pwd={item.pwd}
             hours={12}
-            time="6:00am - 5:00pm"
+            time={`${item.startTime} - ${item.endTime}`}
             cottages={item.cottages}
             electricCharge={item.electric}
             roundTable={item.roundTable}

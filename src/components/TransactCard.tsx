@@ -67,7 +67,7 @@ const Card: React.FC<CardProps> = (props) => {
         <Text style={styles.guestName}>{props.guestName}</Text>
         <View style={styles.headerVioletCont}><Text style={styles.violetText}>{props.cottageNumber}</Text></View>
         <View style={styles.headerVioletCont}><Text style={styles.violetText}>{props.date}</Text></View>
-        <View style={styles.headerVioletCont}><Text style={styles.violetText}>00: 11: 55: 34</Text></View>
+        <View style={styles.headerVioletCont}><Text style={styles.violetText}>00: 00: 00: 00</Text></View>
       </View>
       <Text style={styles.refNumber}>
         Reference No. <Text style={{ fontWeight: 'bold' }}>{props.referenceNumber}</Text>

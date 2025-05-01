@@ -2,7 +2,7 @@ import SQLite from 'react-native-sqlite-storage';
 
 SQLite.enablePromise(true);
 
-const DB_NAME = 'checkin2.db';
+const DB_NAME = 'checkin.db';
 
 export const getDBConnection = async () => {
   return SQLite.openDatabase({ name: DB_NAME, location: 'default' });
@@ -29,7 +29,12 @@ export const initCheckInTable = async () => {
       longTable INTEGER,
       chairs INTEGER,
       corkCage INTEGER,
-      cottageNumber INTEGER
+      cottageNumbers TEXT,
+      startDate TEXT,
+      endDate TEXT,
+      startTime TEXT,
+      endTime TEXT,
+      isCustomTime INTEGER 
     );
   `);
 
@@ -45,7 +50,12 @@ export const saveCheckInData = async (
   address: string,
   guestCounts: { adult: number; senior: number; kids: number; pwd: number },
   charges: { cottages: number; electric: number; roundTable: number; longTable: number; chairs: number; corkCage: number },
-  cottageNumber: number
+  cottageNumbers: number[],
+  startDate: string,
+  endDate: string,
+  startTime: string,
+  endTime: string,
+  isCustomTime: boolean,
 ) => {
   const db = await getDBConnection();
 
@@ -53,8 +63,8 @@ export const saveCheckInData = async (
     `INSERT INTO guestCheckIn (
       firstname, lastname, contactNo, address,
       adult, senior, kids, pwd,
-      cottages, electric, roundTable, longTable, chairs, corkCage, cottageNumber
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      cottages, electric, roundTable, longTable, chairs, corkCage, cottageNumbers, startDate, endDate, startTime, endTime, isCustomTime
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       firstname,
       lastname,
@@ -70,12 +80,16 @@ export const saveCheckInData = async (
       charges.longTable,
       charges.chairs,
       charges.corkCage,
-      cottageNumber
+      JSON.stringify(cottageNumbers),
+      startDate,
+      endDate,
+      startTime,
+      endTime,
+      isCustomTime ? 1 : 0,
     ]
   );
 };
 
-// 📥 Fetch all check-in records
 export const getAllCheckIns = async (): Promise<GuestCheckIn[]> => {
   const db = await getDBConnection();
   const results = await db.executeSql(`SELECT * FROM guestCheckIn ORDER BY id DESC`);
@@ -83,11 +97,20 @@ export const getAllCheckIns = async (): Promise<GuestCheckIn[]> => {
   const checkIns: GuestCheckIn[] = [];
 
   for (let i = 0; i < rows.length; i++) {
-    checkIns.push(rows.item(i));
+    const item = rows.item(i);
+
+    checkIns.push({
+      ...item,
+      cottageNumbers: item.cottageNumbers
+        ? JSON.parse(item.cottageNumbers)
+        : [],
+      isCustomTime: !!item.isCustomTime, // convert 0/1 to boolean
+    });
   }
 
   return checkIns;
 };
+
 
 export interface GuestCheckIn {
   id: number;
@@ -105,19 +128,27 @@ export interface GuestCheckIn {
   longTable: number;
   chairs: number;
   corkCage: number;
-  cottageNumber: number;
+  cottageNumbers: number[];
+  startDate: string;
+  endDate: string;
+  startTime: string;
+  endTime: string;
+  isCustomTime: boolean;
 }
 
 export const getReservedCottages = async (): Promise<number[]> => {
   const db = await getDBConnection();
-  const results = await db.executeSql(`SELECT cottageNumber FROM guestCheckIn`);
+  const results = await db.executeSql(`SELECT cottageNumbers FROM guestCheckIn`);
   const rows = results[0].rows;
   const reserved: number[] = [];
 
   for (let i = 0; i < rows.length; i++) {
-    const cottageNum = rows.item(i).cottageNumber;
-    if (typeof cottageNum === 'number') {
-      reserved.push(cottageNum);
+    const raw = rows.item(i).cottageNumbers;
+    try {
+      const parsed: number[] = JSON.parse(raw);
+      reserved.push(...parsed);
+    } catch (e) {
+      console.warn('Failed to parse cottageNumbers for row', i, raw);
     }
   }
 
