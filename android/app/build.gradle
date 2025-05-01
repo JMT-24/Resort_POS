@@ -86,18 +86,18 @@ android {
         versionName "1.0"
     }
     signingConfigs {
-        debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-        }
-        // release {
-        //     storeFile file('your_key_name.keystore')
-        //     storePassword 'haciendaDarasa'
-        //     keyAlias 'your_key_alias'
-        //     keyPassword 'haciendaDarasa'
+        // debug {
+        //     storeFile file('debug.keystore')
+        //     storePassword 'android'
+        //     keyAlias 'androiddebugkey'
+        //     keyPassword 'android'
         // }
+        release {
+            storeFile file('your_key_name.keystore')
+            storePassword 'haciendaDarasa'
+            keyAlias 'your_key_alias'
+            keyPassword 'haciendaDarasa'
+        }
     }
     buildTypes {
         debug {
@@ -111,8 +111,8 @@ android {
         //     proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         // }
         release {
-            // signingConfig signingConfigs.release
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
+            // signingConfig signingConfigs.debug
         }
     }
 }
