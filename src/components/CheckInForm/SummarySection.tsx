@@ -63,10 +63,12 @@ const SummarySection: React.FC<SummarySectionProps> = ({
     { label: 'Chair', value: charges.chairs },
     { label: 'Cork Cage', value: charges.corkCage },
   ];
-  const handleSave = () => {
+  const handleSave = async() => {
 
-    // await saveCheckInData(firstname, lastname, contactNo, address, guestCounts, charges, cottageNumbers, isCustomTime);
-    // console.log('Saved to SQLite!');
+    await saveCheckInData(firstname, lastname, contactNo, address, guestCounts, charges, cottageNumbers, startDate,
+    endDate, startTime, endTime, isCustomTime);
+    
+    console.log('Saved to SQLite!');
     console.log(startDate + ' date and ' + endDate);
     console.log(startTime + ' time and ' + endTime);
     console.log(new Date() + " date now");

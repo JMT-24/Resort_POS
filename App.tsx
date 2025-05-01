@@ -63,20 +63,12 @@
 
 import React, { PureComponent, useEffect } from "react";
 import AppNavigator from "./src/navigation/AppNavigator";
-import { initDatabase } from "./src/sqliteService";
 import { initCheckInTable } from "./src/database/checkInSqlite";
 
 const App = () => {
   useEffect(() => {
     const initDB = async () => {
       try {
-        await initDatabase();
-        console.log('✅ SQLite table initialized');
-        const now = new Date();
-        const formattedTime = now.toLocaleString('en-PH', {
-          timeZone: 'Asia/Manila',
-        });
-        console.log(formattedTime);
         await initCheckInTable();
         console.log('table created');
       } catch (error) {
