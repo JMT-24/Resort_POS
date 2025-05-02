@@ -1,5 +1,5 @@
 // CheckInForm/SummarySection.tsx
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import styles from '../../styles/CheckInForm/SummarySectionStyles';
 import { saveCheckInData } from '../../database/checkInSqlite';
@@ -85,23 +85,54 @@ const SummarySection: React.FC<SummarySectionProps> = ({
 
   const [priceList, setPriceList] = useState<PriceList | null>(null);
 
+  useEffect(() => {
+    const fetchPrices = async () => {
+      const prices = await getPriceList();
+      setPriceList(prices);
+    };
+  
+    fetchPrices();
+  }, []);
+
+  const getPriceForLabel = (label: string): number => {
+    if (!priceList) return 0;
+  
+    switch (label) {
+      case 'Adults': return priceList.adults;
+      case 'Senior': return priceList.senior;
+      case 'Kids': return priceList.kids;
+      case 'PWD': return priceList.pwd;
+      case 'Cottages': return priceList.cottage;
+      case 'Electric Charge': return priceList.electric;
+      case 'Round Table': return priceList.roundTable;
+      case 'Long Table': return priceList.longTable;
+      case 'Chair': return priceList.chairs;
+      case 'Cork Cage': return priceList.corkCage;
+      default: return 0;
+    }
+  };
 
   return (
     <View style={styles.summaryBox}>
       <ScrollView style={styles.scrollView} contentContainerStyle={{ paddingBottom: 300 }}>
         <View style={styles.paymentDetailsSummary}>
+
           {summaryItems.map(({ label, value }) => (
+            
             <View key={label} style={styles.detailSummaryField}>
               <View style={styles.formTogglePic}></View>
               <View style={styles.detail_miniField}>
                 <Text style={styles.summaryLabel}>{label}</Text>
                 <View style={styles.detail_subminiField}>
                   <Text>{value}x</Text>
-                  <Text style={styles.summaryLabel}>1,500</Text>
+                  <Text style={styles.summaryLabel}>
+                    {`${getPriceForLabel(label) * value}`}
+                    </Text>
                 </View>
               </View>
             </View>
           ))}
+
         </View>
       </ScrollView>
 
