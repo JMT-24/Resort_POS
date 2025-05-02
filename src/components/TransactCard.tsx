@@ -3,10 +3,13 @@ import { View, Text, TouchableOpacity, ImageSourcePropType, Image } from 'react-
 import styles from '../styles/CardStyles';
 import TransactDetails from '../components/TransactDetails';
 
-const profilePic: ImageSourcePropType = require('../img/rhenzie.png');
-const remarksIcon: ImageSourcePropType = require('../icons/remarksIcon.png');
+const profilePic: ImageSourcePropType = require('../img/rhenzie.png');  
 const editIcon: ImageSourcePropType = require('../icons/editIcons.png');
-const detailsIcon: ImageSourcePropType = require('../icons/detailsIcon.png');
+const fullDetailsIcon: ImageSourcePropType = require('../icons/fullDetails.png');
+const notesIcon: ImageSourcePropType = require('../icons/notes.png');
+const startTimeIcon: ImageSourcePropType = require('../icons/startTimeIcon.png');
+const remarksIcon: ImageSourcePropType = require('../icons/redRemarksIcon.png');
+const checkIcon: ImageSourcePropType = require('../icons/checkIcon.png');
 
 
 export interface CardProps {
@@ -119,12 +122,12 @@ const Card: React.FC<CardProps> = (props) => {
         <View style={styles.BottomRowCont}>
           <View>
             <View style={styles.buttonRow}>
-              <TouchableOpacity style={styles.button}>
-                <Image source={editIcon} style={styles.buttonIcon}/>
-                <Text style={styles.buttonText}>Remarks</Text>
+              <TouchableOpacity style={[styles.button, {borderColor: "#FF6666"}]}>
+                <Image source={remarksIcon} style={styles.buttonIcon}/>
+                <Text style={[styles.buttonText, {color: "#FF6666"}]}>Remarks</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.button}  onPress={() => setModalVisible(true)}>
-                <Image source={editIcon} style={styles.buttonIcon}/>
+                <Image source={fullDetailsIcon} style={styles.buttonIcon}/>
                 <Text style={styles.buttonText}>Full Details</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.button}>
@@ -136,16 +139,16 @@ const Card: React.FC<CardProps> = (props) => {
           <View>
             <View style={styles.buttonRow}>
               <TouchableOpacity style={styles.button}>
-                <Image source={editIcon} style={styles.buttonIcon}/>
+                <Image source={notesIcon} style={styles.buttonIcon}/>
                 <Text style={styles.buttonText}>Notes</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.button}>
-                <Image source={editIcon} style={styles.buttonIcon}/>
+                <Image source={startTimeIcon} style={styles.buttonIcon}/>
                 <Text style={styles.buttonText}>Start Time</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button}>
-                <Image source={editIcon} style={styles.buttonIcon}/>
-                <Text style={styles.buttonText}>Check Out</Text>
+              <TouchableOpacity style={[styles.button, {backgroundColor: "#22C55E", paddingRight: 0, paddingLeft: 10,}]}>
+                <Text style={[styles.buttonText, {color: "white"}]}>Check Out</Text>
+                <Image source={checkIcon} style={styles.checkIcon}/>
               </TouchableOpacity>
             </View>
           </View>
@@ -153,11 +156,10 @@ const Card: React.FC<CardProps> = (props) => {
 
       </View>
 
-      {/* Pass modal state as props to TransactDetails */}
       <TransactDetails 
         {...props} 
-        modalVisible={modalVisible}  // Pass modalVisible state
-        setModalVisible={setModalVisible}  // Pass setModalVisible function
+        modalVisible={modalVisible}  
+        setModalVisible={setModalVisible}  
       />
 
     </View>

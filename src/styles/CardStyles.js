@@ -163,6 +163,9 @@ const styles = StyleSheet.create({
   buttonIcon: {
     transform: [{scaleX: .6},{scaleY: .6}],
   },
+  checkIcon: {
+    transform: [{scaleX: .4},{scaleY: .4}],
+  },
   buttonText: {
     fontSize: 13,
     fontWeight: 'bold',

@@ -112,6 +112,11 @@ const SummarySection: React.FC<SummarySectionProps> = ({
     }
   };
 
+  const totalAmount = summaryItems.reduce((acc, item) => {
+    const unitPrice = getPriceForLabel(item.label);
+    return acc + unitPrice * item.value;
+  }, 0);
+
   return (
     <View style={styles.summaryBox}>
       <ScrollView style={styles.scrollView} contentContainerStyle={{ paddingBottom: 300 }}>
@@ -140,7 +145,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({
         <Text style={styles.paymentDetailHeader}>Payment Details</Text>
         <View style={styles.detailsField}>
           <Text style={styles.paymentDetailLabel}>Subtotal</Text>
-          <Text style={styles.paymentDetailData}>98.00</Text>
+          <Text style={styles.paymentDetailData}>{totalAmount}</Text>
         </View>
         <View style={styles.detailsField}>
           <Text style={styles.paymentDetailLabel}>Discount</Text>
@@ -149,7 +154,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({
         <View style={styles.horizontalLine} />
         <View style={styles.detailsField}>
           <Text style={styles.paymentDetailData}>Total</Text>
-          <Text style={styles.paymentDetailData}>98.00</Text>
+          <Text style={styles.paymentDetailData}>{totalAmount}</Text>
         </View>
         <TouchableOpacity style={styles.Confirmbtn} onPress={handleSave}>
           <Text style={styles.ConfirmbtnText}>CONFIRM</Text>
