@@ -20,6 +20,7 @@ const rhenziePic: ImageSourcePropType = require('../img/rhenzie.png');
 type RootStackParamList = {
   CheckIn: undefined;
   Calendar: undefined;
+  Prices: undefined;
 };
 
 type NavButtonProps = {
@@ -65,6 +66,7 @@ const LeftSidebar: React.FC = () => {
         <RenderNavButton label="Transactions" icon={calendarIcon} screen="Transactions" activeScreen={activeScreen} setActiveScreen={setActiveScreen}/>
         <RenderNavButton label="Messages" icon={messageIcon} screen="Messages" activeScreen={activeScreen} setActiveScreen={setActiveScreen}/>
         <RenderNavButton label="Remarks" icon={remarksIcon} screen="Remarks" activeScreen={activeScreen} setActiveScreen={setActiveScreen}/>
+        <RenderNavButton label="Prices" icon={remarksIcon} screen="Prices" activeScreen={activeScreen} setActiveScreen={setActiveScreen}/>
       </View>
 
       <View style={styles.staffContainer}>

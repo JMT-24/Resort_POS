@@ -1,8 +1,10 @@
 // CheckInForm/SummarySection.tsx
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import styles from '../../styles/CheckInForm/SummarySectionStyles';
 import { saveCheckInData } from '../../database/checkInSqlite';
+import { initializeDefaultPriceList } from '../../database/priceListSQLite';
+import { getPriceList, PriceList } from '../../database/priceListSQLite';
 
 interface GuestCounts {
   adult: number;
@@ -12,8 +14,6 @@ interface GuestCounts {
 }
 
 interface Charges {
-  cottages: number;
-  electric: number;
   roundTable: number;
   longTable: number;
   chairs: number;
@@ -27,6 +27,8 @@ interface SummarySectionProps {
   lastname: string;
   contactNo: string;
   address: string;
+  cottages: number;
+  electric: number;
   cottageNumbers: number[];
   onConfirmClick: () => void;
   startDate: string;
@@ -43,6 +45,8 @@ const SummarySection: React.FC<SummarySectionProps> = ({
   lastname,
   contactNo,
   address, 
+  cottages,
+  electric,
   cottageNumbers,
   onConfirmClick,
   startDate,
@@ -56,8 +60,8 @@ const SummarySection: React.FC<SummarySectionProps> = ({
     { label: 'Senior', value: guestCounts.senior },
     { label: 'Kids', value: guestCounts.kids },
     { label: 'PWD', value: guestCounts.pwd },
-    { label: 'Cottages', value: charges.cottages },
-    { label: 'Electric Charge', value: charges.electric },
+    { label: 'Cottages', value: cottages },
+    { label: 'Electric Charge', value: electric },
     { label: 'Round Table', value: charges.roundTable },
     { label: 'Long Table', value: charges.longTable },
     { label: 'Chair', value: charges.chairs },
@@ -65,8 +69,8 @@ const SummarySection: React.FC<SummarySectionProps> = ({
   ];
   const handleSave = async() => {
 
-    await saveCheckInData(firstname, lastname, contactNo, address, guestCounts, charges, cottageNumbers, startDate,
-    endDate, startTime, endTime, isCustomTime);
+    // await saveCheckInData(firstname, lastname, contactNo, address, guestCounts, charges, cottageNumbers, startDate,
+    // endDate, startTime, endTime, isCustomTime);
     
     console.log('Saved to SQLite!');
     console.log(startDate + ' date and ' + endDate);
@@ -74,8 +78,13 @@ const SummarySection: React.FC<SummarySectionProps> = ({
     console.log(new Date() + " date now");
     console.log("Reserved Cottages: " + cottageNumbers);
     console.log("Custome Time " + isCustomTime);
+    console.log(cottages + " cottages and " + electric);
     onConfirmClick();
+    // initializeDefaultPriceList();
   };
+
+  const [priceList, setPriceList] = useState<PriceList | null>(null);
+
 
   return (
     <View style={styles.summaryBox}>

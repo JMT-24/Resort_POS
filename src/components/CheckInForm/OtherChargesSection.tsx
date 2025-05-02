@@ -4,8 +4,6 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../../styles/CheckInForm/OtherChargesSectionStyles';
 
 interface Charges {
-  cottages: number;
-  electric: number;
   roundTable: number;
   longTable: number;
   chairs: number;

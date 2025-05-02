@@ -64,6 +64,7 @@
 import React, { PureComponent, useEffect } from "react";
 import AppNavigator from "./src/navigation/AppNavigator";
 import { initCheckInTable } from "./src/database/checkInSqlite";
+import { createPriceListTable } from "./src/database/priceListSQLite";
 
 const App = () => {
   useEffect(() => {
@@ -73,6 +74,12 @@ const App = () => {
         console.log('table created');
       } catch (error) {
         console.error('❌ Failed to initialize DB:', error);
+      }
+      try {
+        await createPriceListTable();
+        console.log("Price List created");
+      } catch (error) {
+        console.error('Failed to make the price list table:', error);
       }
     };
 

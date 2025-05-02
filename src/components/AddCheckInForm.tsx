@@ -42,8 +42,6 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
   });
 
   const [charges, setCharges] = useState({
-    cottages: cottageCount,
-    electric: cottageCount,
     roundTable: 0,
     longTable: 0,
     chairs: 0,
@@ -78,10 +76,6 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
     : 'All None';
 
   const [isCustomTime, setIsCustomTime] = useState(false);
-
-  useEffect(() => {
-    setCottageCount(cottageNums.length);
-  }, [cottageNums]);
 
   return (
     <View>
@@ -135,6 +129,8 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
               startTime={startTime}
               endTime={endTime}
               isCustomTime={isCustomTime}
+              cottages={cottageNums.length}
+              electric={cottageNums.length}
             />
             <ConfirmPopupModal 
             visible={isPopupOpen}
