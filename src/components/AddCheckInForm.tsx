@@ -4,7 +4,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import firestore from '@react-native-firebase/firestore';
 
 import styles from '../styles/CheckInFormStyles';
-import { initDatabase, fetchFirstName } from '../sqliteService';
 import { initCheckInTable } from '../database/checkInSqlite';
 
 import PersonalInfoSection from './CheckInForm/PersonalInfoSection';
@@ -33,6 +32,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
   const [contactNo, setContactNo] = useState('');
   const [address, setAddress] = useState('');
   const [cottageNums, setCottageNumbers] = useState<number[]>([]);
+  const [cottageCount, setCottageCount] = useState(0);
 
   const [guestCounts, setGuestCounts] = useState({
     adult: 0,
@@ -42,8 +42,8 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
   });
 
   const [charges, setCharges] = useState({
-    cottages: 1,
-    electric: 1,
+    cottages: cottageCount,
+    electric: cottageCount,
     roundTable: 0,
     longTable: 0,
     chairs: 0,
@@ -79,7 +79,10 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
 
   const [isCustomTime, setIsCustomTime] = useState(false);
 
-  
+  useEffect(() => {
+    setCottageCount(cottageNums.length);
+  }, [cottageNums]);
+
   return (
     <View>
       <Modal 

@@ -6,10 +6,11 @@ const haciendaIcon: ImageSourcePropType = require('../../icons/haciendaIcon.png'
 const printIcon: ImageSourcePropType = require('../../icons/printIcon.png');
 
 interface Props {
-    transactNum: number;
+    referenceNum: string;
+    guestName: string;
 }
 
-const TransactInfo: React.FC<Props> = ({transactNum}) => {
+const TransactInfo: React.FC<Props> = ({referenceNum, guestName}) => {
     return (
         <View style={styles.container}>
             {/* Top Half */}
@@ -20,7 +21,7 @@ const TransactInfo: React.FC<Props> = ({transactNum}) => {
                 <View style={styles.quarter2}>
                         <View style={styles.infoContainer}>
                             <Text style={styles.infoLabel}>Transaction Number:</Text>
-                            <Text style={styles.infoValue}>{transactNum}</Text>
+                            <Text style={styles.infoValue}>{referenceNum}</Text>
                         </View>
                         <View style={styles.infoContainer}>
                             <Text style={styles.infoLabel}>Date Created:</Text>
@@ -34,7 +35,7 @@ const TransactInfo: React.FC<Props> = ({transactNum}) => {
                 <View style={styles.quarter3}>
                     <View style={styles.infoContainer}>
                         <Text style={styles.infoLabel}>From:</Text>
-                        <Text style={styles.infoValue}>Angel Cabalhin</Text>
+                        <Text style={styles.infoValue}>{`${guestName}`}</Text>
                     </View>
                     <View style={styles.infoContainer}>
                         <Text style={styles.infoLabel}>Billed to:</Text>

@@ -93,11 +93,11 @@ const MainContent = () => {
             hours={12}
             time={`${item.startTime} - ${item.endTime}`}
             cottages={item.cottages}
+            corkCage={item.corkCage}
             electricCharge={item.electric}
             roundTable={item.roundTable}
             longTable={item.longTable}
             chairs={item.chairs}
-            others="-"
             downpayment={1500}
             balance={1500}
             discounts={100}

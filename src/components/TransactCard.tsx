@@ -22,10 +22,10 @@ export interface CardProps {
   time: string;
   cottages: number;
   electricCharge: number;
+  corkCage: number;
   roundTable: number;
   longTable: number;
   chairs: number;
-  others: string;
   downpayment: number;
   balance: number;
   discounts: number;
@@ -90,6 +90,7 @@ const Card: React.FC<CardProps> = (props) => {
         <DetailsRow label="Round Table" value={props.roundTable} />
         <DetailsRow label="Long Table" value={props.longTable} />
         <DetailsRow label="Chairs" value={props.chairs} />
+        <DetailsRow label="Cork Cage" value={props.corkCage} />
         <View style={styles.hr} />
       </View>
 

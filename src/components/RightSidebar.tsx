@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, Text, TouchableOpacity } from 'react-native';
 import styles from '../styles/RightSidebarStyles';
 import AddCheckinForm from './AddCheckInForm';
@@ -11,13 +12,27 @@ const RightSidebar: React.FC = () => {
 
   const [reservedCottages, setReservedCottages] = useState<number[]>([]);
 
-  useEffect(() => {
-    const fetchReserved = async () => {
-      const data = await getReservedCottages();
-      setReservedCottages(data);
-    };
-    fetchReserved();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      let isActive = true;
+  
+      const fetchReserved = async () => {
+        if (!isActive) return;
+        const data = await getReservedCottages();
+        setReservedCottages(data);
+      };
+  
+      fetchReserved(); // fetch immediately
+  
+      const interval = setInterval(fetchReserved, 3000); // refresh every 3 sec
+  
+      return () => {
+        isActive = false;
+        clearInterval(interval);
+      };
+    }, [])
+  );
+  
 
   const isUnavailable = (cottage: number) => reservedCottages.includes(cottage);
 

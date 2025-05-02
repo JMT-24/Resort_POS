@@ -19,10 +19,20 @@ const TransactDetails: React.FC<CardProps> = (props) => {
           <View style={styles.modalContainer}>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
               <TransactInfo
-                transactNum={10}
+                guestName={props.guestName}
+                referenceNum={props.referenceNumber}
                />
               <InfoTable 
-                adults={10}
+                adults={props.adults}
+                kids={props.kids}
+                senior={props.senior}
+                pwd={props.pwd}
+                cottages={props.cottages}
+                electricCharge={props.electricCharge}
+                longTable={props.longTable}
+                roundTable={props.roundTable}
+                chairs={props.chairs}
+                corkCage={props.corkCage}
               />
 
             </ScrollView>
