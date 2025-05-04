@@ -170,10 +170,11 @@ const MainContent = () => {
             roundTable={item.roundTable}
             longTable={item.longTable}
             chairs={item.chairs}
-            downpayment={1500}
+            downpayment={(totalPrice(item.adult, item.kids, item.senior, item.pwd, item.cottages, item.electric, 
+              item.roundTable, item.longTable, item.chairs, item.corkCage)) * 0.5}
             balance={totalPrice(item.adult, item.kids, item.senior, item.pwd, item.cottages, item.electric, 
               item.roundTable, item.longTable, item.chairs, item.corkCage)}
-            discounts={100}
+            discounts={0}
           />
         ))}
       </ScrollView>

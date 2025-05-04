@@ -1,4 +1,4 @@
-  import React, { useState } from 'react';
+  import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ImageSourcePropType, Image } from 'react-native';
 import styles from '../styles/CardStyles';
 import TransactDetails from '../components/TransactDetails';
@@ -51,7 +51,34 @@ const DetailsRow2: React.FC<{ label: string; value: string | number }> = ({ labe
 );
 
 const Card: React.FC<CardProps> = (props) => {
-  const [modalVisible, setModalVisible] = useState(false);  // Add modal state here
+  const [modalVisible, setModalVisible] = useState(false);  
+  const [timeLeft, setTimeLeft] = useState(props.hours * 60 * 60);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+
+    if (isTimerRunning && timeLeft > 0) {
+      interval = setInterval(() => {
+        setTimeLeft(prev => prev - 1);
+      }, 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [isTimerRunning, timeLeft]);
+
+  const formatTime = (seconds: number) => {
+    const days = Math.floor(seconds / (3600 * 24));
+    const hrs = Math.floor((seconds % (3600 * 24)) / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${pad(days)}: ${pad(hrs)}: ${pad(mins)}: ${pad(secs)}`;
+  };
+
+  const handleStartTimer = () => {
+    setIsTimerRunning(true);
+  };
 
   return (
     <View style={styles.card}>
@@ -70,7 +97,7 @@ const Card: React.FC<CardProps> = (props) => {
         <Text style={styles.guestName}>{props.guestName}</Text>
         <View style={styles.headerVioletCont}><Text style={styles.violetText}>{props.cottageNumber}</Text></View>
         <View style={styles.headerVioletCont}><Text style={styles.violetText}>{props.date}</Text></View>
-        <View style={styles.headerVioletCont}><Text style={styles.violetText}>00: 00: 00: 00</Text></View>
+        <View style={styles.headerVioletCont}><Text style={styles.violetText}>{formatTime(timeLeft)}</Text></View>
       </View>
       <Text style={styles.refNumber}>
         Reference No. <Text style={{ fontWeight: 'bold' }}>{props.referenceNumber}</Text>
@@ -142,7 +169,7 @@ const Card: React.FC<CardProps> = (props) => {
                 <Image source={notesIcon} style={styles.buttonIcon}/>
                 <Text style={styles.buttonText}>Notes</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress={handleStartTimer}>
                 <Image source={startTimeIcon} style={styles.buttonIcon}/>
                 <Text style={styles.buttonText}>Start Time</Text>
               </TouchableOpacity>

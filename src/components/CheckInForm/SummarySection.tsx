@@ -69,8 +69,8 @@ const SummarySection: React.FC<SummarySectionProps> = ({
   ];
   const handleSave = async() => {
 
-    // await saveCheckInData(firstname, lastname, contactNo, address, guestCounts, charges, cottageNumbers, startDate,
-    // endDate, startTime, endTime, isCustomTime);
+    await saveCheckInData(firstname, lastname, contactNo, address,  guestCounts, cottages, electric, charges, cottageNumbers, startDate,
+    endDate, startTime, endTime, isCustomTime);
     
     console.log('Saved to SQLite!');
     console.log(startDate + ' startdate and ' + endDate);
