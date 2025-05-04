@@ -46,17 +46,17 @@ export const createPriceListTable = async () => {
     );
   };
 
-  export const getPriceList = async (): Promise<PriceList | null> => {
-    const db = await getDBConnection();
-    const results = await db.executeSql(`SELECT * FROM priceList WHERE id = 1`);
-    const rows = results[0].rows;
-  
-    if (rows.length > 0) {
-      return rows.item(0);
-    }
-  
-    return null;
-  };
+    export const getPriceList = async (): Promise<PriceList | null> => {
+        const db = await getDBConnection();
+        const results = await db.executeSql(`SELECT * FROM priceList WHERE id = 1`);
+        const rows = results[0].rows;
+    
+        if (rows.length > 0) {
+        return rows.item(0);
+        }
+    
+        return null;
+    };
 
   export const initializeDefaultPriceList = async () => {
     const existing = await getPriceList();

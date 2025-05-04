@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, TouchableOpacity, Modal, ScrollView, ImageSourcePropType, Image } from 'react-native';
 import styles from '../../styles/TransactionDetails/InfoTableStyles';
+import { getPriceList, PriceList } from '../../database/priceListSQLite';
 
 interface Props {
     adults: number;
@@ -15,9 +16,63 @@ interface Props {
     chairs: number;
 }
 
+
 const InfoTable: React.FC<Props> = ({adults, kids, senior, pwd,
     cottages, corkCage, electricCharge, longTable, roundTable, chairs
 }) => {
+
+const [priceList, setPriceList] = useState<PriceList | null>(null);
+
+  useEffect(() => {
+    const fetchPrices = async () => {
+      const prices = await getPriceList();
+      setPriceList(prices);
+    };
+  
+    fetchPrices();
+  }, []);
+
+  const getPriceForLabel = (label: string): number => {
+    if (!priceList) return 0;
+  
+    switch (label) {
+      case 'Adults': return priceList.adults;
+      case 'Senior': return priceList.senior;
+      case 'Kids': return priceList.kids;
+      case 'PWD': return priceList.pwd;
+      case 'Cottages': return priceList.cottage;
+      case 'Electric Charge': return priceList.electric;
+      case 'Round Table': return priceList.roundTable;
+      case 'Long Table': return priceList.longTable;
+      case 'Chair': return priceList.chairs;
+      case 'Cork Cage': return priceList.corkCage;
+      default: return 0;
+    }
+  };
+
+    const InfoRow: React.FC<{label: string, amount: number}> = ({label, amount}) => (
+        <View style={styles.row}>
+            <Text style={styles.cell2}>{label}</Text>
+            <Text style={styles.cell}>{amount}</Text>
+            <Text style={styles.cell}>{getPriceForLabel(`${label}`)}</Text>
+            <Text style={styles.cell}>{`${getPriceForLabel(label) * amount}`}</Text>
+        </View>
+    );
+
+    const totalPrice =
+    getPriceForLabel('Adults') * adults +
+    getPriceForLabel('Kids') * kids +
+    getPriceForLabel('Senior') * senior +
+    getPriceForLabel('PWD') * pwd +
+    getPriceForLabel('Cottages') * cottages +
+    getPriceForLabel('Electric Charge') * electricCharge +
+    getPriceForLabel('Round Table') * roundTable +
+    getPriceForLabel('Long Table') * longTable +
+    getPriceForLabel('Chair') * chairs +
+    getPriceForLabel('Cork Cage') * corkCage;
+
+    const halfPrice = totalPrice * 0.5;
+
     return (
         <View style={styles.TableContainer}>
             <View style={styles.table}>
@@ -27,34 +82,11 @@ const InfoTable: React.FC<Props> = ({adults, kids, senior, pwd,
                     <Text style={[styles.cell, styles.headerText]}>Rate</Text>
                     <Text style={[styles.cell, styles.headerText]}>Amount</Text>
                 </View>
-
-                <View style={styles.row}>
-                    <Text style={styles.cell2}>Adult</Text>
-                    <Text style={styles.cell}>{adults}</Text>
-                    <Text style={styles.cell}>180</Text>
-                    <Text style={styles.cell}>360</Text>
-                </View>
-
-                <View style={styles.row}>
-                    <Text style={styles.cell2}>Kids</Text>
-                    <Text style={styles.cell}>{kids}</Text>
-                    <Text style={styles.cell}>150</Text>
-                    <Text style={styles.cell}>300</Text>
-                </View>
-
-                <View style={styles.row}>
-                    <Text style={styles.cell2}>Senior</Text>
-                    <Text style={styles.cell}>{senior}</Text>
-                    <Text style={styles.cell}>150</Text>
-                    <Text style={styles.cell}>300</Text>
-                </View>
-
-                <View style={styles.row}>
-                    <Text style={styles.cell2}>PWD</Text>
-                    <Text style={styles.cell}>{pwd}</Text>
-                    <Text style={styles.cell}>150</Text>
-                    <Text style={styles.cell}>300</Text>
-                </View>
+                
+                <InfoRow label='Adults' amount={adults} />
+                <InfoRow label='Kids' amount={kids} />
+                <InfoRow label='Senior' amount={senior} />
+                <InfoRow label='PWD' amount={pwd} />
 
             </View>
 
@@ -66,47 +98,13 @@ const InfoTable: React.FC<Props> = ({adults, kids, senior, pwd,
                     <Text style={[styles.cell, styles.headerText]}>Amount</Text>
                 </View>
 
-                <View style={styles.row}>
-                    <Text style={styles.cell2}>Cottage</Text>
-                    <Text style={styles.cell}>{cottages}</Text>
-                    <Text style={styles.cell}>200</Text>
-                    <Text style={styles.cell}>400</Text>
-                </View>
-
-                <View style={styles.row}>
-                    <Text style={styles.cell2}>Electricity Charge</Text>
-                    <Text style={styles.cell}>{electricCharge}</Text>
-                    <Text style={styles.cell}>200</Text>
-                    <Text style={styles.cell}>400</Text>
-                </View>
-
-                <View style={styles.row}>
-                    <Text style={styles.cell2}>Long Table</Text>
-                    <Text style={styles.cell}>{longTable}</Text>
-                    <Text style={styles.cell}>200</Text>
-                    <Text style={styles.cell}>400</Text>
-                </View>
+                <InfoRow label='Cottages' amount={cottages} />
+                <InfoRow label='Electric Charge' amount={electricCharge} />
+                <InfoRow label='Round Table' amount={roundTable} />
+                <InfoRow label='Long Table' amount={longTable} />
+                <InfoRow label='Chair' amount={chairs} />
+                <InfoRow label='Cork Cage' amount={corkCage} />
                 
-                <View style={styles.row}>
-                    <Text style={styles.cell2}>Round Table</Text>
-                    <Text style={styles.cell}>{roundTable}</Text>
-                    <Text style={styles.cell}>200</Text>
-                    <Text style={styles.cell}>400</Text>
-                </View>
-
-                <View style={styles.row}>
-                    <Text style={styles.cell2}>Cork Cage</Text>
-                    <Text style={styles.cell}>{corkCage}</Text>
-                    <Text style={styles.cell}>200</Text>
-                    <Text style={styles.cell}>400</Text>
-                </View> 
-                
-                <View style={styles.row}>
-                    <Text style={styles.cell2}>Chairs</Text>
-                    <Text style={styles.cell}>{chairs}</Text>
-                    <Text style={styles.cell}>200</Text>
-                    <Text style={styles.cell}>400</Text>
-                </View>
 
             </View>
 
@@ -121,11 +119,15 @@ const InfoTable: React.FC<Props> = ({adults, kids, senior, pwd,
                 <View style={styles.half}>
                     <View style={styles.footerView}>
                         <Text style={styles.footerText}>Downpayment{'('}50{'%)'}</Text>
-                        <Text style={styles.footerText}>5,000</Text>
+                        <Text style={styles.footerText}>
+                            ₱{halfPrice.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        </Text>
                     </View>
                     <View style={styles.footerView}>
                         <Text style={[styles.footerText, {fontWeight: "bold"}]}>Total Price{':'}</Text>
-                        <Text style={[styles.footerText, {fontWeight: "bold"}]}>10,000</Text>
+                        <Text style={[styles.footerText, {fontWeight: "bold"}]}>
+                            ₱{totalPrice.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        </Text>
                     </View>
                 </View>
             </View>

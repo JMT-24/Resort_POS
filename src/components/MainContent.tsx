@@ -1,10 +1,11 @@
 import React, {act, use, useEffect, useState, useCallback} from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { View, Text, ScrollView, TouchableOpacity, TextInput, Image } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, TextInput, Image, ImageSourcePropType } from 'react-native';
 import styles from '../styles/MainContentStyles';
 import Card from '../components/TransactCard';
 import { getAllCheckIns, GuestCheckIn } from '../database/checkInSqlite';
-import searchIcon from "../icons/searchIcon.png";
+import { getPriceList, PriceList } from '../database/priceListSQLite';
+const searchIcon: ImageSourcePropType = require('../icons/searchIcon.png');
 
 const MainContent = () => {
   const [activeTab, setActiveTab] = useState('Check In');
@@ -27,6 +28,23 @@ const MainContent = () => {
     return `${months[month - 1]} ${day}`;
   };
 
+  const getHourDifference = (startTime: string, endTime: string) => {
+    const parseTime = (timeStr: string) => {
+      const [time, modifier] = timeStr.split(' ');
+      let [hours, minutes] = time.split(':').map(Number);
+  
+      if (modifier === 'PM' && hours !== 12) hours += 12;
+      if (modifier === 'AM' && hours === 12) hours = 0;
+  
+      return hours + minutes / 60;
+    };
+  
+    const startHours = parseTime(startTime);
+    const endHours = parseTime(endTime);
+  
+    return endHours - startHours;
+  };
+
   useFocusEffect(
     useCallback(() => {
       let isActive = true;
@@ -47,6 +65,60 @@ const MainContent = () => {
       };
     }, [])
   );
+
+  const [priceList, setPriceList] = useState<PriceList | null>(null);
+
+  useEffect(() => {
+    const fetchPrices = async () => {
+      const prices = await getPriceList();
+      setPriceList(prices);
+    };
+  
+    fetchPrices();
+  }, []);
+
+  const getPriceForLabel = (label: string): number => {
+    if (!priceList) return 0;
+  
+    switch (label) {
+      case 'Adults': return priceList.adults;
+      case 'Senior': return priceList.senior;
+      case 'Kids': return priceList.kids;
+      case 'PWD': return priceList.pwd;
+      case 'Cottages': return priceList.cottage;
+      case 'Electric Charge': return priceList.electric;
+      case 'Round Table': return priceList.roundTable;
+      case 'Long Table': return priceList.longTable;
+      case 'Chair': return priceList.chairs;
+      case 'Cork Cage': return priceList.corkCage;
+      default: return 0;
+    }
+  };
+
+
+  const totalPrice = (
+    adults: number,
+    kids: number,
+    senior: number,
+    pwd: number,
+    cottages: number,
+    electricCharge: number,
+    roundTable: number,
+    longTable: number,
+    chairs: number,
+    corkCage: number
+  ): number =>
+    getPriceForLabel('Adults') * adults +
+    getPriceForLabel('Kids') * kids +
+    getPriceForLabel('Senior') * senior +
+    getPriceForLabel('PWD') * pwd +
+    getPriceForLabel('Cottages') * cottages +
+    getPriceForLabel('Electric Charge') * electricCharge +
+    getPriceForLabel('Round Table') * roundTable +
+    getPriceForLabel('Long Table') * longTable +
+    getPriceForLabel('Chair') * chairs +
+    getPriceForLabel('Cork Cage') * corkCage;
+  
   
   return (
     <View style={styles.mainContent}>
@@ -90,7 +162,7 @@ const MainContent = () => {
             kids={item.kids}
             senior={item.senior}
             pwd={item.pwd}
-            hours={12}
+            hours={getHourDifference(item.startTime, item.endTime)}
             time={`${item.startTime} - ${item.endTime}`}
             cottages={item.cottages}
             corkCage={item.corkCage}
@@ -99,7 +171,8 @@ const MainContent = () => {
             longTable={item.longTable}
             chairs={item.chairs}
             downpayment={1500}
-            balance={1500}
+            balance={totalPrice(item.adult, item.kids, item.senior, item.pwd, item.cottages, item.electric, 
+              item.roundTable, item.longTable, item.chairs, item.corkCage)}
             discounts={100}
           />
         ))}

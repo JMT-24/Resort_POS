@@ -73,9 +73,8 @@ const SummarySection: React.FC<SummarySectionProps> = ({
     // endDate, startTime, endTime, isCustomTime);
     
     console.log('Saved to SQLite!');
-    console.log(startDate + ' date and ' + endDate);
-    console.log(startTime + ' time and ' + endTime);
-    console.log(new Date() + " date now");
+    console.log(startDate + ' startdate and ' + endDate);
+    console.log(startTime + ' starttime and ' + endTime);
     console.log("Reserved Cottages: " + cottageNumbers);
     console.log("Custome Time " + isCustomTime);
     console.log(cottages + " cottages and " + electric);
@@ -111,6 +110,7 @@ const SummarySection: React.FC<SummarySectionProps> = ({
       default: return 0;
     }
   };
+
 
   const totalAmount = summaryItems.reduce((acc, item) => {
     const unitPrice = getPriceForLabel(item.label);
