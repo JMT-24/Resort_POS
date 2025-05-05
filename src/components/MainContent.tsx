@@ -178,6 +178,9 @@ const MainContent = () => {
               item.items.chairs, item.items.corkCage)}
             discounts={0}
             timestamp={item.timestamp}
+            type={item.bookingType}
+            status={item.status}
+            guestID={item.id}
           />
         ))}
       </ScrollView>

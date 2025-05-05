@@ -225,3 +225,47 @@ export type GuestCheckIn = {
     corkCage: number;
   };
 };
+
+
+export const clearAllData = async () => {
+  const db = await getDBConnection();
+
+  try {
+    await db.executeSql('DELETE FROM Charges');
+    await db.executeSql('DELETE FROM GuestCounts');
+    await db.executeSql('DELETE FROM Bookings');
+    await db.executeSql('DELETE FROM Guests');
+
+    console.log('All data deleted successfully from all tables.');
+  } catch (error) {
+    console.error('Failed to clear all data:', error);
+    throw error;
+  }
+};
+
+
+export const deleteTransactionById = async (bookingId: number) => {
+  const db = await getDBConnection();
+
+  try {
+    // First, get the guestId related to this booking
+    const result = await db.executeSql(`SELECT guestId FROM Bookings WHERE id = ?`, [bookingId]);
+    const guestId = result[0].rows.length > 0 ? result[0].rows.item(0).guestId : null;
+
+    if (!guestId) {
+      console.warn(`No guestId found for bookingId ${bookingId}`);
+      return;
+    }
+
+    // Delete related data in correct order to maintain referential integrity
+    await db.executeSql(`DELETE FROM Charges WHERE bookingId = ?`, [bookingId]);
+    await db.executeSql(`DELETE FROM GuestCounts WHERE bookingId = ?`, [bookingId]);
+    await db.executeSql(`DELETE FROM Bookings WHERE id = ?`, [bookingId]);
+    await db.executeSql(`DELETE FROM Guests WHERE id = ?`, [guestId]);
+
+    console.log(`Deleted transaction ${bookingId} and its related data successfully.`);
+  } catch (error) {
+    console.error(`Failed to delete transaction ${bookingId}:`, error);
+    throw error;
+  }
+};

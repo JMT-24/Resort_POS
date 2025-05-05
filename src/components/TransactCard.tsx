@@ -2,6 +2,7 @@
 import { View, Text, TouchableOpacity, ImageSourcePropType, Image } from 'react-native';
 import styles from '../styles/CardStyles';
 import TransactDetails from '../components/TransactDetails';
+import { clearAllData, deleteTransactionById } from '../database/checkInSqlite';
 
 const profilePic: ImageSourcePropType = require('../img/rhenzie.png');  
 const editIcon: ImageSourcePropType = require('../icons/editIcons.png');
@@ -35,6 +36,9 @@ export interface CardProps {
   timestamp: string;
   modalVisible?: boolean;  // Add modalVisible as optional
   setModalVisible?: React.Dispatch<React.SetStateAction<boolean>>;  // Add setModalVisible as optional
+  type: string;
+  status: string;
+  guestID: number
 }
 
 const DetailsRow: React.FC<{ label: string; value: string | number }> = ({ label, value }) => (
@@ -96,7 +100,7 @@ const Card: React.FC<CardProps> = (props) => {
     <View style={styles.card}>
       <View style={styles.topHeaderCont}>
         <View style={styles.guestTypeCont}>
-          <Text style={styles.violetText}>Walk-In</Text>
+          <Text style={styles.violetText}>{props.type.charAt(0).toUpperCase() + props.type.slice(1)}</Text>
         </View>
         <View style={styles.timeCounterLabelCont}>
           <Text style={styles.timeCounterLabel}>Day</Text>
@@ -141,7 +145,6 @@ const Card: React.FC<CardProps> = (props) => {
           <View style={styles.otherChargesCont}>
             <DetailsRow2 label="Downpayment" value={`${props.downpayment} php`} />
             <DetailsRow2 label="Balance" value={`${props.balance} php`} />
-            {/* <DetailsRow label="Discounts" value={`${props.discounts} php`} /> */}
           </View>
           <View>
             <View style={styles.assignStaffCont}>
@@ -185,7 +188,8 @@ const Card: React.FC<CardProps> = (props) => {
                 <Image source={startTimeIcon} style={styles.buttonIcon}/>
                 <Text style={styles.buttonText}>Start Time</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.button, {backgroundColor: "#22C55E", paddingRight: 0, paddingLeft: 10,}]}>
+              <TouchableOpacity style={[styles.button, {backgroundColor: "#22C55E", paddingRight: 0, paddingLeft: 10,}]}
+                onPress={() => deleteTransactionById(props.guestID)}>
                 <Text style={[styles.buttonText, {color: "white"}]}>Check Out</Text>
                 <Image source={checkIcon} style={styles.checkIcon}/>
               </TouchableOpacity>

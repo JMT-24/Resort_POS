@@ -131,7 +131,7 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
               cottages={cottageNums.length}
               electric={cottageNums.length}
               type='walk-In'
-              status='cbecked-in'
+              status='checked-in'
             />
             <ConfirmPopupModal 
             visible={isPopupOpen}
