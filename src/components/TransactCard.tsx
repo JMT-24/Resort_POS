@@ -32,6 +32,7 @@ export interface CardProps {
   downpayment: number;
   balance: number;
   discounts: number;
+  timestamp: string;
   modalVisible?: boolean;  // Add modalVisible as optional
   setModalVisible?: React.Dispatch<React.SetStateAction<boolean>>;  // Add setModalVisible as optional
 }
@@ -78,6 +79,17 @@ const Card: React.FC<CardProps> = (props) => {
 
   const handleStartTimer = () => {
     setIsTimerRunning(true);
+  };
+  
+  const formatDateFromString = (dateString: string) => {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return ''; // Invalid date
+    }
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 0-based months
+    const day = date.getDate().toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
   };
 
   return (
@@ -139,7 +151,7 @@ const Card: React.FC<CardProps> = (props) => {
                 </View>
                 <View style={styles.assignTextContainer}>
                   <Text style={styles.staffName}>Staff Rhenzie</Text>
-                  <Text style={styles.transactionDate}>Date Created 01/22/2025</Text>
+                  <Text style={styles.transactionDate}>Date Created {formatDateFromString(props.timestamp)}</Text>
                 </View>
               </View>
             </View>

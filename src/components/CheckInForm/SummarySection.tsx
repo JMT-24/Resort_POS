@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import styles from '../../styles/CheckInForm/SummarySectionStyles';
-import { saveCheckInData } from '../../database/checkInSqlite';
+import { saveCheckInData, deleteDB } from '../../database/checkInSqlite';
 import { initializeDefaultPriceList } from '../../database/priceListSQLite';
 import { getPriceList, PriceList } from '../../database/priceListSQLite';
 
@@ -36,6 +36,8 @@ interface SummarySectionProps {
   startTime: string;
   endTime: string;
   isCustomTime: boolean;
+  type: string;
+  status: string;
 }
 
 const SummarySection: React.FC<SummarySectionProps> = ({ 
@@ -54,6 +56,8 @@ const SummarySection: React.FC<SummarySectionProps> = ({
   startTime,
   endTime,
   isCustomTime,
+  type,
+  status,
 }) => {
   const summaryItems = [
     { label: 'Adults', value: guestCounts.adult },
@@ -67,10 +71,40 @@ const SummarySection: React.FC<SummarySectionProps> = ({
     { label: 'Chair', value: charges.chairs },
     { label: 'Cork Cage', value: charges.corkCage },
   ];
-  const handleSave = async() => {
 
-    await saveCheckInData(firstname, lastname, contactNo, address,  guestCounts, cottages, electric, charges, cottageNumbers, startDate,
-    endDate, startTime, endTime, isCustomTime);
+  const timestamp: string = new Date().toDateString();
+  
+  const handleSave = async() => {
+    try {
+      await saveCheckInData(
+        {
+          firstname,
+          lastname,
+          contactNo,
+          address
+        },
+        guestCounts,
+        {
+          cottages,
+          electric,
+          ...charges  // includes roundTable, longTable, chairs, corkCage
+        },
+        {
+          cottageNumbers,
+          startDate,
+          endDate,
+          startTime,
+          endTime,
+          isCustomTime,
+          type,     // e.g. "walk-in" or "reservation"
+          status,  // e.g. "checked-in", "cancelled", etc.
+          timestamp,
+        }
+      );
+      console.log('Check-in data saved successfully.');
+    } catch (error) {
+      console.error('Failed to save check-in data:', error);
+    }
     
     console.log('Saved to SQLite!');
     console.log(startDate + ' startdate and ' + endDate);
@@ -78,7 +112,11 @@ const SummarySection: React.FC<SummarySectionProps> = ({
     console.log("Reserved Cottages: " + cottageNumbers);
     console.log("Custome Time " + isCustomTime);
     console.log(cottages + " cottages and " + electric);
+    console.log("Time now: " + new Date().toISOString());
+    console.log(formatDate(new Date().toISOString()));
+
     onConfirmClick();
+    // deleteDB();
     // initializeDefaultPriceList();
   };
 
@@ -116,6 +154,22 @@ const SummarySection: React.FC<SummarySectionProps> = ({
     const unitPrice = getPriceForLabel(item.label);
     return acc + unitPrice * item.value;
   }, 0);
+
+  const formatDate = (dateString: string) => {
+    if (!dateString || dateString === 'None') return '';
+  
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      // Invalid date
+      return '';
+    }
+  
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
+    const day = date.getDate().toString().padStart(2, '0'); // Pad day with leading zero
+  
+    return `${month}/${day}/${year}`;
+  };
 
   return (
     <View style={styles.summaryBox}>

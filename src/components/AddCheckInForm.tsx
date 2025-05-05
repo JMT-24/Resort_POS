@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import firestore from '@react-native-firebase/firestore';
 
 import styles from '../styles/CheckInFormStyles';
-import { initCheckInTable } from '../database/checkInSqlite';
+import { initializeTables } from '../database/checkInSqlite';
 
 import PersonalInfoSection from './CheckInForm/PersonalInfoSection';
 import GuestCountSection from './CheckInForm/GuestCountSection';
@@ -32,7 +32,6 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
   const [contactNo, setContactNo] = useState('');
   const [address, setAddress] = useState('');
   const [cottageNums, setCottageNumbers] = useState<number[]>([]);
-  const [cottageCount, setCottageCount] = useState(0);
 
   const [guestCounts, setGuestCounts] = useState({
     adult: 0,
@@ -131,6 +130,8 @@ const AddCheckinForm: React.FC<AddCheckinFormProps> = ({ modalVisible, setModalV
               isCustomTime={isCustomTime}
               cottages={cottageNums.length}
               electric={cottageNums.length}
+              type='walk-In'
+              status='cbecked-in'
             />
             <ConfirmPopupModal 
             visible={isPopupOpen}

@@ -1,158 +1,227 @@
-import SQLite from 'react-native-sqlite-storage';
+import { openDatabase, deleteDatabase, SQLiteDatabase } from 'react-native-sqlite-storage';
 
-SQLite.enablePromise(true);
-
-const DB_NAME = 'checkin.db';
-
-export const getDBConnection = async () => {
-  return SQLite.openDatabase({ name: DB_NAME, location: 'default' });
+/**
+ * Deletes the existing database file to start fresh.
+ */
+export const deleteDB = async (): Promise<void> => {
+  if (db) {
+    await db.close();  // close connection if open
+    db = null;
+  }
+  try {
+    await deleteDatabase({ name: 'resort.db', location: 'default' });
+    console.log('Database deleted successfully');
+  } catch (error) {
+    console.error('Failed to delete database:', error);
+    throw error;
+  }
 };
 
-// 🧱 Create the table
-export const initCheckInTable = async () => {
-  const db = await getDBConnection();
 
-  await db.executeSql(`
-    CREATE TABLE IF NOT EXISTS guestCheckIn (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      firstname TEXT,
-      lastname TEXT,
-      contactNo TEXT,
-      address TEXT,
-      adult INTEGER,
-      senior INTEGER,
-      kids INTEGER,
-      pwd INTEGER,
-      cottages INTEGER,
-      electric INTEGER,
-      roundTable INTEGER,
-      longTable INTEGER,
-      chairs INTEGER,
-      corkCage INTEGER,
-      cottageNumbers TEXT,
-      startDate TEXT,
-      endDate TEXT,
-      startTime TEXT,
-      endTime TEXT,
-      isCustomTime INTEGER 
-    );
-  `);
+let db: SQLiteDatabase;
 
+export const getDBConnection = async (): Promise<SQLiteDatabase> => {
+  if (db) return db;
+  db = await openDatabase({ name: 'resort.db', location: 'default' });
   return db;
 };
 
-// 💾 Save check-in record
-/// edit tables for cottageNumbers and DateTime
+export const initializeTables = async () => {
+  const db = await getDBConnection();
+
+  await db.executeSql(`CREATE TABLE IF NOT EXISTS Guests (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    firstname TEXT,
+    lastname TEXT,
+    contactNo TEXT,
+    address TEXT
+  );`);
+
+  await db.executeSql(`CREATE TABLE IF NOT EXISTS Bookings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    guestId INTEGER,
+    cottageNumbers TEXT,
+    startDate TEXT,
+    endDate TEXT,
+    startTime TEXT,
+    endTime TEXT,
+    isCustomTime INTEGER,
+    type TEXT,
+    status TEXT,
+    timestamp TEXT,
+    FOREIGN KEY (guestId) REFERENCES Guests(id)
+  );`);
+
+  await db.executeSql(`CREATE TABLE IF NOT EXISTS GuestCounts (
+    bookingId INTEGER,
+    adult INTEGER,
+    senior INTEGER,
+    kids INTEGER,
+    pwd INTEGER,
+    FOREIGN KEY (bookingId) REFERENCES Bookings(id)
+  );`);
+
+  await db.executeSql(`CREATE TABLE IF NOT EXISTS Charges (
+    bookingId INTEGER,
+    cottages INTEGER,
+    electric INTEGER,
+    roundTable INTEGER,
+    longTable INTEGER,
+    chairs INTEGER,
+    corkCage INTEGER,
+    FOREIGN KEY (bookingId) REFERENCES Bookings(id)
+  );`);
+};
+
 export const saveCheckInData = async (
-  firstname: string,
-  lastname: string,
-  contactNo: string,
-  address: string,
+  guest: { firstname: string; lastname: string; contactNo: string; address: string },
   guestCounts: { adult: number; senior: number; kids: number; pwd: number },
-  cottages: number,
-  electric: number, 
-  charges: { roundTable: number; longTable: number; chairs: number; corkCage: number },
-  cottageNumbers: number[],
-  startDate: string,
-  endDate: string,
-  startTime: string,
-  endTime: string,
-  isCustomTime: boolean,
+  charges: { cottages: number; electric: number; roundTable: number; longTable: number; chairs: number; corkCage: number },
+  booking: { cottageNumbers: number[]; startDate: string; endDate: string; startTime: string; endTime: string; isCustomTime: boolean; type: string; status: string; timestamp: string }
 ) => {
   const db = await getDBConnection();
 
-  await db.executeSql(
-    `INSERT INTO guestCheckIn (
-      firstname, lastname, contactNo, address,
-      adult, senior, kids, pwd,
-      cottages, electric, roundTable, longTable, chairs, corkCage, cottageNumbers, startDate, endDate, startTime, endTime, isCustomTime
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+  const result = await db.executeSql(
+    `INSERT INTO Guests (firstname, lastname, contactNo, address) VALUES (?, ?, ?, ?)`,
+    [guest.firstname, guest.lastname, guest.contactNo, guest.address]
+  );
+  const guestId = result[0].insertId;
+
+  const bookingResult = await db.executeSql(
+    `INSERT INTO Bookings (guestId, cottageNumbers, startDate, endDate, startTime, endTime, isCustomTime, type, status, timestamp)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
-      firstname,
-      lastname,
-      contactNo,
-      address,
-      guestCounts.adult,
-      guestCounts.senior,
-      guestCounts.kids,
-      guestCounts.pwd,
-      cottages,
-      electric,
+      guestId,
+      JSON.stringify(booking.cottageNumbers),
+      booking.startDate,
+      booking.endDate,
+      booking.startTime,
+      booking.endTime,
+      booking.isCustomTime ? 1 : 0,
+      booking.type,
+      booking.status,
+      booking.timestamp,
+    ]
+  );
+  const bookingId = bookingResult[0].insertId;
+
+  await db.executeSql(
+    `INSERT INTO GuestCounts (bookingId, adult, senior, kids, pwd) VALUES (?, ?, ?, ?, ?)`,
+    [bookingId, guestCounts.adult, guestCounts.senior, guestCounts.kids, guestCounts.pwd]
+  );
+
+  await db.executeSql(
+    `INSERT INTO Charges (bookingId, cottages, electric, roundTable, longTable, chairs, corkCage) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    [
+      bookingId,
+      charges.cottages,
+      charges.electric,
       charges.roundTable,
       charges.longTable,
       charges.chairs,
       charges.corkCage,
-      JSON.stringify(cottageNumbers),
-      startDate,
-      endDate,
-      startTime,
-      endTime,
-      isCustomTime ? 1 : 0,
     ]
   );
 };
 
 export const getAllCheckIns = async (): Promise<GuestCheckIn[]> => {
   const db = await getDBConnection();
-  const results = await db.executeSql(`SELECT * FROM guestCheckIn ORDER BY id DESC`);
-  const rows = results[0].rows;
-  const checkIns: GuestCheckIn[] = [];
+  const results = await db.executeSql(`
+    SELECT Bookings.*, Guests.firstname, Guests.lastname, Guests.contactNo, Guests.address,
+           GuestCounts.adult, GuestCounts.senior, GuestCounts.kids, GuestCounts.pwd,
+           Charges.cottages, Charges.electric, Charges.roundTable, Charges.longTable, Charges.chairs, Charges.corkCage
+    FROM Bookings
+    JOIN Guests ON Bookings.guestId = Guests.id
+    JOIN GuestCounts ON GuestCounts.bookingId = Bookings.id
+    JOIN Charges ON Charges.bookingId = Bookings.id
+  `);
 
-  for (let i = 0; i < rows.length; i++) {
-    const item = rows.item(i);
+  const rows = results[0].rows.raw();
 
-    checkIns.push({
-      ...item,
-      cottageNumbers: item.cottageNumbers
-        ? JSON.parse(item.cottageNumbers)
-        : [],
-      isCustomTime: !!item.isCustomTime, // convert 0/1 to boolean
-    });
-  }
+  const data: GuestCheckIn[] = rows.map((row: any) => ({
+    id: row.id,
+    firstname: row.firstname,
+    lastname: row.lastname,
+    contactNo: row.contactNo,
+    address: row.address,
+    cottageNumbers: row.cottageNumbers ? JSON.parse(row.cottageNumbers) : [],
+    startDate: row.startDate,
+    endDate: row.endDate,
+    startTime: row.startTime,
+    endTime: row.endTime,
+    isCustomTime: !!row.isCustomTime,
+    bookingType: row.type as 'walk-in' | 'reservation',
+    status: row.status as 'checked-in' | 'checked-out' | 'cancelled',
+    timestamp: row.timestamp,
+    guests: {
+      adult: row.adult,
+      senior: row.senior,
+      kids: row.kids,
+      pwd: row.pwd
+    },
+    items: {
+      cottages: row.cottages,
+      electric: row.electric,
+      roundTable: row.roundTable,
+      longTable: row.longTable,
+      chairs: row.chairs,
+      corkCage: row.corkCage
+    }
+  }));
 
-  return checkIns;
+  return data;
 };
 
 
-export interface GuestCheckIn {
+export const getReservedCottages = async () => {
+  const db = await getDBConnection();
+  const results = await db.executeSql(
+    `SELECT cottageNumbers FROM Bookings WHERE status != 'cancelled'`
+  );
+
+  const allCottageNumbers = results[0].rows.raw()
+  .map((row: { cottageNumbers: string }) => {
+    try {
+      return JSON.parse(row.cottageNumbers || '[]');
+    } catch (e) {
+      console.warn('Failed to parse cottageNumbers:', row.cottageNumbers);
+      return [];
+    }
+  })
+  .flat();
+
+
+  return allCottageNumbers;
+};
+
+
+export type GuestCheckIn = {
   id: number;
   firstname: string;
   lastname: string;
   contactNo: string;
   address: string;
-  adult: number;
-  senior: number;
-  kids: number;
-  pwd: number;
-  cottages: number;
-  electric: number;
-  roundTable: number;
-  longTable: number;
-  chairs: number;
-  corkCage: number;
   cottageNumbers: number[];
   startDate: string;
   endDate: string;
   startTime: string;
   endTime: string;
   isCustomTime: boolean;
-}
-
-export const getReservedCottages = async (): Promise<number[]> => {
-  const db = await getDBConnection();
-  const results = await db.executeSql(`SELECT cottageNumbers FROM guestCheckIn`);
-  const rows = results[0].rows;
-  const reserved: number[] = [];
-
-  for (let i = 0; i < rows.length; i++) {
-    const raw = rows.item(i).cottageNumbers;
-    try {
-      const parsed: number[] = JSON.parse(raw);
-      reserved.push(...parsed);
-    } catch (e) {
-      console.warn('Failed to parse cottageNumbers for row', i, raw);
-    }
-  }
-
-  return reserved;
+  bookingType: 'walk-in' | 'reservation';
+  status: 'checked-in' | 'checked-out' | 'cancelled';
+  timestamp: string;
+  guests: {
+    adult: number;
+    senior: number;
+    kids: number;
+    pwd: number;
+  };
+  items: {
+    cottages: number;
+    electric: number;
+    roundTable: number;
+    longTable: number;
+    chairs: number;
+    corkCage: number;
+  };
 };

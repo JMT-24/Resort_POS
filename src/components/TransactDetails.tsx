@@ -21,6 +21,7 @@ const TransactDetails: React.FC<CardProps> = (props) => {
               <TransactInfo
                 guestName={props.guestName}
                 referenceNum={props.referenceNumber}
+                timestamp={props.timestamp}
                />
               <InfoTable 
                 adults={props.adults}

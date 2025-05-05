@@ -158,23 +158,26 @@ const MainContent = () => {
             referenceNumber={`0000${item.id}`}
             cottageNumber={`Cottage ${item.cottageNumbers.join(', ')}`}
             date={`${formatDate(item.startDate)} - ${formatDate(item.endDate)}`}
-            adults={item.adult}
-            kids={item.kids}
-            senior={item.senior}
-            pwd={item.pwd}
+            adults={item.guests.adult}
+            kids={item.guests.kids}
+            senior={item.guests.senior}
+            pwd={item.guests.pwd}
             hours={getHourDifference(item.startTime, item.endTime)}
             time={`${item.startTime} - ${item.endTime}`}
-            cottages={item.cottages}
-            corkCage={item.corkCage}
-            electricCharge={item.electric}
-            roundTable={item.roundTable}
-            longTable={item.longTable}
-            chairs={item.chairs}
-            downpayment={(totalPrice(item.adult, item.kids, item.senior, item.pwd, item.cottages, item.electric, 
-              item.roundTable, item.longTable, item.chairs, item.corkCage)) * 0.5}
-            balance={totalPrice(item.adult, item.kids, item.senior, item.pwd, item.cottages, item.electric, 
-              item.roundTable, item.longTable, item.chairs, item.corkCage)}
+            cottages={item.items.cottages}
+            corkCage={item.items.corkCage}
+            electricCharge={item.items.electric}
+            roundTable={item.items.roundTable}
+            longTable={item.items.longTable}
+            chairs={item.items.chairs}
+            downpayment={(totalPrice(item.guests.adult, item.guests.kids, item.guests.senior, item.guests.pwd, 
+              item.items.cottages, item.items.electric, item.items.roundTable, item.items.longTable, item.items.chairs, 
+              item.items.corkCage)) * 0.5}
+            balance={totalPrice(item.guests.adult, item.guests.kids, item.guests.senior, item.guests.pwd, 
+              item.items.cottages, item.items.electric, item.items.roundTable, item.items.longTable, 
+              item.items.chairs, item.items.corkCage)}
             discounts={0}
+            timestamp={item.timestamp}
           />
         ))}
       </ScrollView>

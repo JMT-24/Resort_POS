@@ -8,9 +8,21 @@ const printIcon: ImageSourcePropType = require('../../icons/printIcon.png');
 interface Props {
     referenceNum: string;
     guestName: string;
+    timestamp: string;
 }
 
-const TransactInfo: React.FC<Props> = ({referenceNum, guestName}) => {
+const TransactInfo: React.FC<Props> = ({referenceNum, guestName, timestamp}) => {
+    const formatDateFromString = (dateString: string) => {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) {
+          return ''; // Invalid date
+        }
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 0-based months
+        const day = date.getDate().toString().padStart(2, '0');
+        const year = date.getFullYear();
+        return `${month}/${day}/${year}`;
+      };
+
     return (
         <View style={styles.container}>
             {/* Top Half */}
@@ -25,7 +37,7 @@ const TransactInfo: React.FC<Props> = ({referenceNum, guestName}) => {
                         </View>
                         <View style={styles.infoContainer}>
                             <Text style={styles.infoLabel}>Date Created:</Text>
-                            <Text style={styles.infoValue}>MM/DD/YYYY</Text>
+                            <Text style={styles.infoValue}>{formatDateFromString(timestamp)}</Text>
                         </View>
                 </View>
             </View>
